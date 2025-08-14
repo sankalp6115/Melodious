@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome To Melodious</title>
+  <link rel="icon"
+    href="https://png.pngtree.com/png-vector/20190702/ourlarge/pngtree-music-note-icon-in-trendy-style-isolated-background-png-image_1535289.jpg"
+    type="image/icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil:opsz,wght@10..72,100..900&family=Oswald:wght@200..700&display=swap"
+    rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Oswald";
+    }
+
+    body {
+      margin: 0;
+      background-color: #080710;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Oswald", sans-serif;
+    }
+
+    .background .shape {
+      height: 200px;
+      width: 200px;
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(20px);
+      opacity: 0.8;
+    }
+
+    .shape:first-child {
+      background: linear-gradient(135deg, #1845ad, #23a2f6);
+      top: 10%;
+      left: 30%;
+      backdrop-filter: blur(10px);
+    }
+
+    .shape:last-child {
+      background: linear-gradient(135deg, #ff512f, #f09819);
+      bottom: 10%;
+      right: 30%;
+    }
+
+    .form-container {
+      width: 100%;
+      max-width: 400px;
+      height: 500px;
+      position: relative;
+      perspective: 1000px;
+    }
+
+    .flipper {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transition: transform 0.6s ease;
+      transform-style: preserve-3d;
+    }
+
+    #login,
+    #signup {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      transform: translateZ(50px);
+    }
+
+    #signup {
+      transform: rotateY(180deg) translateZ(-50px);
+    }
+
+    form {
+      width: 100%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(15px);
+      border-radius: 12px;
+      color: white;
+      text-align: center;
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6),
+        0 10px 30px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: linear-gradient(145deg,
+          rgba(255, 255, 255, 0.1),
+          rgba(0, 0, 0, 0.2));
+      transform: translateZ(50px);
+    }
+
+    .flipped {
+      transform: rotateY(180deg);
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+
+    .input-container {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      height: 45px;
+      padding: 10px 20px;
+      border: 2px solid #23a2f6;
+      border-radius: 25px;
+      color: white;
+      font-size: 16px;
+      transition: border-color 0.3s;
+      background: rgba(0, 0, 0, 0.2);
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6),
+        0 2px 5px rgba(255, 255, 255, 0.1);
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #ff512f;
+    }
+
+    .eyeBtn {
+      position: absolute;
+      background-color: transparent;
+      border: none;
+      top: 12px;
+      right: 15px;
+      cursor: pointer;
+    }
+
+    .eyeImg {
+      height: 20px;
+      filter: drop-shadow(0 0 0px white);
+    }
+
+    label {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
+      pointer-events: none;
+      transition: 0.3s ease;
+    }
+
+    input:focus+label,
+    input:not(:placeholder-shown)+label {
+      top: 0;
+      left: 15px;
+      background: #080710;
+      padding: 0 5px;
+      color: #ff512f;
+      font-size: 12px;
+      border-radius: 5px;
+    }
+
+    input[type="submit"] {
+      width: 80%;
+      margin-top: 20px;
+      background: linear-gradient(135deg, #23a2f6, #1845ad);
+      border: none;
+      padding: 12px 0;
+      border-radius: 25px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s, box-shadow 0.3s;
+      align-self: center;
+    }
+
+    input[type="submit"]:hover {
+      background: linear-gradient(135deg, #ff512f, #f09819);
+      box-shadow: 0 0 15px rgba(255, 81, 47, 0.8);
+    }
+
+    h5 {
+      margin-top: 30px;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+    }
+
+    button.formBtn {
+      color: #23a2f6;
+      cursor: pointer;
+      transition: color 0.2s;
+      background-color: transparent;
+      border: none;
+      font-weight: 700;
+    }
+
+    button.formBtn:hover {
+      color: #ff512f;
+    }
+
+    @media (max-width: 480px) {
+      form {
+        width: 90%;
+      }
+
+      .shape {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+
+  <div class="form-container">
+    <div class="flipper">
+      <!-- Login Form -->
+      <form action="#" method="post" id="login">
+        <h1>Welcome Back!</h1>
+        <div class="input-container">
+          <input type="email" id="loginEmail" name="email" placeholder=" " required autocomplete="email" />
+          <label for="email">E-Mail ID</label>
+        </div>
+        <div class="input-container">
+          <input type="password" id="loginPswd" name="password" placeholder=" " required
+            autocomplete="current-password" />
+          <label for="pswd">Password</label>
+          <button class="eyeBtn" type="button">
+            <img src="../Images/eye-closed.png" class="eyeImg" />
+          </button>
+        </div>
+        <input type="submit" value="Login" />
+        <h5>
+          Don't have an Account ?
+          <button class="formBtn signupBtn" type="button">Sign Up</button>
+        </h5>
+      </form>
+
+      <!-- Signup Form -->
+      <form action="#" method="post" id="signup">
+        <h1>Welcome To Melodious!</h1>
+        <div class="input-container">
+          <input type="text" id="singupName" name="name" placeholder=" " required autocomplete="username" />
+          <label for="email">What Shall we call you?</label>
+        </div>
+        <div class="input-container">
+          <input type="email" id="singupEmail" name="email" placeholder=" " required autocomplete="email" />
+          <label for="email">E-Mail ID</label>
+        </div>
+        <div class="input-container">
+          <input type="password" id="singupPswd" name="password" placeholder=" " required min=""/>
+          <label for="pswd">Password</label>
+          <button class="eyeBtn" type="button">
+            <img src="../Images/eye-closed.png" class="eyeImg" />
+          </button>
+        </div>
+        <input type="submit" value="Signup" />
+        <h5>
+          Already Have An Account ?
+          <button class="formBtn loginBtn" type="button">Login</button>
+        </h5>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Flip functionality
+    const flipper = document.querySelector(".flipper");
+    document.querySelector(".signupBtn").addEventListener("click", () => {
+      flipper.classList.add("flipped");
+    });
+    document.querySelector(".loginBtn").addEventListener("click", () => {
+      flipper.classList.remove("flipped");
+    });
+
+    // Password visibility toggle
+    document.querySelectorAll(".eyeBtn").forEach((button) => {
+      button.addEventListener("click", (e) => {
+        const input = e.currentTarget.parentElement.querySelector("input");
+        const img = e.currentTarget.querySelector("img");
+
+        if (input.type === "password") {
+          input.type = "text";
+          img.src = "../Images/eye-open.png";
+        } else {
+          input.type = "password";
+          img.src = "../Images/eye-closed.png";
+        }
+      });
+    });
+
+    //Send Data
+    // document.getElementById("signup").onsubmit = function (e) {
+    //   e.preventDefault();
+
+    //   const formData = new FormData(e.target);
+    //   let dataText = "";
+
+    //   formData.forEach((value, key) => {
+    //     dataText += `${key}: ${value}\n`;
+    //   });
+
+    //   const blob = new Blob([dataText], { type: "text/plain" });
+    //   const link = document.createElement("a");
+    //   link.href = URL.createObjectURL(blob);
+    //   link.download = "formData.txt";
+    //   link.click();
+    // };
+  </script>
+</body>
+
+</html>

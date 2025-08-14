@@ -1,0 +1,388 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Oswald", sans-serif;
+}
+body {
+    width: 100dvw;
+    overflow-x: hidden;
+    padding: 0;
+    background-image: url(../../Assets/Images/Backgrounds/BG2.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: white;
+    font-family: "Oswald", sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    background: #121212;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #ff0844, #ffb199);
+    border-radius: 8px;
+    border: 2px solid #121212;
+    background-size: 100% 400%;
+    transition: background-position 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, rgb(255, 8, 68, 0.8), rgb(255, 177, 153, 0.8));
+}
+
+/* --------------------------------------------Brand title------------------------------------------ */
+:root {
+    --heading-size: 6em;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+svg {
+    width: 100vw;
+    height: calc(var(--heading-size));
+}
+
+svg text {
+    font-size: var(--heading-size);
+    letter-spacing: 7px;
+    stroke-width: 1px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    stroke: red;
+    fill: white;
+    text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, .1), 0 0 5px rgba(0, 0, 0, .1), 0 1px 3px rgba(0, 0, 0, .3), 0 3px 5px rgba(0, 0, 0, .2), 0 5px 10px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .2), 0 20px 20px rgba(0, 0, 0, .15);
+    font-family: "Cookie", serif;
+    letter-spacing: 5px;
+    animation: animated-stroke 2.5s 0.5s forwards ease-out;
+    stroke-dasharray: 0 80%;
+}
+
+@keyframes animated-stroke {
+    0% {
+        stroke-dasharray: 0 80%;
+    }
+    100% {
+        stroke-dasharray: 25% 0%;
+        stroke-dashoffset: 10%;
+    }
+}
+/* --------------------------------Search Bar------------------------------ */
+button.submitBtn{
+    position: absolute;
+    top: 36px;
+    left: 79%;
+    background-color: transparent;
+    border: 0;
+    transition: 0.1s;
+    scale: 1.1;
+}
+button.submitBtn:hover{
+    scale: 1.2;
+}
+button.submitBtn img{
+    height: 30px;
+    background-color: black;
+    border-radius: 20%;
+    padding: 2px;
+    
+}
+input.searchBar{
+    height: 30px;
+    width: 250px;
+    position: absolute;
+    border: 1px solid black;
+    top: 30px;
+    left: 65%;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(2px);
+    border-radius: 10px;
+    padding: 20px 0px 20px 10px;
+}
+::placeholder{
+    color: rgb(39, 39, 39);
+}
+input.searchBar:focus{
+    outline: none;
+}
+/* --------------------------------Profile Section-------------------------------- */
+section.profile {
+    position: absolute;
+    right: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+div.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+:root {
+    --login-accent: #FFFFFF;
+}
+
+/* __________________________________Login Part__________________________________ */
+/* Login Button */
+button.login-btn {
+    height: 40px;
+    width: 100px;
+    color: #1224ee;
+    font-weight: 900;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 100px;
+    background-color: rgba(47, 47, 47, 0.105);
+    border: none;
+    transition: 0.2s ease;
+    border: 2px solid var(--login-accent);
+}
+
+span.sign-in-span {
+    position: absolute;
+    top: 12px;
+    left: 17px;
+}
+
+button.login-btn:hover {
+    box-shadow: 0 0 10px 2px var(--login-accent) inset, 0 0 10px 2px var(--login-accent);
+    color: white;
+}
+
+button.login-btn::after {
+    content: '';
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    background-image: url(../../Assets/Images/control-images/proceed.png);
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-color: black;
+    background-position: 65% center;
+    border-radius: 50%;
+    top: 10px;
+    left: 67.5px;
+}
+
+div.login-overlay {
+    position: absolute;
+    background-color: var(--login-accent);
+    height: 25px;
+    width: 80px;
+    border-radius: 100px;
+    box-shadow: 0 0 10px 2px var(--login-accent);
+    z-index: -3;
+}
+
+div.user-avatar {
+    position: relative;
+    top: 2px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+img.user-avatar {
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+div.profile_menu {
+    position: absolute;
+    width: 15vw;
+    background-color: rgba(0, 74, 158, 0.2);
+    backdrop-filter: blur(5px);
+    box-shadow: -2px 2px 15px gold;
+    border: 2px solid gold;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    top: 8vh;
+    right: 2vh;
+    padding: 10px;
+    border-radius: 10px;
+    visibility: hidden;
+    transition: visibility 0s, opacity 0.2s ease;
+}
+
+div.profile_menu span {
+    cursor: pointer;
+    padding: 10px;
+}
+
+div.profile_menu span:hover {
+    background-color: #0055b6;
+    text-decoration: underline;
+}
+
+div.profile_menu img {
+    height: 20px;
+    float: right;
+}
+/* ---------------------------------------------Whole Part------------------------- */
+.whole{
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+}
+/* ---------------------------------------Left Section------------------------------------------- */
+.left-section{
+    width: 16vw;
+    min-height: 100vh;
+    background-color: rgba(0, 85, 182, 0.3);
+    border-right: 1px solid black;
+    backdrop-filter: blur(5px);
+    margin-top: -110.8px;
+    padding-left: 20px;
+}
+/* ---------------------------------------------------Greeting-------------------------------------------- */
+
+.greeting-div {
+    margin-top: 20px;
+    animation: greeting 1s 1 ease-out;
+    /* transform: translateY(20px); */
+}
+
+@keyframes greeting {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* -----------------------------------------------------Left Menu--------------------------------------------- */
+h4.left-menu-heading{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    opacity: 0.7;
+    font-weight: 100;
+}
+a.left-menu-option{
+    position: relative;
+    left: 10px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    color: white;
+}
+a.left-menu-option::before{
+    content: '';
+    position: absolute;
+    right: 10px;
+    height: 25px;
+    width: 3px;
+    background-color: cyan;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: 0.1s transform;
+}
+a.left-menu-option:hover{
+    color: cyan;
+}
+a.left-menu-option:hover::before, a.left-menu-option:focus::before{
+    transform: scaleY(1);
+    transform-origin: top;
+}
+a.left-menu-option img{
+    height: 20px;
+    vertical-align: bottom;
+    margin-right: 5px;
+}
+
+/* ------------------------------------Playlist----------------------------------- */
+/* Main Section */
+section.main-section::before{
+    content: '';
+    position: fixed;
+    pointer-events: none;
+    background-color: #000000;
+    opacity: 0.2;
+    z-index: -1;
+    height: 100%;
+    width: calc(100% - 16vw);
+    top: 0;
+    right: 0;
+}
+section.main-section{
+    margin-left: 20px;
+}
+.playlist:hover button.playPauseBtn {
+    opacity: 1;
+}
+button.playPauseBtn:hover{  
+    scale: 1.1;
+}
+
+h2.artist-heading{
+
+}
+section#artists{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+a.artist{
+    display: inline;
+    border-radius: 10px;
+    padding: 10px 10px 20px 10px;
+    display: flex;
+    flex-direction: column;
+    transition: 0.1s;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+    
+    &:hover{
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}
+div.artist-poster img{
+    height: 150px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+}
+div.artist-poster::after{
+    content: '';
+    position: absolute;
+    height: 40px; 
+    width: 40px;
+    background-color: #3BE477;
+    border-radius: 50%;
+    display: block;
+    transform: translateX(100px) translateY(-30px);
+    background-image: url(https://icon-library.com/images/play-button-icon-vector/play-button-icon-vector-4.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 60%;
+    opacity: 0;
+    transition: 0.2s;
+}
+a.artist:hover div.artist-poster::after{
+    opacity: 1;
+    transform: translateX(100px) translateY(-50px);
+}
+div.artist-poster::after:hover{
+    scale: 1.1;
+}
+span.artist-title {
+    font-size: 15px;
+    width: 100px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Music Player</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: rgb(10,10,10);
+      
+    }
+    h1 {
+      text-align: center;
+      color: white;
+    }
+    .setting {
+      margin: 20px 0;
+      padding: 10px;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      font-size: 18px;
+      margin-right: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #speedValue {
+      font-size: 16px;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Music Player Settings</h1>
+  <div class="setting">
+    <label for="onekoToggle">Oneko Cat:</label>
+    <button id="onekoToggle">Enable Oneko</button>
+  </div>
+  <div class="setting">
+    <label for="speedToggle">Speed Control:</label>
+    <button id="speedToggle">Enable Speed Control</button>
+    <span id="speedValue"></span>
+  </div>
+
+  <script>
+    // Broadcast Channel for communication with main music player
+    const channel = new BroadcastChannel("music_channel");
+
+    // Oneko Cat Toggle
+    const onekoButton = document.getElementById("onekoToggle");
+    let isOnekoEnabled = false;
+    onekoButton.addEventListener("click", () => {
+      isOnekoEnabled = !isOnekoEnabled;
+      channel.postMessage({
+        action: "toggleOneko",
+        value: isOnekoEnabled,
+      });
+      onekoButton.textContent = isOnekoEnabled ? "Disable Oneko" : "Enable Oneko";
+    });
+
+    // Speed Control Toggle
+    const speedButton = document.getElementById("speedToggle");
+    let isSpeedEnabled = false;
+    speedButton.addEventListener("click", () => {
+      isSpeedEnabled = !isSpeedEnabled;
+      channel.postMessage({
+        action: "toggleSpeedControl",
+        value: isSpeedEnabled,
+      });
+      speedButton.textContent = isSpeedEnabled ? "Disable Speed Control" : "Enable Speed Control";
+    });
+
+    // Listen for updates from main music player
+    channel.onmessage = (event) => {
+      const { action, value } = event.data;
+      switch (action) {
+        case "toggleOneko":
+          isOnekoEnabled = value;
+          onekoButton.textContent = isOnekoEnabled ? "Disable Oneko" : "Enable Oneko";
+          break;
+        case "toggleSpeedControl":
+          isSpeedEnabled = value;
+          speedButton.textContent = isSpeedEnabled ? "Disable Speed Control" : "Enable Speed Control";
+          break;
+        case "updateSpeed":
+          document.getElementById("speedValue").textContent = `Current Speed: ${value}x`;
+          break;
+        default:
+          console.warn("Unknown action received:", action);
+      }
+    };
+  </script>
+</body>
+</html>

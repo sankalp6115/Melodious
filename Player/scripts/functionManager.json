@@ -1,0 +1,10 @@
+[
+    {"main.js":["main functionalities of the page"]},
+    {"easterEggs.js":["drumMode", "Konami Code"]},
+    {"searching.js":["debounce", "fuzzy search"]},
+    {"toolTip.js":["toolTip"]},
+    {"songs.js":["songs file and metadata"]},
+    {"lyrics.js":["songs lyrics data"]},
+    {"oneko.js":["oneko script"]},
+    {"minorFunctionalities.js":["DarkMode Toggle", "Login Btn Styling Change", "Like Animation", "Profile Menu Management"]}
+]

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Melodious</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon"
+    href="https://png.pngtree.com/png-vector/20190702/ourlarge/pngtree-music-note-icon-in-trendy-style-isolated-background-png-image_1535289.jpg"
+    type="image/icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Twinkle+Star&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <!-- Drum Mode Iframe -->
+  <div id="drumKitContainer" style=" display: none; position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+    <iframe id="drumKitIframe" src="../JS Drum Kit/index.html"
+      style="width: 100%; height: 100%; border: none; border-radius: 8px"></iframe>
+    <button class="closeDrumBtn" onclick="document.getElementById('drumKitContainer').style.display='none'">
+      ✕
+    </button>
+  </div>
+
+  <header>
+    <div class="title">
+      <svg width="100%">
+        <text x="50%" y="60%">Melodious</text>
+      </svg>
+    </div>
+
+    <div class="search">
+      <input type="search" name="" id="search" placeholder="Search" />
+      <button type="submit">
+        <img
+          src="https://static.vecteezy.com/system/resources/thumbnails/014/441/308/small/magnifying-glass-icon-3d-design-for-application-and-website-presentation-png.png"
+          class="searchIcon" />
+      </button>
+    </div>
+
+    <section class="profile">
+      <div class="login">
+        <div class="login-overlay"></div>
+        <button class="login-btn">
+          <a class="sign-in-link" href="../Dot Menu Pages/Authentication/loginSignup.html">SIGN IN</a>
+        </button>
+      </div>
+      <div class="user-avatar">
+        <img class="user-avatar" src="../Assets/Images/control-images/user-avatar.png" alt="user-avatar" />
+      </div>
+      <div class="profile_menu">
+        <a href="#" class="profile_menu_option">Account <img src="../Assets/Images/control-images/link.png" /></a>
+        <a href="#" class="profile_menu_option">Profile</a>
+        <a href="../Dot Menu Pages/Settings/subscription.html" class="profile_menu_option">Upgrade to Premium <img
+            src="../Assets/Images/control-images/link.png" /></a>
+        <a href="#" class="profile_menu_option">Support <img src="../Assets/Images/control-images/link.png" /></a>
+        <a href="#" class="profile_menu_option">Download <img src="../Assets/Images/control-images/link.png" /></a>
+        <a href="../Dot Menu Pages/Settings/settings.html" target="_blank" class="profile_menu_option">Settings</a>
+<!-- Theme Toggle Checkbox -->
+        <span class="profile_menu_option">
+          <input class="toggle-checkbox" type="checkbox" id="dark-mode" />
+          <label for="dark-mode" class="toggle dark-mode"></label>
+        </span>
+<!-- Oneko CHeckbox -->
+        <input class="toggle-checkbox" type="checkbox" id="oneko-checkbox" style="display: none;"/>
+        
+        <hr />
+        <span class="profile_menu_option" style="height: 40px;">Log Out</span>
+            <div class="drumMode"></div>
+      </div>
+    </section>
+  </header>
+
+  <!-- Decoration -->
+
+  <!-- Section Containing song table and side player -->
+  <section class="main">
+    <!-- Main Song Table -->
+    <div id="songList" class="song-list-container">
+      <div class="hover-highlight" id="hover-highlight"></div>
+    </div>
+
+    <div class="posterAndSideMenu">
+      <section class="playlist_poster">
+        <div class="playlist-info">
+          <span class="playlist-title">Urban Rock</span>
+          <span class="playlist-owner">Private</span>
+          <span class="playlist-length"></span>
+        </div>
+        <div class="right-side-controls">
+          <button class="likeBtn">
+            <img src="../Assets/Images/Animations/heart.png" class="heart" />
+          </button>
+          <img src="../Assets/Images/Animations/likeAnimation.gif" class="likeAnimation" />
+        </div>
+      </section>
+
+      <!-- Side Player -->
+      <div class="side-menu">
+        <div class="video-container">
+          <img src="../Assets/Images/Album_Arts/song-icon4.png" alt="" id="rightAlbumArt" />
+        </div>
+        <div class="song-info">
+          <div class="song-title"></div>
+          <div class="artist-name"></div>
+        </div>
+
+        <div class="nextSong">
+          <img src="../Assets/Images/Album_Arts/01-album.jpg" class="nextSongAlbumArt" />
+          <span>Upcoming</span>
+          <div class="nextSongTitle">-</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <!-- Custom Music Player -->
+    <div class="player">
+      <div class="albumArt_and_songInfo">
+        <div class="player-album-art">
+          <img src="" id="player-album-art-img" />
+        </div>
+        <div class="player-song-info">
+          <div class="player-song-title" id="songTitle">Song Title</div>
+          <div class="player-artist" id="songArtist">Artist Name</div>
+          <!-- Audio Element (Hidden) -->
+          <audio id="audioPlayer" preload="auto" type="audio/mp3" crossorigin="anonymous" loading="lazy"></audio>
+        </div>
+      </div>
+
+      <div class="controls_and_progress">
+        <!-- Controls -->
+        <div class="controls">
+          <button class="control_button inactiveShuffle" id="repeatBtn">
+            <!-- <img src="../Assets/Images/control-images/repeat.jpg" alt="repeat"> -->
+          </button>
+          <button class="control_button" id="prevBtn">
+            <img src="../Assets/Images/control-images/previous.jpg" alt="back" />
+          </button>
+          <button class="control_button" id="playPauseBtn">
+            <img src="../Assets/Images/control-images/play.jpg" id="play-pause-image" alt="start-stop" />
+          </button>
+          <button class="control_button" id="nextBtn">
+            <img src="../Assets/Images/control-images/next.jpg" alt="next" />
+          </button>
+          <button class="control_button shuffleBtn" id="shuffleBtn">
+            <img src="../Assets/Images/control-images/shuffle-enabled.JPG" alt="shuffle" />
+          </button>
+        </div>
+
+        <div class="visualiser-elmt"></div>
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+          <input type="range" id="progressBar" class="progressBar" value="0" max="100" step="0.1" />
+        </div>
+        <div class="progress-container" id="progress-container">
+          <span id="elapsed_time" class="elapsed_time time"></span>
+          <div class="progress-bar" id="progress-bar"></div>
+          <img src="../Assets/Images/control-images/progress-indicator3.gif" alt="Indicator" class="progress-indicator"
+            id="progress-indicator" />
+          <span id="total_time" class="total_time time"></span>
+        </div>
+        <!-- Speed Control Of Music -->
+        <div id="speed-control">
+          <select name="speed" id="speed">
+            <!-- <option value="custom"><input type="range" name="custom-speed" id="custom-speed"></option> -->
+            <option class="speed" value="0.25">0.25x</option>
+            <option class="speed" value="0.50">0.50x</option>
+            <option class="speed" value="0.75">0.75x</option>
+            <option class="speed" value="1.00" selected>1.00x</option>
+            <option class="speed" value="1.25">1.25x</option>
+            <option class="speed" value="1.50">1.50x</option>
+            <option class="speed" value="1.75">1.75x</option>
+            <option class="speed" value="2.00">2.00x</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Active Lyric -->
+      <div class="active-lyric-line"></div>
+      <button class="lyrics-open">
+        <img src="../Assets/Images/control-images/menu_open.png" alt="lyrics" class="lyric-open-img" />
+      </button>
+      <div class="lyric-open-tooltip">Open Lyrics</div>
+      <!-- Volume Control -->
+      <div class="volume-control">
+        <div id="vol_tooltip" class="vol_tooltip">100</div>
+        <img id="volume-img" src="../Assets/Images/control-images/vol_low.JPG" alt="volume" style="height: 20px" />
+        <input type="range" id="volumeControl" value="100" max="100" step="2" />
+      </div>
+
+      <img src="../Assets/Images//Animations/side_cartoon.gif" style="position: absolute; height: 50px; right: 0; bottom: 0"
+        class="side_cartoon" />
+    </div>
+  </div>
+
+  <!-- Bottom Section -->
+  <section class="bottom">
+    <div class="bottomLinks">
+      <h4>Company</h4>
+      <a href="#">About</a>
+      <a href="#">Jobs</a>
+      <a href="#">For The Record</a>
+    </div>
+    <div class="bottomLinks">
+      <h4>Communities</h4>
+      <a href="#">For Artists</a>
+      <a href="#">Developers</a>
+      <a href="#">Advertising</a>
+      <a href="#">Investors</a>
+      <a href="#">Vendors</a>
+    </div>
+    <div class="bottomLinks">
+      <h4>Useful Links</h4>
+      <a href="#">Support</a>
+      <a href="#">Free Mobile App</a>
+    </div>
+    <div class="bottomLinks">
+      <h4>Melodious Plans</h4>
+      <a href="#">Premium</a>
+      <a href="#">Individual</a>
+      <a href="#">Premium Duo</a>
+      <a href="#">Premium Family</a>
+      <a href="#">Premium Student</a>
+      <a href="#">Free</a>
+    </div>
+    <div class="socialMedia">
+      <a href="#"><img src="../Assets/Images//Social Media/facebook.png" class="socialIcon" /></a>
+      <a href="#"><img src="../Assets/Images//Social Media/linkedin.png" class="socialIcon" /></a>
+      <a href="#"><img src="../Assets/Images//Social Media/instagram.png" class="socialIcon" /></a>
+    </div>
+  </section>
+  <section class="legalTerms">
+    <a href="#">Legal</a>
+    <a href="#">Safety & Privacy Center</a>
+    <a href="#">Privacy Policies</a>
+    <a href="#">Cookies</a>
+    <a href="#">About Ads</a>
+    <a href="#">Accessibility</a>
+    <a href="#">&copy; 2025 Melodious</a>
+  </section>
+
+  <!-- Lyrics -->
+  <div id="lyrics-container"></div>
+
+  <!-- Konami Cheat Code -->
+  <div class="cheat-code">
+    <img src="../Assets/Images/Animations/rain.gif" />
+  </div>
+</body>
+<script src="scripts/main.js" type="module"></script>
+<script src="../Global Scripts/songs.js"></script>
+<script src="../Global Scripts/lyrics.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
+<script src="scripts/oneko.js"></script>
+
+</html>

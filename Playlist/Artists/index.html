@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melodious</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="https://png.pngtree.com/png-vector/20190702/ourlarge/pngtree-music-note-icon-in-trendy-style-isolated-background-png-image_1535289.jpg" type="image/icon">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>  
+        <div class="title">
+        <svg>
+            <text x="50%" y="65%">Melodious</text>
+          </svg>
+        </div>
+        <div class="searchBar">
+            <input type="text" class="searchBar" name="searchBar" placeholder="Type Here to Search">
+            <button class="submitBtn"><img src="../../Assets/Images/control-images/search.png"></button>
+        </div>
+        <section class="profile">
+          <div class="login">
+            <div class="login-overlay"></div>
+            <button class="login-btn"><span class="sign-in-span">SIGN IN</span></button>
+          </div>
+          <div class="user-avatar">
+        <img class="user-avatar" src="../../Assets/Images/control-images/user-avatar.png" alt="user-avatar" />
+      </div>
+      <div class="profile_menu">
+        <a href="#" class="profile_menu_option">Account <img src="../../Assets/Images/control-images/link.png" /></a>
+        <a href="#" class="profile_menu_option">Profile</a>
+        <a href="../../Dot Menu Pages/Settings/subscription.html" class="profile_menu_option">Upgrade to Premium <img
+            src="../../Assets/Images/control-images/link.png" /></a>
+        <a href="#" class="profile_menu_option">Support <img src="../../Assets/Images/control-images/link.png" /></a>
+        <a href="#" class="profile_menu_option">Download <img src="../../Assets/Images/control-images/link.png" /></a>
+        <a href="../../Dot Menu Pages/Settings/settings.html" target="_blank" class="profile_menu_option">Settings</a>
+            <!-- <span class="profile_menu_option">
+              <input type="checkbox" name="dark-mode" id="dark-mode">
+              <label for="dark-mode" class="dark-mode-toggle"></label>
+            </span> -->
+
+            <hr>
+            <span class="profile_menu_option">Log Out</span>
+          </div>
+        </section>
+    </header>
+
+    <!-- -------------------------------------Left Section---------------------------------------- -->
+<div class="whole">
+
+<section class="left-section">
+    
+    <div class="greeting-div">
+        <h1 class="greeting"></h1>
+        <span>What do you want to hear today ?</span>
+    </div>
+
+    <h4 class="left-menu-heading">Menu</h4>
+    <a class="left-menu-option" href="#" ><img src="../../Assets/Images/control-images/cd.png">Explore</a>
+    <a class="left-menu-option" href="#" ><img src="../../Assets/Images/control-images/speaker.png">Genres</a>
+    <a class="left-menu-option" href="#" ><img src="../../Assets/Images/control-images/playlist.png">Playlists</a>
+    <a class="left-menu-option" href="index.html"><img src="../../Assets/Images/control-images/mic.png">Artists</a>
+    <a class="left-menu-option" href="#" ><img src="../../Assets/Images/control-images/radio.png">Radio</a>
+
+    <h4 class="left-menu-heading">Library</h4>
+    <a class="left-menu-option" href="#" ><img src="../../Assets/Images/control-images/recent.png">Recent</a>
+    <a class="left-menu-option" href="#" ><img src="../../Assets/Images/control-images/favourite.png">Favourites</a>
+    <a class="left-menu-option" href="#" ><img src="../../Assets/Images/control-images/album.png">Albums</a>
+    <a class="left-menu-option" href="#" ><img src="../../Assets/Images/control-images/folder.png">Local</a>
+    <a class="left-menu-option" href="#" style="font-weight: 100; left: 0; opacity: 0.8;">Upgrade To Deluxe<img src="../../Assets/Images/control-images/link.png"></a>
+</section>
+
+<!-- ------------------------------------Main Section------------------------------------------- -->
+<section class="playlist-container main-section">
+    <h2 class="artist-heading">Featured Artists</h2>
+    <section id="artists"></section>
+    <h2 class="artist-heading">Other Artists</h2>
+    <section id="artists2"></section>
+</section>
+
+</div>
+</body>
+<script src="script.js" type="module"></script>
+<script src="../../Global Scripts/artists.js"></script>
+<script src="../../Global Scripts/songs.js"></script>
+</html>

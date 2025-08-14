@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+body{
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+div#box{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    
+}
+
+button{
+    height: 50px;
+    width: 50px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgb(255, 255, 255);
+    color: white;
+    font-size: 15px;
+    transition: all 0.07s ease;
+    border-radius: 5px;
+}
+span.keyName{
+    text-align: center;
+    display: block;
+    font-size: 12px;
+    color: gold;
+}
+.key.playing {
+    scale: 0.9;
+    box-shadow: 0 0 10px #9f5afd, 0 0 20px #9f5afd;
+    background-color: #9f5afd;
+    color: white;
+}
+</style>
+<body>
+    <div id="box">
+        <button class="key" onclick="play(clap)" id="clap">A 
+            <span class="keyName">Clap</span> 
+        </button>
+        <button class="key" onclick="play(hihat)" id="hihat">S 
+            <span class="keyName">Hihat</span> 
+        </button>
+        <button class="key" onclick="play(kick)" id="kick">D 
+            <span class="keyName">Kick</span> 
+        </button>
+        <button class="key" onclick="play(openhat)" id="openhat">F 
+            <span class="keyName">Openhat</span> 
+        </button>
+        <button class="key" onclick="play(boom)" id="boom">G 
+            <span class="keyName">Boom</span> 
+        </button>
+        <button class="key" onclick="play(ride)" id="ride">H 
+            <span class="keyName">Ride</span> 
+        </button>
+        <button class="key" onclick="play(snare)" id="snare">J 
+            <span class="keyName">Snare</span> 
+        </button>
+        <button class="key" onclick="play(tom)" id="tom">K 
+            <span class="keyName">Tom</span> 
+        </button>
+        <button class="key" onclick="play(tink)" id="tink">L 
+            <span class="keyName">Tink</span> 
+        </button>
+    </div>
+
+</body>
+<script>
+    const clap = new Audio("sounds/clap.wav");
+const hihat = new Audio("sounds/hihat.wav");
+const kick = new Audio("sounds/kick.wav");
+const openhat = new Audio("sounds/openhat.wav");
+const boom = new Audio("sounds/boom.wav");
+const ride = new Audio("sounds/ride.wav");
+const snare = new Audio("sounds/snare.wav");
+const tom = new Audio("sounds/tom.wav");
+const tink = new Audio("sounds/tink.wav");
+
+
+const clapBtn = document.getElementById("clap");
+const hihatBtn = document.getElementById("hihat");
+const kickBtn = document.getElementById("kick");
+const openhatBtn = document.getElementById("openhat");
+const boomBtn = document.getElementById("boom");
+const rideBtn = document.getElementById("ride");
+const snareBtn = document.getElementById("snare");
+const tomBtn =document.getElementById("tom");
+const tinkBtn = document.getElementById("tink");
+
+function play(sound){
+    sound.currentTime = 0;
+    sound.play();
+}
+
+
+function addAnimation(btn) {
+    btn.classList.add("playing");
+    setTimeout(() => {
+        btn.classList.remove("playing");
+    }, 100); // remove after 100ms
+}
+
+document.addEventListener("keydown", (e) => {
+    switch(e.key) {
+        case "a":
+            clapBtn.click();
+            addAnimation(clapBtn);
+            break;
+        case "s":
+            hihatBtn.click();
+            addAnimation(hihatBtn);
+            break;
+        case "d":
+            kickBtn.click();
+            addAnimation(kickBtn);
+            break;
+        case "f":
+            openhatBtn.click();
+            addAnimation(openhatBtn);
+            break;
+        case "g":
+            boomBtn.click();
+            addAnimation(boomBtn);
+            break;
+        case "h":
+            rideBtn.click();
+            addAnimation(rideBtn);
+            break;
+        case "j":
+            snareBtn.click();
+            addAnimation(snareBtn);
+            break;
+        case "k":
+            tomBtn.click();
+            addAnimation(tomBtn);
+            break;
+        case "l":
+            tinkBtn.click();
+            addAnimation(tinkBtn);
+            break;
+    }
+});
+
+</script>
+</html>
