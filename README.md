@@ -29,8 +29,8 @@
 ## 📸 Screenshots
 | Playlist View | Artist Page | Main Screen |
 |---------------|-------------|-------------|
-| ![Playlist](ss/playlist.png) | ![Artist](ss/artist%202.png) | ![Main](ss/main%201.png) |
-| ![Artist](ss/artist.png) | ![Playlist2](ss/playlist%202.png) | ![Main2](ss/main%202.png) |
+| ![Playlist](SS/playlist.png) | ![Artist](SS/artist%202.png) | ![Main](SS/main%201.png) |
+| ![Artist](SS/artist.png) | ![Playlist2](SS/playlist%202.png) | ![Main2](SS/main%202.png) |
 
 ---
 
@@ -38,7 +38,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=cSS3&logoColor=white"/>
   <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E"/>
   <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white"/>
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
