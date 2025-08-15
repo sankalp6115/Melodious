@@ -13,7 +13,7 @@ export function customCursor(){
         transition: "border 0.1s, transform 0.1s",
         transform: "translate(-50%, -50%)",
         pointerEvents: "none",
-        // backdropFilter: "brightness(200%)",
+        backdropFilter: "grayscale(1)",
     });
 
     minCursor.className = "cursor";
@@ -24,7 +24,7 @@ export function customCursor(){
         borderRadius: "50%",
         background: "rgb(255,255,255)",
         zIndex: "1000",
-        transition: "0.2s linear",
+        transition: "0.1s linear",
         pointerEvents: "none",
         transform: "translate(-50%, -50%)",
         // boxShadow: "0 0 10px white",

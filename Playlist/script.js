@@ -58,7 +58,7 @@ playlists.forEach(playlist => {
         <img src="${playlist.poster}" alt="${playlist.name} poster">
       </div>
       <div class="playlist-info">
-        <span class="playlist-title">${playlist.name} Music</span>
+        <span class="playlist-title">${playlist.name}</span>
       </div>
       <button class="playPauseBtn">
         <img src="../Assets/Images/control-images/play.JPG" alt="Play button">

@@ -162,6 +162,30 @@ svg text {
   resize: both;
 }
 
+/* Voice Recognition */
+div.voiceRecog{
+  position: absolute;
+  right: 18%;
+  top: 15px;
+}
+div.voiceRecog button{
+  border: none;
+  background-color: transparent;
+}
+div.voiceRecog button img{
+  height: 30px;
+  border-radius: 50%;
+  transition: 0.1s;
+}
+div.voiceRecog button img:hover{
+  scale: 1.1;
+}
+
+.listening{
+  filter: drop-shadow(0 0 10px orange);
+  border: 2px solid orange;
+}
+
 /* SearchBox */
 div.search {
   position: relative;
@@ -320,6 +344,15 @@ div.profile_menu {
   transition: visibility 0s, opacity 0.2s ease;
 }
 
+div.profile_menu span {
+    cursor: pointer;
+    padding: 10px;
+}
+
+div.profile_menu span:hover {
+    background-color: #0055b6;
+    text-decoration: underline;
+}
 div.profile_menu a {
   cursor: pointer;
   padding: 10px;

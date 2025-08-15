@@ -3,6 +3,7 @@ import './easterEggs.js';
 import './searching.js';
 import './minorFunctionalities.js';
 import { customCursor } from './customCursor.js';
+import createVoiceControl from './voice recognition.js';
 
 customCursor();
 const channel = new BroadcastChannel("music_channel");
@@ -441,10 +442,6 @@ function createSongTable() {
     th.textContent = headerText;
     return th;
   });
-
-  songs.forEach(song => {
-    console.log(song.artist);
-  })
 //Table Creation Rules
   table.innerHTML = `
       <thead>
@@ -694,3 +691,15 @@ lyricOpenBtn.addEventListener("click", () => {
     lyricIcon.style.filter = "grayscale(0%)";
   }
 });
+
+
+// // ================= VOICE RECOGNITION =================
+const controls = {
+    toggleShuffle,
+    toggleLoop,
+    handleNextSong,
+    handlePreviousSong,
+    toggleMute
+};
+
+const voiceControl = createVoiceControl(playerElements, controls);

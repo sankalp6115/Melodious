@@ -202,6 +202,7 @@ div.profile_menu {
     background-color: rgba(0, 74, 158, 0.2);
     backdrop-filter: blur(5px);
     box-shadow: -2px 2px 15px gold;
+    background-color: #004a9e;
     border: 2px solid gold;
     display: flex;
     flex-direction: column;
@@ -218,7 +219,17 @@ div.profile_menu span {
     cursor: pointer;
     padding: 10px;
 }
+div.profile_menu a {
+  cursor: pointer;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
 
+  &:hover {
+    background-color: #0055b6;
+    text-decoration: underline;
+  }
+}
 div.profile_menu span:hover {
     background-color: #0055b6;
     text-decoration: underline;
@@ -228,6 +239,42 @@ div.profile_menu img {
     height: 20px;
     float: right;
 }
+.profile_menu_option .toggle-checkbox {
+  position: absolute;
+  z-index: 1;
+  border-radius: inherit;
+  font: inherit;
+  cursor: pointer;
+  display: none;
+}
+
+.profile_menu_option label {
+  display: block;
+  height: 20px;
+  width: 40px;
+  background-color: orange;
+  border-radius: 50px;
+  margin: 10px;
+  float: right;
+}
+
+.profile_menu_option label:before {
+  content: '';
+  position: absolute;
+  display: block;
+  height: 15px;
+  width: 15px;
+  background-color: white;
+  border: 1px solid black;
+  transform: translateY(2px) translateX(2px);
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+input.toggle-checkbox:checked~label.toggle::before {
+  translate: 20px;
+}
+
 /* ---------------------------------------------Whole Part------------------------- */
 .whole{
     display: grid;

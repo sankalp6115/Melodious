@@ -32,7 +32,12 @@
         <text x="50%" y="60%">Melodious</text>
       </svg>
     </div>
-
+    
+    <div class="voiceRecog">
+        <!-- Voice Recognition -->
+        <button id="voiceBtn"><img src="../Assets/Images/control-images/mic-off.png"></button>
+    </div>
+    
     <div class="search">
       <input type="search" name="" id="search" placeholder="Search" />
       <button type="submit">
@@ -189,9 +194,9 @@
       <div class="lyric-open-tooltip">Open Lyrics</div>
       <!-- Volume Control -->
       <div class="volume-control">
-        <div id="vol_tooltip" class="vol_tooltip">100</div>
+        <div id="vol_tooltip" class="vol_tooltip"></div>
         <img id="volume-img" src="../Assets/Images/control-images/vol_low.JPG" alt="volume" style="height: 20px" />
-        <input type="range" id="volumeControl" value="100" max="100" step="2" />
+        <input type="range" id="volumeControl" max="100" step="2" value="50"/>
       </div>
 
       <img src="../Assets/Images//Animations/side_cartoon.gif" style="position: absolute; height: 50px; right: 0; bottom: 0"
