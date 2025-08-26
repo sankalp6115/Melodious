@@ -1,23 +1,6 @@
 const songs = [
   {
     "id": 1,
-    "title": "Aaj Ki Raat",
-    "artist": [
-      "Sachin-Jigar",
-      "Madhubanti Bagchi",
-      "Divya Kumar",
-      "Amitabh Bhattacharya"
-    ],
-    "album": "Stree 2",
-    "genre": "Gujarati Pop",
-    "year": 2024,
-    "length": 228,
-    "albumArt": "http://localhost:3000/music/AlbumArt/Sachin-Jigar, Madhubanti Bagchi, Divya Kumar, Amitabh Bhattacharya - Aaj Ki Raat.jpg",
-    "file": "http://localhost:3000/music/Sachin-Jigar, Madhubanti Bagchi, Divya Kumar, Amitabh Bhattacharya - Aaj Ki Raat.mp3",
-    "rating": 5
-  },
-  {
-    "id": 2,
     "title": "Aankhein Khuli",
     "artist": [
       "Jatin-Lalit",
@@ -40,7 +23,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 3,
+    "id": 2,
     "title": "Aaoge Tum Kabhi",
     "artist": [
       "The Local Train"
@@ -54,7 +37,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 4,
+    "id": 3,
     "title": "Aap Ki Nazron Ne Samjha",
     "artist": [
       "Sanam"
@@ -68,37 +51,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 5,
-    "title": "Aasan Nahin Yahan",
-    "artist": [
-      "Arijit Singh"
-    ],
-    "album": "Aashiqui 2",
-    "genre": "Hindi Pop",
-    "year": 2013,
-    "length": 214,
-    "albumArt": "http://localhost:3000/music/AlbumArt/Arijit Singh - Aasan Nahin Yahan.jpg",
-    "file": "http://localhost:3000/music/Arijit Singh - Aasan Nahin Yahan.mp3",
-    "rating": 5
-  },
-  {
-    "id": 6,
-    "title": "Achha Sila Diya",
-    "artist": [
-      "Jaani",
-      "B Praak",
-      "Nikhil Vinay"
-    ],
-    "album": "Achha Sila Diya",
-    "genre": "Punjabi Pop",
-    "year": 2023,
-    "length": 317,
-    "albumArt": "http://localhost:3000/music/AlbumArt/Jaani, B Praak, Nikhil Vinay - Achha Sila Diya.jpg",
-    "file": "http://localhost:3000/music/Jaani, B Praak, Nikhil Vinay - Achha Sila Diya.mp3",
-    "rating": 5
-  },
-  {
-    "id": 7,
+    "id": 4,
     "title": "Ae Dil Hai Mushkil Title Track",
     "artist": [
       "Pritam",
@@ -113,7 +66,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 8,
+    "id": 5,
     "title": "Agar Tum Saath Ho",
     "artist": [
       "Alka Yagnik",
@@ -128,7 +81,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 9,
+    "id": 6,
     "title": "Akhiyaan Gulaab (From \"Teri Baaton Mein Aisa Uljha Jiya\")",
     "artist": [
       "Mitraz"
@@ -142,7 +95,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 10,
+    "id": 7,
     "title": "Alag Aasmaan",
     "artist": [
       "Anuv Jain"
@@ -156,7 +109,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 11,
+    "id": 8,
     "title": "Apna Bana Le",
     "artist": [
       "Sachin-Jigar",
@@ -172,7 +125,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 12,
+    "id": 9,
     "title": "Arjan Vailly",
     "artist": [
       "Manan Bhardwaj",
@@ -187,7 +140,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 13,
+    "id": 10,
     "title": "Astronaut In The Ocean",
     "artist": [
       "Masked Wolf"
@@ -201,7 +154,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 14,
+    "id": 11,
     "title": "Baarish Ban Jaana",
     "artist": [
       "Payal Dev",
@@ -217,7 +170,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 15,
+    "id": 12,
     "title": "Baatein Ye Kabhi Na (From \"Khamoshiyan\") - Male",
     "artist": [
       "Jeet Gannguli",
@@ -232,7 +185,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 16,
+    "id": 13,
     "title": "Balenciaga",
     "artist": [
       "T3NZU"
@@ -246,7 +199,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 17,
+    "id": 14,
     "title": "Banjaara (From \"Ek Villain\")",
     "artist": [
       "Mohammed Irfan"
@@ -260,7 +213,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 18,
+    "id": 15,
     "title": "Bekhayali (From \"Kabir Singh\")",
     "artist": [
       "Sachet Tandon",
@@ -275,7 +228,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 19,
+    "id": 16,
     "title": "Believer",
     "artist": [
       "Imagine Dragons"
@@ -289,7 +242,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 20,
+    "id": 17,
     "title": "Bhula Dena",
     "artist": [
       "Mustafa Zahid"
@@ -303,7 +256,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 21,
+    "id": 18,
     "title": "Blinding Lights",
     "artist": [
       "The Weeknd"
@@ -317,7 +270,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 22,
+    "id": 19,
     "title": "Bloodline (with Jelly Roll)",
     "artist": [
       "Alex Warren",
@@ -332,7 +285,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 23,
+    "id": 20,
     "title": "Bones",
     "artist": [
       "Imagine Dragons"
@@ -346,7 +299,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 24,
+    "id": 21,
     "title": "Born to Shine",
     "artist": [
       "Diljit Dosanjh"
@@ -360,7 +313,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 25,
+    "id": 22,
     "title": "Bre Petrunko",
     "artist": [
       "Dabro remix"
@@ -374,7 +327,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 26,
+    "id": 23,
     "title": "Buddhu Sa Mann",
     "artist": [
       "Amaal Mallik",
@@ -390,7 +343,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 27,
+    "id": 24,
     "title": "Bulleya",
     "artist": [
       "Pritam",
@@ -406,7 +359,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 28,
+    "id": 25,
     "title": "Chahun Main Ya Naa",
     "artist": [
       "Palak Muchhal",
@@ -421,7 +374,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 29,
+    "id": 26,
     "title": "Cheques",
     "artist": [
       "Shubh"
@@ -435,7 +388,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 30,
+    "id": 27,
     "title": "Cheri Cheri Lady",
     "artist": [
       "Modern Talking"
@@ -449,21 +402,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 31,
-    "title": "Chhu Kar Mere Manko - From \"Yaarana\"",
-    "artist": [
-      "Kishore Kumar"
-    ],
-    "album": "Yaarana (Original Motion Picture Soundtrack)",
-    "genre": "Ghazal",
-    "year": 1981,
-    "length": 253,
-    "albumArt": "http://localhost:3000/music/AlbumArt/Kishore Kumar - Chhu Kar Mere Manko - From 'Yaarana'.jpg",
-    "file": "http://localhost:3000/music/Kishore Kumar - Chhu Kar Mere Manko - From 'Yaarana'.mp3",
-    "rating": 5
-  },
-  {
-    "id": 32,
+    "id": 28,
     "title": "Choo Lo",
     "artist": [
       "The Local Train"
@@ -477,7 +416,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 33,
+    "id": 29,
     "title": "Co2",
     "artist": [
       "Prateek Kuhad"
@@ -491,7 +430,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 34,
+    "id": 30,
     "title": "Cradles",
     "artist": [
       "Sub Urban"
@@ -505,7 +444,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 35,
+    "id": 31,
     "title": "Dekhte Dekhte",
     "artist": [
       "Atif Aslam",
@@ -522,7 +461,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 36,
+    "id": 32,
     "title": "Dhadak - Title Track",
     "artist": [
       "Ajay Gogavale",
@@ -537,37 +476,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 37,
-    "title": "Dil Diyan Gallan",
-    "artist": [
-      "Vishal-Shekhar",
-      "Atif Aslam",
-      "Irshad Kamil"
-    ],
-    "album": "Tiger Zinda Hai",
-    "genre": "Bollywood",
-    "year": 2017,
-    "length": 260,
-    "albumArt": "http://localhost:3000/music/AlbumArt/Vishal-Shekhar, Atif Aslam, Irshad Kamil - Dil Diyan Gallan.jpg",
-    "file": "http://localhost:3000/music/Vishal-Shekhar, Atif Aslam, Irshad Kamil - Dil Diyan Gallan.mp3",
-    "rating": 5
-  },
-  {
-    "id": 38,
-    "title": "Dil Kya Kare",
-    "artist": [
-      "Kishore Kumar"
-    ],
-    "album": "Julie (Original Motion Picture Soundtrack)",
-    "genre": "Ghazal",
-    "year": 1975,
-    "length": 404,
-    "albumArt": "http://localhost:3000/music/AlbumArt/Kishore Kumar - Dil Kya Kare.jpg",
-    "file": "http://localhost:3000/music/Kishore Kumar - Dil Kya Kare.mp3",
-    "rating": 5
-  },
-  {
-    "id": 39,
+    "id": 33,
     "title": "Dil Kya Kare",
     "artist": [
       "Sanam"
@@ -581,7 +490,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 40,
+    "id": 34,
     "title": "Disco Disco",
     "artist": [
       "Sachin-Jigar",
@@ -597,7 +506,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 41,
+    "id": 35,
     "title": "Don't Start Now",
     "artist": [
       "Dua Lipa"
@@ -611,7 +520,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 42,
+    "id": 36,
     "title": "Dope Shope",
     "artist": [
       "Yo Yo Honey Singh",
@@ -626,7 +535,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 43,
+    "id": 37,
     "title": "Duniyaa (From \"Luka Chuppi\")",
     "artist": [
       "Akhil",
@@ -643,7 +552,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 44,
+    "id": 38,
     "title": "Ek Ajnabee Haseena Se",
     "artist": [
       "Kishore Kumar",
@@ -658,7 +567,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 45,
+    "id": 39,
     "title": "Ek Ajnabee Haseena Se - Chill Mix",
     "artist": [
       "SPECRO X SKETCH",
@@ -673,7 +582,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 46,
+    "id": 40,
     "title": "Enemy (with JID) - from the series Arcane League of Legends",
     "artist": [
       "Imagine Dragons",
@@ -690,7 +599,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 47,
+    "id": 41,
     "title": "Excuses",
     "artist": [
       "AP Dhillon",
@@ -706,7 +615,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 48,
+    "id": 42,
     "title": "Expiration Dating",
     "artist": [
       "Madelline"
@@ -720,7 +629,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 49,
+    "id": 43,
     "title": "Faded",
     "artist": [
       "Alan Walker"
@@ -734,7 +643,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 50,
+    "id": 44,
     "title": "Fairytale",
     "artist": [
       "Alexander Rybak"
@@ -748,7 +657,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 51,
+    "id": 45,
     "title": "Fearless Pt. II",
     "artist": [
       "Lost Sky",
@@ -763,7 +672,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 52,
+    "id": 46,
     "title": "GigaChad Theme - Phonk House Version",
     "artist": [
       "g3ox_em"
@@ -777,7 +686,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 53,
+    "id": 47,
     "title": "Gulabi Aankhen",
     "artist": [
       "Sanam"
@@ -791,7 +700,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 54,
+    "id": 48,
     "title": "Hai Apna Dil To Aawara - Happy",
     "artist": [
       "Hemant Kumar",
@@ -806,7 +715,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 55,
+    "id": 49,
     "title": "Happy Nation",
     "artist": [
       "Ace of Base"
@@ -820,7 +729,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 56,
+    "id": 50,
     "title": "Happy Nation Phonk",
     "artist": [
       "x3L"
@@ -834,7 +743,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 57,
+    "id": 51,
     "title": "Har Kisi Ko",
     "artist": [
       "Arijit Singh",
@@ -849,7 +758,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 58,
+    "id": 52,
     "title": "Hasi - Male Version",
     "artist": [
       "Ami Mishra",
@@ -864,7 +773,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 59,
+    "id": 53,
     "title": "Heat Waves",
     "artist": [
       "Glass Animals"
@@ -878,7 +787,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 60,
+    "id": 54,
     "title": "Hey Mama (feat. Nicki Minaj, Bebe Rexha & Afrojack)",
     "artist": [
       "David Guetta",
@@ -895,7 +804,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 61,
+    "id": 55,
     "title": "Hum Bewafa Hargiz Na The",
     "artist": [
       "Sanam"
@@ -909,7 +818,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 62,
+    "id": 56,
     "title": "Humdard (From \"Ek Villain\")",
     "artist": [
       "Arijit Singh"
@@ -923,7 +832,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 63,
+    "id": 57,
     "title": "Humnava Mere",
     "artist": [
       "Jubin Nautiyal",
@@ -938,7 +847,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 64,
+    "id": 58,
     "title": "Husn",
     "artist": [
       "Anuv Jain"
@@ -952,7 +861,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 65,
+    "id": 59,
     "title": "Ievan Polkka (Progressive Dance Remix)",
     "artist": [
       "JDneX"
@@ -966,7 +875,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 66,
+    "id": 60,
     "title": "Ilahi",
     "artist": [
       "Pritam",
@@ -981,7 +890,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 67,
+    "id": 61,
     "title": "In The End - Mellen Gi Remix",
     "artist": [
       "Tommee Profitt",
@@ -997,7 +906,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 68,
+    "id": 62,
     "title": "INDUSTRY BABY (feat. Jack Harlow)",
     "artist": [
       "Lil Nas X",
@@ -1012,7 +921,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 69,
+    "id": 63,
     "title": "Ishq",
     "artist": [
       "Faheem Abdullah",
@@ -1028,7 +937,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 70,
+    "id": 64,
     "title": "İzmir Marşı",
     "artist": [
       "CVRTOON"
@@ -1042,7 +951,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 71,
+    "id": 65,
     "title": "Jashn-E-Bahaaraa",
     "artist": [
       "A.R. Rahman",
@@ -1057,7 +966,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 72,
+    "id": 66,
     "title": "Jee Karda - Rock Version",
     "artist": [
       "Sachin-Jigar",
@@ -1073,7 +982,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 73,
+    "id": 67,
     "title": "Jeena Jeena",
     "artist": [
       "Sachin-Jigar",
@@ -1089,7 +998,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 74,
+    "id": 68,
     "title": "Jeene Laga Hoon",
     "artist": [
       "Atif Aslam",
@@ -1105,7 +1014,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 75,
+    "id": 69,
     "title": "Jo Tere Sang",
     "artist": [
       "Jeet Gannguli",
@@ -1120,7 +1029,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 76,
+    "id": 70,
     "title": "Jo Tum Mere Ho",
     "artist": [
       "Anuv Jain"
@@ -1134,7 +1043,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 77,
+    "id": 71,
     "title": "Judaai",
     "artist": [
       "Sachin-Jigar",
@@ -1151,7 +1060,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 78,
+    "id": 72,
     "title": "Kabhi Kabhi Aditi",
     "artist": [
       "Rashid Ali"
@@ -1165,7 +1074,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 79,
+    "id": 73,
     "title": "Kahin Door Jab Din Dhal Jaye",
     "artist": [
       "Mukesh",
@@ -1180,7 +1089,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 80,
+    "id": 74,
     "title": "Kaise Hua (From \"Kabir Singh\")",
     "artist": [
       "Vishal Mishra",
@@ -1195,7 +1104,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 81,
+    "id": 75,
     "title": "Kesariya (From \"Brahmastra\")",
     "artist": [
       "Pritam",
@@ -1211,7 +1120,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 82,
+    "id": 76,
     "title": "Khamoshiyan",
     "artist": [
       "Jeet Gannguli",
@@ -1227,7 +1136,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 83,
+    "id": 77,
     "title": "Khwab Ho Tum Ya Koi Haqeeqat",
     "artist": [
       "Kishore Kumar",
@@ -1242,7 +1151,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 84,
+    "id": 78,
     "title": "Kya Hua Tera Vada",
     "artist": [
       "Sushma Shrestha",
@@ -1258,7 +1167,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 85,
+    "id": 79,
     "title": "Kya Mujhe Pyar Hai",
     "artist": [
       "Pritam",
@@ -1274,7 +1183,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 86,
+    "id": 80,
     "title": "Lag Ja Gale",
     "artist": [
       "Sanam"
@@ -1288,7 +1197,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 87,
+    "id": 81,
     "title": "Levitating",
     "artist": [
       "Dua Lipa"
@@ -1302,7 +1211,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 88,
+    "id": 82,
     "title": "Likhe Jo Khat Tujhe",
     "artist": [
       "Mohammed Rafi"
@@ -1316,7 +1225,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 89,
+    "id": 83,
     "title": "Likhe Jo Khat Tujhe",
     "artist": [
       "Sanam"
@@ -1330,7 +1239,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 90,
+    "id": 84,
     "title": "Lite Flow",
     "artist": [
       "Subodh Su2"
@@ -1344,7 +1253,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 91,
+    "id": 85,
     "title": "Lo Maan Liya",
     "artist": [
       "Arijit Singh"
@@ -1358,7 +1267,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 92,
+    "id": 86,
     "title": "Love You Zindagi",
     "artist": [
       "Amit Trivedi",
@@ -1374,7 +1283,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 93,
+    "id": 87,
     "title": "Luminary",
     "artist": [
       "Joel Sunny"
@@ -1388,7 +1297,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 94,
+    "id": 88,
     "title": "Maan Meri Jaan",
     "artist": [
       "King"
@@ -1402,7 +1311,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 95,
+    "id": 89,
     "title": "Mahiye Jinna Sohna",
     "artist": [
       "Darshan Raval"
@@ -1416,7 +1325,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 96,
+    "id": 90,
     "title": "Main Agar Kahoon",
     "artist": [
       "Vishal-Shekhar",
@@ -1432,7 +1341,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 97,
+    "id": 91,
     "title": "Main Dhoondne Ko Zamaane Mein (From \"Heartless\")",
     "artist": [
       "Arijit Singh"
@@ -1446,7 +1355,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 98,
+    "id": 92,
     "title": "Main Pal Do Pal Ka Shair Hoon",
     "artist": [
       "Mukesh"
@@ -1460,7 +1369,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 99,
+    "id": 93,
     "title": "Main Rahoon Ya Na Rahoon",
     "artist": [
       "Amaal Mallik",
@@ -1476,7 +1385,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 100,
+    "id": 94,
     "title": "Main Rang Sharbaton Ka",
     "artist": [
       "Atif Aslam",
@@ -1492,7 +1401,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 101,
+    "id": 95,
     "title": "Maiyya Mainu",
     "artist": [
       "Sachet Tandon",
@@ -1507,7 +1416,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 102,
+    "id": 96,
     "title": "Malang Sajna",
     "artist": [
       "Sachet Tandon",
@@ -1524,7 +1433,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 103,
+    "id": 97,
     "title": "Mann Mera",
     "artist": [
       "Gajendra Verma"
@@ -1538,7 +1447,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 104,
+    "id": 98,
     "title": "Mann Mera - Original Version",
     "artist": [
       "Gajendra Verma"
@@ -1552,7 +1461,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 105,
+    "id": 99,
     "title": "Mast Magan",
     "artist": [
       "Arijit Singh",
@@ -1567,7 +1476,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 106,
+    "id": 100,
     "title": "MATUSHKA ULTRAFUNK",
     "artist": [
       "satirin"
@@ -1581,7 +1490,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 107,
+    "id": 101,
     "title": "Mere Mehboob Qayamat Hogi",
     "artist": [
       "Kishore Kumar",
@@ -1596,7 +1505,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 108,
+    "id": 102,
     "title": "Mere Mehboob Qayamat Hogi",
     "artist": [
       "Sanam",
@@ -1611,7 +1520,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 109,
+    "id": 103,
     "title": "Mere Samnewali Khidki Mein - Jhankar Beats",
     "artist": [
       "DJ Harshit Shah",
@@ -1627,7 +1536,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 110,
+    "id": 104,
     "title": "Milne Hai Mujhse Aayi",
     "artist": [
       "Arijit Singh"
@@ -1641,7 +1550,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 111,
+    "id": 105,
     "title": "Milne Hai Mujhse Aayi (From \"Aashiqui 2\")",
     "artist": [
       "Arijit Singh"
@@ -1655,7 +1564,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 112,
+    "id": 106,
     "title": "Mitwa",
     "artist": [
       "Shankar-Ehsaan-Loy",
@@ -1672,7 +1581,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 113,
+    "id": 107,
     "title": "Mortals",
     "artist": [
       "Warriyo"
@@ -1686,7 +1595,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 114,
+    "id": 108,
     "title": "Nadaan Parinde",
     "artist": [
       "A.R. Rahman",
@@ -1701,7 +1610,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 115,
+    "id": 109,
     "title": "NEXT!",
     "artist": [
       "NCTS"
@@ -1715,7 +1624,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 116,
+    "id": 110,
     "title": "O Mere Dil Ke Chain",
     "artist": [
       "Kishore Kumar",
@@ -1730,7 +1639,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 117,
+    "id": 111,
     "title": "O Mere Dil Ke Chain",
     "artist": [
       "Sanam",
@@ -1745,7 +1654,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 118,
+    "id": 112,
     "title": "O Saathi",
     "artist": [
       "Atif Aslam",
@@ -1760,7 +1669,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 119,
+    "id": 113,
     "title": "On My Way",
     "artist": [
       "Alan Walker",
@@ -1776,7 +1685,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 120,
+    "id": 114,
     "title": "One Love",
     "artist": [
       "Shubh"
@@ -1790,7 +1699,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 121,
+    "id": 115,
     "title": "Pal Pal Dil Ke Paas - From \"Blackmail\"",
     "artist": [
       "Kishore Kumar"
@@ -1804,7 +1713,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 122,
+    "id": 116,
     "title": "Pal Pal Dil Ke Paas - Title Track - From \"Pal Pal Dil Ke Paas\"",
     "artist": [
       "Arijit Singh",
@@ -1819,7 +1728,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 123,
+    "id": 117,
     "title": "Party All Night",
     "artist": [
       "Yo Yo Honey Singh"
@@ -1833,7 +1742,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 124,
+    "id": 118,
     "title": "Party All Night",
     "artist": [
       "Yo Yo Honey Singh",
@@ -1848,7 +1757,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 125,
+    "id": 119,
     "title": "PASSO BEM SOLTO - Slowed",
     "artist": [
       "ATLXS"
@@ -1862,7 +1771,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 126,
+    "id": 120,
     "title": "Pehli Dafa",
     "artist": [
       "Atif Aslam",
@@ -1877,7 +1786,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 127,
+    "id": 121,
     "title": "Phir Aur Kya Chahiye (From \"Zara Hatke Zara Bachke\")",
     "artist": [
       "Sachin-Jigar",
@@ -1893,7 +1802,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 128,
+    "id": 122,
     "title": "Phir Bhi Tumko Chaahunga",
     "artist": [
       "Mithoon",
@@ -1909,7 +1818,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 129,
+    "id": 123,
     "title": "Pirates Of The Caribbean (Main Theme)",
     "artist": [
       "The Intermezzo Orchestra"
@@ -1923,7 +1832,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 130,
+    "id": 124,
     "title": "Plevne",
     "artist": [
       "CVRTOON"
@@ -1937,7 +1846,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 131,
+    "id": 125,
     "title": "Pyaar Hota Kayi Baar Hai",
     "artist": [
       "Pritam",
@@ -1954,7 +1863,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 132,
+    "id": 126,
     "title": "Pyar Diwana Hota Hai",
     "artist": [
       "Kishore Kumar",
@@ -1969,7 +1878,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 133,
+    "id": 127,
     "title": "Pyar Hua Iqrar Hua",
     "artist": [
       "Manna Dey",
@@ -1984,7 +1893,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 134,
+    "id": 128,
     "title": "Raanjhanaa (From \"Raanjhanaa\")",
     "artist": [
       "A.R. Rahman",
@@ -2000,7 +1909,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 135,
+    "id": 129,
     "title": "Raataan Lambiyan (From \"Shershaah\")",
     "artist": [
       "Tanishk Bagchi",
@@ -2016,7 +1925,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 136,
+    "id": 130,
     "title": "Rasputin",
     "artist": [
       "Boney M."
@@ -2030,7 +1939,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 137,
+    "id": 131,
     "title": "Royalty",
     "artist": [
       "Egzod",
@@ -2046,7 +1955,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 138,
+    "id": 132,
     "title": "Rush E",
     "artist": [
       "Sheet Music Boss"
@@ -2060,7 +1969,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 139,
+    "id": 133,
     "title": "S'Hab Music - Remix",
     "artist": [
       "N'gaous",
@@ -2075,7 +1984,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 140,
+    "id": 134,
     "title": "Saagar Jaisi Aankhonwali - From \"Saagar\"",
     "artist": [
       "Kishore Kumar",
@@ -2090,7 +1999,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 141,
+    "id": 135,
     "title": "Samjhawan",
     "artist": [
       "Jawad Ahmad",
@@ -2107,7 +2016,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 142,
+    "id": 136,
     "title": "Sanam Re (From \"Sanam Re\")",
     "artist": [
       "Mithoon",
@@ -2122,7 +2031,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 143,
+    "id": 137,
     "title": "Sanson Ki Mala Pe",
     "artist": [
       "Nusrat Fateh Ali Khan"
@@ -2136,7 +2045,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 144,
+    "id": 138,
     "title": "Sanson Ki Mala Pe - Cover",
     "artist": [
       "André Antunes",
@@ -2151,7 +2060,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 145,
+    "id": 139,
     "title": "Satranga (From \"ANIMAL\")",
     "artist": [
       "Arijit Singh",
@@ -2167,7 +2076,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 146,
+    "id": 140,
     "title": "Sau Tarah Ke",
     "artist": [
       "Pritam",
@@ -2185,7 +2094,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 147,
+    "id": 141,
     "title": "Saware (From \"Phantom\")",
     "artist": [
       "Arijit Singh"
@@ -2199,7 +2108,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 148,
+    "id": 142,
     "title": "Sea Shanty Medley",
     "artist": [
       "Home Free"
@@ -2213,7 +2122,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 149,
+    "id": 143,
     "title": "Shape of You",
     "artist": [
       "Ed Sheeran"
@@ -2227,7 +2136,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 150,
+    "id": 144,
     "title": "Simroon Tera Naam (From \"Yaariyan 2\")",
     "artist": [
       "Manan Bhardwaj",
@@ -2243,7 +2152,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 151,
+    "id": 145,
     "title": "Soch Na Sake",
     "artist": [
       "Amaal Mallik",
@@ -2259,7 +2168,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 152,
+    "id": 146,
     "title": "Sooraj Ki Baahon Mein",
     "artist": [
       "Dominique Cerejo",
@@ -2275,7 +2184,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 153,
+    "id": 147,
     "title": "Stereo Hearts (feat. Adam Levine)",
     "artist": [
       "Gym Class Heroes",
@@ -2290,7 +2199,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 154,
+    "id": 148,
     "title": "Stronger",
     "artist": [
       "TheFatRat",
@@ -2306,7 +2215,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 155,
+    "id": 149,
     "title": "Sunflower - Spider-Man: Into the Spider-Verse",
     "artist": [
       "Post Malone",
@@ -2321,7 +2230,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 156,
+    "id": 150,
     "title": "Suniyan Suniyan",
     "artist": [
       "Juss",
@@ -2336,7 +2245,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 157,
+    "id": 151,
     "title": "Sunn Raha Hai (Male Version)",
     "artist": [
       "Ankit Tiwari"
@@ -2350,7 +2259,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 158,
+    "id": 152,
     "title": "Taarif Karoon",
     "artist": [
       "Mohammed Rafi",
@@ -2365,7 +2274,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 159,
+    "id": 153,
     "title": "Tera Ghata",
     "artist": [
       "Gajendra Verma"
@@ -2379,7 +2288,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 160,
+    "id": 154,
     "title": "Tera Hone Laga Hoon",
     "artist": [
       "Atif Aslam",
@@ -2395,7 +2304,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 161,
+    "id": 155,
     "title": "Tere Pyaar Mein",
     "artist": [
       "Pritam",
@@ -2412,7 +2321,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 162,
+    "id": 156,
     "title": "Tere Sang Yaara",
     "artist": [
       "Atif Aslam",
@@ -2427,7 +2336,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 163,
+    "id": 157,
     "title": "Tere Vaaste (From \"Zara Hatke Zara Bachke\")",
     "artist": [
       "Varun Jain",
@@ -2445,7 +2354,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 164,
+    "id": 158,
     "title": "Teri Khair Mangdi",
     "artist": [
       "Bilal Saeed",
@@ -2460,7 +2369,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 165,
+    "id": 159,
     "title": "Teri Meri Kahaani",
     "artist": [
       "Palak Muchhal",
@@ -2476,7 +2385,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 166,
+    "id": 160,
     "title": "Thoda Thoda Pyaar",
     "artist": [
       "Nilesh Ahuja",
@@ -2492,7 +2401,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 167,
+    "id": 161,
     "title": "Thodi Jagah (From \"Marjaavaan\")",
     "artist": [
       "Arijit Singh",
@@ -2508,7 +2417,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 168,
+    "id": 162,
     "title": "Thunder",
     "artist": [
       "Imagine Dragons"
@@ -2522,7 +2431,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 169,
+    "id": 163,
     "title": "Time Back",
     "artist": [
       "Xvnty"
@@ -2536,7 +2445,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 170,
+    "id": 164,
     "title": "Time Back(Instrumental)",
     "artist": [
       "Bad Style, Tupac Shakur"
@@ -2550,7 +2459,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 171,
+    "id": 165,
     "title": "Toxic",
     "artist": [
       "BoyWithUke"
@@ -2564,7 +2473,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 172,
+    "id": 166,
     "title": "Tu Hi Haqeeqat",
     "artist": [
       "Pritam",
@@ -2581,7 +2490,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 173,
+    "id": 167,
     "title": "Tujhe Kitna Chahne Lage (From \"Kabir Singh\")",
     "artist": [
       "Arijit Singh",
@@ -2596,7 +2505,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 174,
+    "id": 168,
     "title": "Tujhse Naraz Nahi Zindagi",
     "artist": [
       "Sanam",
@@ -2611,7 +2520,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 175,
+    "id": 169,
     "title": "Tum Hi Aana (From \"Marjaavaan\")",
     "artist": [
       "Payal Dev",
@@ -2627,7 +2536,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 176,
+    "id": 170,
     "title": "Tum Hi Ho",
     "artist": [
       "Mithoon",
@@ -2642,7 +2551,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 177,
+    "id": 171,
     "title": "Tum Se (From \"Teri Baaton Mein Aisa Uljha Jiya\")",
     "artist": [
       "Sachin-Jigar",
@@ -2659,7 +2568,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 178,
+    "id": 172,
     "title": "Unholy (feat. Kim Petras)",
     "artist": [
       "Sam Smith",
@@ -2674,7 +2583,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 179,
+    "id": 173,
     "title": "Ve Kamleya (From \"Rocky Aur Rani Kii Prem Kahaani\")",
     "artist": [
       "Pritam",
@@ -2693,7 +2602,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 180,
+    "id": 174,
     "title": "Wellerman - Sea Shanty",
     "artist": [
       "Nathan Evans"
@@ -2707,7 +2616,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 181,
+    "id": 175,
     "title": "World's Smallest Violin",
     "artist": [
       "AJR"
@@ -2721,7 +2630,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 182,
+    "id": 176,
     "title": "Yeh Raaten Yeh Mausam",
     "artist": [
       "Sanam",
@@ -2736,7 +2645,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 183,
+    "id": 177,
     "title": "Yeh Vaada Raha - Tu Tu Hai Wahi / From “Yeh Vaada Raha”",
     "artist": [
       "Kishore Kumar",
@@ -2752,7 +2661,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 184,
+    "id": 178,
     "title": "Zaroorat",
     "artist": [
       "Mustafa Zahid"
@@ -2766,7 +2675,7 @@ const songs = [
     "rating": 5
   },
   {
-    "id": 185,
+    "id": 179,
     "title": "Матушка",
     "artist": [
       "Татьяна Куртукова"

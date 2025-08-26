@@ -2,7 +2,7 @@ import { showTooltip } from './toolTip.js';
 import './easterEggs.js';
 import './searching.js';
 import './minorFunctionalities.js';
-import { customCursor } from './customCursor.js';
+import { customCursor } from '../../Global Scripts/customCursor.js';
 import createVoiceControl from './voice recognition.js';
 
 customCursor();

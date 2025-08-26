@@ -4,6 +4,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Oswald", sans-serif;
+    cursor: none;
 }
 body {
     width: 100dvw;
@@ -139,7 +140,7 @@ button.login-btn {
     color: #1224ee;
     font-weight: 900;
     font-size: 15px;
-    cursor: pointer;
+    /* cursor: pointer; */
     border-radius: 100px;
     background-color: rgba(47, 47, 47, 0.105);
     border: none;
@@ -187,7 +188,7 @@ div.user-avatar {
     position: relative;
     top: 2px;
     margin-right: 10px;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 img.user-avatar {
@@ -216,11 +217,11 @@ div.profile_menu {
 }
 
 div.profile_menu span {
-    cursor: pointer;
+    /* cursor: pointer; */
     padding: 10px;
 }
 div.profile_menu a {
-  cursor: pointer;
+  /* cursor: pointer; */
   padding: 10px;
   color: white;
   text-decoration: none;
@@ -244,7 +245,7 @@ div.profile_menu img {
   z-index: 1;
   border-radius: inherit;
   font: inherit;
-  cursor: pointer;
+  /* cursor: pointer; */
   display: none;
 }
 
@@ -321,7 +322,7 @@ a.left-menu-option{
     left: 10px;
     margin-bottom: 10px;
     font-size: 15px;
-    cursor: pointer;
+    /* cursor: pointer; */
     display: block;
     text-decoration: none;
     color: white;
@@ -372,7 +373,7 @@ a.playlist {
     display: flex;
     align-items: center;
     flex-direction: column;
-    cursor: pointer;
+    /* cursor: pointer; */
     text-decoration: none;
     color: white;
 }
@@ -412,7 +413,7 @@ button.playPauseBtn {
     border-radius: 50%;
     opacity: 0;
     transition: 0.2s;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 button.playPauseBtn img {
     height: 40px;
@@ -442,7 +443,7 @@ a.artist{
     display: flex;
     flex-direction: column;
     transition: 0.1s;
-    cursor: pointer;
+    /* cursor: pointer; */
     text-decoration: none;
     color: white;
 }
@@ -471,7 +472,7 @@ h4.show_all{
     font-weight: 200; 
     opacity: 1; 
     transform: translateX(15vw) translateY(20px); 
-    cursor: pointer; 
+    /* cursor: pointer; */ 
 }
 section.genres{
     width: 18vw;
@@ -489,7 +490,7 @@ div.genre{
     padding: 15px 5px;
     border-radius: 10px;
     transition: 0.1s;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 div.genre:hover{
     filter:hue-rotate(45deg);

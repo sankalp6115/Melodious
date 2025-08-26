@@ -2,6 +2,8 @@ import { showTooltip } from './../../../Player/scripts/toolTip.js';
 import './../../../Player/scripts/easterEggs.js';
 import './../../../Player/scripts/searching.js';
 import './../../../Player/scripts/minorFunctionalities.js';
+import { customCursor } from '../../Global Scripts/customCursor.js';
+customCursor();
 
 const channel = new BroadcastChannel("music_channel");
 

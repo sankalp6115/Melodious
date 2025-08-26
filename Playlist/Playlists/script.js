@@ -1,5 +1,8 @@
 import { playlists } from "../../Global Scripts/playlists.js";
 import { showTooltip } from "./../../../Player/scripts/toolTip.js";
+import { customCursor } from '../../Global Scripts/customCursor.js';
+customCursor();
+
 
 // --------- Greeting and Left Menu Handling ---------
 const greeting = document.querySelector(".greeting");

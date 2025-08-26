@@ -1,4 +1,7 @@
 import {playlists} from './../Global Scripts/playlists.js';
+import { customCursor } from '../../../Global Scripts/customCursor.js';
+customCursor();
+
 //----------------------------------------------Login Button handling 
 const loginBtn = document.querySelector(".login-btn");
 const loginOverlay = document.querySelector(".login-overlay");

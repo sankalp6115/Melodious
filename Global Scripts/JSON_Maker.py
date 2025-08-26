@@ -17,7 +17,7 @@ def get_default_music_dir():
 
 DEFAULT_MUSIC_DIR = Path(os.environ.get("MUSIC_DIR", get_default_music_dir()))
 DEFAULT_BASE_URL = os.environ.get("BASE_URL", "http://localhost:3000/music")
-DEFAULT_OUTPUT_FILE = r"D:\\Coding\\WebD\\Music_Player\\Player\\scripts\\songs.js"
+DEFAULT_OUTPUT_FILE = r"D:\\Coding\WebD\\Significant Projects\\Melodious\\Global Scripts\\songs.js"
 
 # -------------------- CORE FUNCTIONS --------------------
 

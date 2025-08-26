@@ -1,4 +1,6 @@
 export function customCursor(){
+    const all = document.body.querySelector("*");
+    all.style.cursor = "none";
     document.body.style.cursor = "none";
     const cursor = document.createElement("div");
     const minCursor = document.createElement("div");
