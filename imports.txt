@@ -1,0 +1,2 @@
+AudioMotionAnalyzer 
+import AudioMotionAnalyzer from 'https://cdn.jsdelivr.net/npm/audiomotion-analyzer@4/+esm';

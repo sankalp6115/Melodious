@@ -1,0 +1,16 @@
+{
+  "name": "melodious",
+  "version": "1.0.0",
+  "description": "<!-- HEADER BANNER --> <p align=\"center\">   <img src=\"https://svg-banners.vercel.app/api?type=origin&text1=Melodious%F0%9F%8E%B5&width=600&height=200\" alt=\"Melodious Banner\"/> </p>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "audiomotion-analyzer": "^4.5.4"
+  }
+}
