@@ -992,6 +992,10 @@
     "image": "/artist-images/udit narayan.jpg"
   },
   {
+    "name": "Unknown Artist",
+    "image": null
+  },
+  {
     "name": "Varun Jain",
     "image": "/artist-images/varun jain.jpg"
   },

@@ -75,10 +75,10 @@ def extract_metadata(file_path):
             "year": year,
             "length": duration,
             "file": rel_path,
-            "albumArt": f"assets/album-arts/{art_filename}"
+            "albumArt": f"assets/album-arts/{art_filename}" if art_path.exists() else None
         }
     except Exception as e:
-        print(f"  ⚠ Error extracting {file_path.name}: {e}")
+        print(f"Error extracting {file_path.name}: {e}")
         return None
 
 def reset_database():
@@ -140,7 +140,7 @@ def sync(reset=False, cleanup=False):
     
     # 2. Recursive Filesystem Scan
     files = list(SONGS_DIR.rglob("*.mp3"))
-    print(f"🔍 Found {len(files)} MP3 files recursively.")
+    print(f"Found {len(files)} MP3 files recursively.")
     
     valid_files = set()
     for i, file_path in enumerate(files):
@@ -224,10 +224,10 @@ def sync(reset=False, cleanup=False):
     with open(lyrics_json_path, "w", encoding="utf-8") as f:
         json.dump(final_lyrics, f, indent=2, ensure_ascii=False)
         
-    print(f"📝 JSON files updated.")
+    print(f"JSON files updated.")
 
     # 6. Database Sync
-    print(f"🗄 Syncing with Database...")
+    print(f"Syncing with Database...")
     conn = get_connection()
     cursor = conn.cursor()
     
@@ -294,15 +294,15 @@ def sync(reset=False, cleanup=False):
                     """, (playlist_id, song_id, pos))
                     
         conn.commit()
-        print(f"✅ Database synchronized successfully.")
+        print(f"Database synchronized successfully.")
         
     except Exception as e:
-        print(f"❌ Database error: {e}")
+        print(f"Database error: {e}")
         conn.rollback()
     finally:
         conn.close()
 
-    print(f"\n🎉 Sync Complete!")
+    print(f"\n Sync Complete!")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Synchronize Melodious Library")

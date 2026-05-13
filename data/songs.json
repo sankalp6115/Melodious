@@ -2360,6 +2360,21 @@
     "rating": 5
   },
   {
+    "title": "Raat Bhar",
+    "artist": [
+      "Arijit Singh",
+      "Shreya Ghoshal"
+    ],
+    "album": "Heropanti",
+    "genre": "Films/Games",
+    "year": 2014,
+    "length": 325,
+    "file": "Arijit Singh - Raat Bhar.mp3",
+    "albumArt": "assets/album-arts/Arijit Singh - Raat Bhar.jpg",
+    "id": 319,
+    "rating": 0
+  },
+  {
     "title": "Cheques",
     "artist": [
       "Shubh"
@@ -3288,7 +3303,7 @@
     "year": 2020,
     "length": 245,
     "file": "Time Back (Instumental Version).mp3",
-    "albumArt": "assets/album-arts/Time Back (Instumental Version).jpg",
+    "albumArt": null,
     "id": 317,
     "rating": 0
   },
@@ -3320,6 +3335,20 @@
     "albumArt": "assets/album-arts/Xvnty - Time Back.jpg",
     "id": 308,
     "rating": 5
+  },
+  {
+    "title": "Batman Arkham Series - Heaven For Bad Guys",
+    "artist": [
+      "Unknown Artist"
+    ],
+    "album": "Unknown Album",
+    "genre": "Unknown Genre",
+    "year": 0,
+    "length": 141,
+    "file": "Batman Arkham Series - Heaven For Bad Guys.mp3",
+    "albumArt": null,
+    "id": 321,
+    "rating": 0
   },
   {
     "title": "Heat Waves",
