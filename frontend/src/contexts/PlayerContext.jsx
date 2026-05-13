@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useRef } from 'react';
 import Fuse from 'fuse.js';
 import { getAssetUrl } from '../utils/assets';
+import { backend,port } from '../backend_url';
 
 
 export const PlayerContext = createContext();
@@ -10,16 +11,51 @@ export const PlayerProvider = ({ children }) => {
   const [lyrics, setLyrics] = useState([]);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isShuffled, setIsShuffled] = useState(false);
-  const [isLooped, setIsLooped] = useState(false);
-  const [volume, setVolume] = useState(40);
+  const [isShuffled, setIsShuffled] = useState(() => {
+    try {
+      const saved = localStorage.getItem("melodious_is_shuffled");
+      return saved !== null ? JSON.parse(saved) : false;
+    } catch { return false; }
+  });
+  const [isLooped, setIsLooped] = useState(() => {
+    try {
+      const saved = localStorage.getItem("melodious_is_looped");
+      return saved !== null ? JSON.parse(saved) : false;
+    } catch { return false; }
+  });
+  const [volume, setVolume] = useState(() => {
+    const saved = localStorage.getItem("melodious_volume");
+    return saved !== null ? Number(saved) : 40;
+  });
   const [playbackRate, setPlaybackRate] = useState(1);
-  const [currentTime, setCurrentTime] = useState(0);
+  const [currentTime, setCurrentTime] = useState(() => {
+    const saved = localStorage.getItem("melodious_current_time");
+    return saved !== null ? Number(saved) : 0;
+  });
   const [duration, setDuration] = useState(0);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isOnekoEnabled, setIsOnekoEnabled] = useState(false);
+  const [isRestored, setIsRestored] = useState(false);
+  const [recentSongIds, setRecentSongIds] = useState(() => {
+    try {
+      const saved = localStorage.getItem("melodious_recent_songs");
+      return saved ? JSON.parse(saved) : [];
+    } catch { return []; }
+  });
+  const [maxRecents, setMaxRecents] = useState(() => {
+    const saved = localStorage.getItem("melodious_max_recents");
+    return saved ? Number(saved) : 20;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("melodious_recent_songs", JSON.stringify(recentSongIds));
+  }, [recentSongIds]);
+
+  useEffect(() => {
+    localStorage.setItem("melodious_max_recents", maxRecents.toString());
+  }, [maxRecents]);
 
   // New Shuffle State
   const [shuffledIndices, setShuffledIndices] = useState([]);
@@ -42,10 +78,11 @@ export const PlayerProvider = ({ children }) => {
   // ... (fetch logic remains same)
   useEffect(() => {
     // Derive backend host dynamically
-    const BACKEND_HOST = window.location.hostname;
-    const BACKEND = `http://${BACKEND_HOST}:8000`;
+    const BACKEND_HOST = backend || window.location.hostname;
+    const PORT = port || "8000";
+    const BACKEND = `http://${BACKEND_HOST}:${PORT}`;
     const API_BASE = `${BACKEND}/api`;
-    const DEFAULT_ART = `${BACKEND}/assets/album-arts/default-art.jpg`;
+    const DEFAULT_ART = `/assets/album-arts/song-icon5.png`;
 
     const fetchData = async () => {
       try {
@@ -59,7 +96,7 @@ export const PlayerProvider = ({ children }) => {
         songsData = songsData.map(song => ({
           ...song,
           file: `${BACKEND}/api/songs/stream/${encodeURIComponent(song.file)}`,
-          albumArt: getAssetUrl(song.albumArt),
+          albumArt: getAssetUrl(song.albumArt) || DEFAULT_ART,
           artists: Array.isArray(song.artists) ? song.artists : (song.artists ? [song.artists] : []),
         }));
 
@@ -67,7 +104,7 @@ export const PlayerProvider = ({ children }) => {
         setLyrics(lyricsData);
       } catch (err) {
         console.error("API load failed:", err);
-      }
+      } 
     };
     fetchData();
   }, []);
@@ -78,6 +115,58 @@ export const PlayerProvider = ({ children }) => {
       setActiveQueue(songs);
     }
   }, [songs]);
+
+  // Persist basic settings
+  useEffect(() => {
+    localStorage.setItem("melodious_is_shuffled", JSON.stringify(isShuffled));
+    localStorage.setItem("melodious_is_looped", JSON.stringify(isLooped));
+    localStorage.setItem("melodious_volume", volume.toString());
+  }, [isShuffled, isLooped, volume]);
+
+  // Persist current song ID and time
+  useEffect(() => {
+    if (!isRestored) return;
+    const queue = activeQueue.length > 0 ? activeQueue : songs;
+    if (queue.length > 0 && queue[currentSongIndex]) {
+      localStorage.setItem("melodious_current_song_id", queue[currentSongIndex].id.toString());
+    }
+  }, [currentSongIndex, songs, activeQueue, isRestored]);
+
+  useEffect(() => {
+    if (!isRestored) return;
+    localStorage.setItem("melodious_current_time", currentTime.toString());
+  }, [currentTime, isRestored]);
+
+  // Reset time when the song ID changes
+  const prevSongIndex = useRef(currentSongIndex);
+  useEffect(() => {
+    if (isRestored && prevSongIndex.current !== currentSongIndex) {
+      setCurrentTime(0);
+      localStorage.setItem("melodious_current_time", "0");
+      if (audioRef.current) audioRef.current.currentTime = 0;
+    }
+    prevSongIndex.current = currentSongIndex;
+  }, [currentSongIndex, isRestored]);
+
+  // Restore session
+  useEffect(() => {
+    if (songs.length > 0 && !isRestored) {
+      const savedId = localStorage.getItem("melodious_current_song_id");
+      const savedTime = localStorage.getItem("melodious_current_time");
+      
+      if (savedId) {
+        const index = songs.findIndex(s => String(s.id) === String(savedId));
+        if (index !== -1) {
+          setCurrentSongIndex(index);
+          if (savedTime && audioRef.current) {
+            // We set the time in state, and we'll apply it to the audio element once it's ready
+            setCurrentTime(Number(savedTime));
+          }
+        }
+      }
+      setIsRestored(true);
+    }
+  }, [songs, isRestored]);
 
   // Shuffle Logic
   useEffect(() => {
@@ -94,6 +183,16 @@ export const PlayerProvider = ({ children }) => {
       setShuffledIndices([]);
     }
   }, [isShuffled, songs.length]);
+
+  // Keep shuffle pointer in sync with current index
+  useEffect(() => {
+    if (isShuffled && shuffledIndices.length > 0) {
+      const pos = shuffledIndices.indexOf(currentSongIndex);
+      if (pos !== -1 && pos !== shufflePointer) {
+        setShufflePointer(pos);
+      }
+    }
+  }, [currentSongIndex, shuffledIndices, isShuffled]);
 
   // Search logic
   useEffect(() => {
@@ -113,11 +212,30 @@ export const PlayerProvider = ({ children }) => {
 
   const currentSong = activeQueue.length > 0 ? activeQueue[currentSongIndex] : songs[currentSongIndex];
 
-  const playSong = (index, queue = null) => {
+  const addToRecents = (songId) => {
+    setRecentSongIds(prev => {
+      const filtered = prev.filter(id => String(id) !== String(songId));
+      const updated = [songId, ...filtered];
+      return updated.slice(0, maxRecents);
+    });
+  };
+
+  const playSong = (index, queue = null, isFromRecents = false) => {
+    const targetQueue = queue || (activeQueue.length > 0 ? activeQueue : songs);
+    const song = targetQueue[index];
+    
+    if (song && !isFromRecents) {
+      addToRecents(song.id);
+    }
+
     if (queue) {
       setActiveQueue(queue);
     }
     setCurrentSongIndex(index);
+    setCurrentTime(0);
+    localStorage.setItem("melodious_current_time", "0");
+    if (audioRef.current) audioRef.current.currentTime = 0;
+
     if (isShuffled && shuffledIndices.length > 0) {
       const pos = shuffledIndices.indexOf(index);
       if (pos !== -1) setShufflePointer(pos);
@@ -139,6 +257,10 @@ export const PlayerProvider = ({ children }) => {
     const queue = activeQueue.length > 0 ? activeQueue : songs;
     if (queue.length === 0) return;
     
+    setCurrentTime(0);
+    localStorage.setItem("melodious_current_time", "0");
+    if (audioRef.current) audioRef.current.currentTime = 0;
+
     if (isShuffled && shuffledIndices.length > 0) {
       const nextPointer = (shufflePointer + 1) % shuffledIndices.length;
       setShufflePointer(nextPointer);
@@ -157,6 +279,11 @@ export const PlayerProvider = ({ children }) => {
       audioRef.current.currentTime = 0;
       return;
     }
+
+    setCurrentTime(0);
+    localStorage.setItem("melodious_current_time", "0");
+    if (audioRef.current) audioRef.current.currentTime = 0;
+
     if (isShuffled && shuffledIndices.length > 0) {
       const prevPointer = (shufflePointer - 1 + shuffledIndices.length) % shuffledIndices.length;
       setShufflePointer(prevPointer);
@@ -165,6 +292,20 @@ export const PlayerProvider = ({ children }) => {
       setCurrentSongIndex((currentSongIndex - 1 + queue.length) % queue.length);
     }
     setIsPlaying(true);
+  };
+
+  const addToQueueNext = (song) => {
+    const queue = activeQueue.length > 0 ? activeQueue : songs;
+    const newQueue = [...queue];
+    newQueue.splice(currentSongIndex + 1, 0, song);
+    setActiveQueue(newQueue);
+    console.log(activeQueue);
+  };
+
+  const addToQueueLast = (song) => {
+    const queue = activeQueue.length > 0 ? activeQueue : songs;
+    setActiveQueue([...queue, song]);
+    console.log(activeQueue);
   };
 
   // System controls
@@ -222,14 +363,21 @@ if ('mediaSession' in navigator) {
 
   // Ensure play is reliably called on song switches so WebAudio context can resume naturally
   useEffect(() => {
-    if (isPlaying && audioRef.current && activeQueue.length > 0) {
-      // Small timeout to allow src to be fully patched in the DOM before playing
-      const t = setTimeout(() => {
-         if (audioRef.current) audioRef.current.play().catch(() => {});
-      }, 50);
-      return () => clearTimeout(t);
+    if (audioRef.current && activeQueue.length > 0) {
+      // If we just restored, apply the saved time once the audio element is ready for this song
+      if (isRestored && currentTime > 0 && audioRef.current.currentTime === 0) {
+        audioRef.current.currentTime = currentTime;
+      }
+
+      if (isPlaying) {
+        // Small timeout to allow src to be fully patched in the DOM before playing
+        const t = setTimeout(() => {
+           if (audioRef.current) audioRef.current.play().catch(() => {});
+        }, 50);
+        return () => clearTimeout(t);
+      }
     }
-  }, [currentSongIndex, isPlaying, activeQueue]);
+  }, [currentSongIndex, isPlaying, activeQueue, isRestored]);
 
   const [parsedLyrics, setParsedLyrics] = useState([]);
 
@@ -262,9 +410,11 @@ if ('mediaSession' in navigator) {
       songs, activeQueue, currentSong, lyrics, parsedLyrics,
       currentSongIndex, isPlaying, isShuffled, isLooped, volume, playbackRate, currentTime, duration,
       searchQuery, setSearchQuery, searchResults, isOnekoEnabled,
+      recentSongIds, maxRecents, setMaxRecents,
       getNextSongInfo,
       setIsShuffled, setIsLooped, setVolume, setPlaybackRate, setActiveQueue,
       playSong, togglePlayPause, nextSong, prevSong, seek,
+      addToQueueNext, addToQueueLast,
       audioRef
     }}>
       {children}

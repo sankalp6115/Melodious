@@ -1,17 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { PlayerContext } from '../../contexts/PlayerContext';
 
 const EasterEggs = () => {
+  const { setIsOnekoEnabled } = useContext(PlayerContext);
   const [cheatMode, setCheatMode] = useState(false);
   const [sequence, setSequence] = useState([]);
   const konami = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
-  
   const rainAudio = useRef(new Audio("/assets/sounds/rain.mp3"));
 
   useEffect(() => {
     rainAudio.current.loop = true;
     rainAudio.current.volume = 0.5;
 
+    let input = "";
     const handleKeydown = (e) => {
+      // Konami detection
       setSequence(prev => {
         const newSeq = [...prev, e.key].slice(-10);
         if (JSON.stringify(newSeq) === JSON.stringify(konami)) {
@@ -20,11 +23,19 @@ const EasterEggs = () => {
         }
         return newSeq;
       });
+
+      // Neko detection
+      input += e.key;
+      if (input.endsWith("neko")) {
+        setIsOnekoEnabled(prev => !prev);
+        input = "";
+      }
+      if (input.length > 10) input = input.slice(-10);
     };
 
     window.addEventListener("keydown", handleKeydown);
     return () => window.removeEventListener("keydown", handleKeydown);
-  }, []);
+  }, [setIsOnekoEnabled]);
 
   useEffect(() => {
     if (cheatMode) {

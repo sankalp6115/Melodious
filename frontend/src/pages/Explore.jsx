@@ -1,14 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { PlayerContext } from '../contexts/PlayerContext';
-import Oneko from '../components/shared/Oneko';
 
 const Explore = () => {
   const { songs, playSong, currentSongIndex, isPlaying, searchResults, currentSong } = useContext(PlayerContext);
   const containerRef = useRef(null);
-  const highlightRef = useRef(null);
   const [highlightStyle, setHighlightStyle] = useState({ top: 0, height: 0, left: 0, width: 0, opacity: 0 });
-
-  const star = "★";
 
   // Auto-scroll to search results
   useEffect(() => {
@@ -77,12 +73,13 @@ const Explore = () => {
               <tr 
                 key={song.id || index} 
                 data-id={song.id}
+                data-song-id={song.id}
                 className={`row ${isActive ? 'active-row' : ''} ${searchResults.includes(song.id) ? 'searchActive' : ''}`}
                 onClick={() => playSong(index, songs)}
               >
                 <td className="table-index">{index + 1}</td>
                 <td className="table-art">
-                   <img src={song.albumArt} className={`album-art ${isPlaying && isActive ? 'active-album-art' : ''}`} alt="" />
+                   <img src={song.albumArt} loading="lazy" className={`album-art ${isPlaying && isActive ? 'active-album-art' : ''}`} alt="" />
                 </td>
               <td className="table-title">{song.title}</td>
               <td className="table-artist">{song.artists?.join(", ") || "Unknown"}</td>

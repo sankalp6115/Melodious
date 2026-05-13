@@ -20,24 +20,27 @@ const Sidebar = () => {
       </div>
 
       <h4 className="left-menu-heading">Menu</h4>
-      <NavLink className="left-menu-option" to="/explore">
+      <NavLink viewTransition className="left-menu-option" to="/explore">
         <img src="/assets/images/ui/cd.png" alt="" /> Explore
       </NavLink>
-      <NavLink className="left-menu-option" to="/">
+      <NavLink viewTransition className="left-menu-option" to="/">
         <img src="/assets/images/ui/playlist.png" alt="" /> Playlists
       </NavLink>
-      <NavLink className="left-menu-option" to="/artists">
+      <NavLink viewTransition className="left-menu-option" to="/artists">
         <img src="/assets/images/ui/mic.png" alt="" /> Artists
       </NavLink>
-      <NavLink className="left-menu-option" to="/radio">
+      <NavLink viewTransition className="left-menu-option" to="/radio">
         <img src="/assets/images/ui/radio.png" alt="" /> Enjoy
+      </NavLink>
+      <NavLink viewTransition className="left-menu-option" to="/test">
+        <img src="/assets/images/ui/cd.png" alt="" /> Test
       </NavLink>
 
       <h4 className="left-menu-heading">Library</h4>
-      <NavLink className="left-menu-option" to="/recent">
+      <NavLink viewTransition className="left-menu-option" to="/recent">
         <img src="/assets/images/ui/recent.png" alt="" /> Recent
       </NavLink>
-      <NavLink className="left-menu-option" to="/favourites">
+      <NavLink viewTransition className="left-menu-option" to="/favourites">
         <img src="/assets/images/ui/favourite.png" alt="" /> Favourites
       </NavLink>
     </section>

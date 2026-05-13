@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/artists.css';
 import { getAssetUrl } from '../utils/assets';
+import { backend, port } from "../backend_url";
+
 const Artists = () => {
     const [artists, setArtists] = useState([]);
-    const BACKEND_HOST = window.location.hostname;
-    const BACKEND = `http://${BACKEND_HOST}:8000`;
+    
+    const BACKEND_HOST = backend || window.location.hostname;
+    const PORT = port || "8000";
+    const BACKEND = `http://${BACKEND_HOST}:${PORT}`;
 
     useEffect(() => {
         fetch(`${BACKEND}/api/artists`)

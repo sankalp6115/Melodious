@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAssetUrl } from '../utils/assets';
 import '../styles/home.css';
+import { backend, port } from "../backend_url";
 
 const Home = () => {
   const [playlists, setPlaylists] = useState([]);
@@ -9,8 +10,9 @@ const Home = () => {
 
   useEffect(() => {
     // Derive backend dynamically
-    const BACKEND_HOST = window.location.hostname;
-    const BACKEND = `http://${BACKEND_HOST}:8000`;
+    const BACKEND_HOST = backend || window.location.hostname;
+    const PORT = port || "8000";
+    const BACKEND = `http://${BACKEND_HOST}:${PORT}`;
 
     fetch(`${BACKEND}/api/playlists`)
       .then(res => res.json())
@@ -45,6 +47,7 @@ const Home = () => {
                     <img 
                       src={getAssetUrl(pl.poster)} 
                       alt={pl.name} 
+                      loading="lazy"
                       onError={(e) => { e.target.src = getAssetUrl('album-arts/default.jpg'); }}
                     />
                     <div className="playlist-overlay">

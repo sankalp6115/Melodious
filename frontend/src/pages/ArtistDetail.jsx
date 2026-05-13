@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { PlayerContext } from '../contexts/PlayerContext';
 import '../styles/artists.css';
 import { getAssetUrl } from '../utils/assets';
+import { backend, port } from "../backend_url";
 
 const ArtistDetail = () => {
     const { id } = useParams();
@@ -11,8 +12,9 @@ const ArtistDetail = () => {
     const [headerBg, setHeaderBg] = useState('linear-gradient(to right, #333, #111)');
     const imgRef = useRef(null);
 
-    const BACKEND_HOST = window.location.hostname;
-    const BACKEND = `http://${BACKEND_HOST}:8000`;
+    const BACKEND_HOST = backend || window.location.hostname;
+    const PORT = port || "8000";
+    const BACKEND = `http://${BACKEND_HOST}:${PORT}`;
 
     useEffect(() => {
         fetch(`${BACKEND}/api/artists/${id}`)
@@ -42,9 +44,6 @@ const ArtistDetail = () => {
     };
 
     if (!artist) return <div className="loading">Loading Artist...</div>;
-
-    const isCurrentContext = activeQueue.length === artist.songs.length && 
-                             activeQueue[0]?.id === artist.songs[0]?.id;
 
     return (
         <div className="artist-detail-container">
@@ -89,12 +88,14 @@ const ArtistDetail = () => {
                                 <tr 
                                     key={song.id} 
                                     className={`row ${isActive ? 'active-row' : ''}`}
+                                    data-song-id={song.id}
                                     onClick={() => playSong(index, artist.songs)}
                                 >
                                     <td className="table-index">{index + 1}</td>
                                     <td className="table-art">
                                         <img 
                                             src={song.albumArt} 
+                                            loading="lazy"
                                             className={`album-art ${isActive && isPlaying ? 'active-album-art' : ''}`} 
                                             alt="" 
                                             onError={(e) => { e.target.src = getAssetUrl('album-arts/default.jpg'); }}

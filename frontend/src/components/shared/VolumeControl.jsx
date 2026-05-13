@@ -1,42 +1,49 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import { PlayerContext } from '../../contexts/PlayerContext';
-import '../../styles/volumeControl.css'; // Let's isolate this massive CSS into its own file
+import '../../styles/volumeControl.css';
 
 const VolumeControl = () => {
   const { volume, setVolume } = useContext(PlayerContext);
-  const [prevVolume, setPrevVolume] = useState(40); // Backup volume when muted
+  const [prevVolume, setPrevVolume] = useState(40);
   const [isPressed, setIsPressed] = useState(false);
 
-  // Total amount of LEDs wrapping the knob
-  const totalLeds = 40;
-  
-  // A 270-degree arc around the knob, starting at -135deg and ending at +135deg
+  const knobRef = useRef(null);
+
+  const totalLeds = 20;
   const arcSweep = 270;
   const startAngle = -135;
 
-  // Calculate active LEDs based on current volume level (0-100)
   const activeLeds = Math.ceil((volume / 100) * totalLeds);
-
-  // Calculate Knob Rotation (-135deg = 0%, +135deg = 100%)
   const knobRotation = (volume / 100) * arcSweep + startAngle;
 
-  const handleWheel = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  useEffect(() => {
+    const el = knobRef.current;
 
-    if (e.deltaY > 0) {
-      // Scroll Up -> Increase Volume
-      setVolume(Math.min(100, volume + 0.75));
-    } else if (e.deltaY < 0) {
-      // Scroll Down -> Decrease Volume
-      setVolume(Math.max(0, volume - 0.75));
+    const handleWheel = (e) => {
+      e.preventDefault();
+
+      if (e.deltaY > 0) {
+        setVolume(v => Math.min(100, v + 1));
+      } else if (e.deltaY < 0) {
+        setVolume(v => Math.max(0, v - 1));
+      }
+    };
+
+    if (el) {
+      el.addEventListener('wheel', handleWheel, { passive: false });
     }
-  };
+
+    return () => {
+      if (el) {
+        el.removeEventListener('wheel', handleWheel);
+      }
+    };
+  }, [setVolume]);
 
   const handleKnobClick = () => {
     if (volume > 0) {
       setPrevVolume(volume);
-      setVolume(0); // Mute
+      setVolume(0);
     } else {
       setVolume(prevVolume === 0 ? 40 : prevVolume);
     }
@@ -44,16 +51,12 @@ const VolumeControl = () => {
 
   return (
     <div className="neumorphic-volume-container">
-      {/* Outer base shell matching the image */}
       <div className="volume-shell">
         
-        {/* Ring of LEDs */}
         <div className="led-ring">
           {Array.from({ length: totalLeds }).map((_, index) => {
-            // Distribute LEDs across the arc
             const angle = startAngle + (arcSweep / (totalLeds - 1)) * index;
-            // Radius controls distance from center (shell is 65px width)
-            const radius = 35; 
+            const radius = 35;
             const isActive = index < activeLeds;
             
             return (
@@ -68,10 +71,9 @@ const VolumeControl = () => {
           })}
         </div>
 
-        {/* Central Rotary Knob */}
         <div 
+          ref={knobRef}
           className={`volume-knob ${isPressed ? 'knob-pressed' : ''}`}
-          onWheel={handleWheel}
           onMouseDown={() => setIsPressed(true)}
           onMouseUp={() => { setIsPressed(false); handleKnobClick(); }}
           onMouseLeave={() => setIsPressed(false)}
@@ -79,7 +81,6 @@ const VolumeControl = () => {
             transform: `rotate(${knobRotation}deg) scale(${isPressed ? 0.95 : 0.95})`
           }}
         >
-          {/* Subtle indicator dot on the knob itself */}
           <div className="knob-indicator"></div>
         </div>
 

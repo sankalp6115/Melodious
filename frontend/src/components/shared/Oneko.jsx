@@ -150,12 +150,22 @@ const Oneko = () => {
             nekoPosX = Math.min(Math.max(16, nekoPosX), window.innerWidth - 16);
             nekoPosY = Math.min(Math.max(16, nekoPosY), window.innerHeight - 16);
 
+            // Edge cases for window resizing
+            const handleResize = () => {
+                nekoPosX = Math.min(nekoPosX, window.innerWidth - 16);
+                nekoPosY = Math.min(nekoPosY, window.innerHeight - 16);
+            };
+            window.addEventListener('resize', handleResize);
+
             nekoEl.style.left = `${nekoPosX - 16}px`;
             nekoEl.style.top = `${nekoPosY - 16}px`;
         };
 
         const cleanup = init();
-        return cleanup;
+        return () => {
+            cleanup();
+            window.removeEventListener('resize', handleResize);
+        };
     }, [isOnekoEnabled]);
 
     return null;
