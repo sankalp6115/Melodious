@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { PlayerProvider } from './contexts/PlayerContext';
 import Layout from './components/layout/Layout';
 
@@ -25,7 +25,7 @@ const Loading = () => <div className="loading-screen">Loading Melodious...</div>
 function App() {
   return (
     <PlayerProvider>
-      <BrowserRouter>
+      <HashRouter>
         <div className="app-container" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           <Suspense fallback={<Loading />}>
             <Routes>
@@ -47,7 +47,7 @@ function App() {
             <EasterEggs />
           </Suspense>
         </div>
-      </BrowserRouter>
+      </HashRouter>
     </PlayerProvider>
   );
 }

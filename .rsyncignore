@@ -3,8 +3,7 @@ node_modules
 .vscode
 .directorymap
 .DS_Store
+.git
 __pycache__
+package-lock.json
 
-
-*.mp3
-*.lrc

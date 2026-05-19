@@ -13,10 +13,6 @@ def init_db():
     cursor = conn.cursor()
 
     # -------- SONGS --------
-    # id is INTEGER (matches JSON numeric IDs)
-    # duration  ← mapped from JSON "length"
-    # file_path ← mapped from JSON "file"
-    # album_art ← mapped from JSON "albumArt"
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS songs (
         id        INTEGER PRIMARY KEY,
