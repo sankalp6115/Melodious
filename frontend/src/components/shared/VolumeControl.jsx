@@ -1,9 +1,9 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { use, useState, useRef, useEffect } from 'react';
 import { PlayerContext } from '../../contexts/PlayerContext';
 import '../../styles/volumeControl.css';
 
 const VolumeControl = () => {
-  const { volume, setVolume } = useContext(PlayerContext);
+  const { volume, setVolume } = use(PlayerContext);
   const [prevVolume, setPrevVolume] = useState(40);
   const [isPressed, setIsPressed] = useState(false);
 
@@ -74,9 +74,27 @@ const VolumeControl = () => {
         <div 
           ref={knobRef}
           className={`volume-knob ${isPressed ? 'knob-pressed' : ''}`}
+          role="slider"
+          aria-label="Volume Control"
+          aria-valuenow={volume}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          tabIndex={0}
           onMouseDown={() => setIsPressed(true)}
           onMouseUp={() => { setIsPressed(false); handleKnobClick(); }}
           onMouseLeave={() => setIsPressed(false)}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowUp" || e.key === "ArrowRight") {
+              e.preventDefault();
+              setVolume(v => Math.min(100, v + 5));
+            } else if (e.key === "ArrowDown" || e.key === "ArrowLeft") {
+              e.preventDefault();
+              setVolume(v => Math.max(0, v - 5));
+            } else if (e.key === " " || e.key === "Enter") {
+              e.preventDefault();
+              handleKnobClick();
+            }
+          }}
           style={{
             transform: `rotate(${knobRotation}deg) scale(${isPressed ? 0.95 : 0.95})`
           }}

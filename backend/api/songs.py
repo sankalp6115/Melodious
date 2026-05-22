@@ -1,9 +1,14 @@
-from fastapi import Request, APIRouter, HTTPException
+from fastapi import Request, APIRouter, HTTPException, UploadFile, File, Form
 from fastapi.responses import StreamingResponse
 import os
+import shutil
+import re
+import unicodedata
+import urllib.parse
+from pathlib import Path
 
 from database import get_connection
-from utils.path_resolver import get_songs_dir
+from utils.path_resolver import get_songs_dir, get_assets_dir
 
 router = APIRouter()
 
@@ -11,6 +16,34 @@ SONGS_DIR = get_songs_dir()
 
 
 # ---------- HELPER ----------
+
+def sanitize_filename(filename: str) -> str:
+    """Sanitize the filename to be safe for URLs and the filesystem."""
+    # Decode URL encoding if any
+    filename = urllib.parse.unquote(filename)
+    # Extract only the base filename to prevent path traversal
+    filename = Path(filename).name
+    path = Path(filename)
+    stem = path.stem
+    suffix = path.suffix.lower()
+    
+    # Normalize unicode to ASCII, ignoring non-ASCII characters
+    stem = unicodedata.normalize('NFKD', stem).encode('ascii', 'ignore').decode('ascii')
+    
+    # Replace spaces, hyphens and other delimiters with underscores
+    stem = re.sub(r'[\s\-]+', '_', stem)
+    # Strip any characters that are not alphanumeric, dot, underscore, or hyphen
+    stem = re.sub(r'[^a-zA-Z0-9._-]', '', stem)
+    # Collapse multiple underscores
+    stem = re.sub(r'_+', '_', stem)
+    # Trim leading/trailing underscores, dots, or dashes
+    stem = stem.strip('_.-')
+    
+    if not stem:
+        stem = "file"
+        
+    return f"{stem}{suffix}"
+
 
 def row_to_song(row, artists: list[str]) -> dict:
     """Convert a DB row + artists list into the standard song response dict."""
@@ -24,6 +57,7 @@ def row_to_song(row, artists: list[str]) -> dict:
         "file":     row["file_path"],
         "albumArt": row["album_art"],
         "rating":   row["rating"],
+        "isFavorite": bool(row["is_favorite"]) if "is_favorite" in row.keys() else False,
         "artists":  artists,
     }
 
@@ -36,7 +70,7 @@ def fetch_songs_with_artists(cursor, where_clause: str = "", params: tuple = ())
     sql = f"""
     SELECT
         s.id, s.title, s.album, s.genre, s.year,
-        s.duration, s.file_path, s.album_art, s.rating,
+        s.duration, s.file_path, s.album_art, s.rating, s.is_favorite,
         GROUP_CONCAT(a.name, '|||') AS artist_list
     FROM songs s
     LEFT JOIN song_artists sa ON s.id = sa.song_id
@@ -159,3 +193,182 @@ def get_song(song_id: int):
         raise HTTPException(status_code=404, detail="Song not found")
 
     return songs[0]
+
+
+@router.post("/upload")
+async def upload_song(
+    file: UploadFile = File(...),
+    art: UploadFile = File(None),
+    title: str = Form(...),
+    artists: str = Form(...),
+    album: str = Form(""),
+    genre: str = Form(""),
+    year: int = Form(None),
+    duration: int = Form(0)
+):
+    songs_dir = get_songs_dir()
+    songs_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Save the audio file
+    original_filename = Path(file.filename).name
+    clean_filename = sanitize_filename(original_filename)
+    target_song_path = songs_dir / clean_filename
+    
+    counter = 1
+    while target_song_path.exists():
+        stem = Path(clean_filename).stem
+        suffix = Path(clean_filename).suffix
+        target_song_path = songs_dir / f"{stem}_{counter}{suffix}"
+        counter += 1
+        
+    try:
+        with open(target_song_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to save audio file: {str(e)}")
+        
+    song_filename = target_song_path.name
+    
+    # Save cover art if provided
+    album_art_path_db = None
+    target_art_path = None
+    
+    if art:
+        assets_dir = get_assets_dir()
+        art_dir = assets_dir / "album-arts"
+        art_dir.mkdir(parents=True, exist_ok=True)
+        
+        original_art_name = Path(art.filename).name
+        clean_art_name = sanitize_filename(original_art_name)
+        target_art_path = art_dir / clean_art_name
+        
+        counter = 1
+        while target_art_path.exists():
+            stem = Path(clean_art_name).stem
+            suffix = Path(clean_art_name).suffix
+            target_art_path = art_dir / f"{stem}_{counter}{suffix}"
+            counter += 1
+            
+        try:
+            with open(target_art_path, "wb") as buffer:
+                shutil.copyfileobj(art.file, buffer)
+            album_art_path_db = f"assets/album-arts/{target_art_path.name}"
+        except Exception as e:
+            # Clean up the audio file if art saving fails
+            if target_song_path.exists():
+                target_song_path.unlink()
+            raise HTTPException(status_code=500, detail=f"Failed to save cover art: {str(e)}")
+            
+    # Insert metadata into SQLite database
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("""
+        INSERT INTO songs (title, album, genre, year, duration, file_path, album_art, rating)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 0)
+        """, (
+            title,
+            album if album else None,
+            genre if genre else None,
+            year if year is not None else None,
+            duration,
+            song_filename,
+            album_art_path_db
+        ))
+        song_id = cursor.lastrowid
+        
+        # Link song to artists
+        artist_names = [a.strip() for a in artists.split(",") if a.strip()]
+        for name in artist_names:
+            cursor.execute("SELECT id FROM artists WHERE LOWER(name) = LOWER(?)", (name,))
+            artist_row = cursor.fetchone()
+            if artist_row:
+                artist_id = artist_row["id"]
+            else:
+                cursor.execute("INSERT INTO artists (name, image) VALUES (?, NULL)", (name,))
+                artist_id = cursor.lastrowid
+                
+            cursor.execute("""
+            INSERT OR IGNORE INTO song_artists (song_id, artist_id)
+            VALUES (?, ?)
+            """, (song_id, artist_id))
+            
+        conn.commit()
+    except Exception as db_err:
+        conn.rollback()
+        # Clean up files if DB insertion fails
+        if target_song_path.exists():
+            target_song_path.unlink()
+        if target_art_path and target_art_path.exists():
+            target_art_path.unlink()
+        raise HTTPException(status_code=500, detail=f"Database insertion failed: {str(db_err)}")
+    finally:
+        conn.close()
+        
+    return {
+        "status": "success",
+        "song_id": song_id,
+        "file_path": song_filename,
+        "album_art": album_art_path_db
+    }
+
+
+@router.post("/{song_id}/favorite")
+def toggle_favorite(song_id: int):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT is_favorite FROM songs WHERE id = ?", (song_id,))
+    row = cursor.fetchone()
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Song not found")
+    new_fav = 1 if not row["is_favorite"] else 0
+    cursor.execute("UPDATE songs SET is_favorite = ? WHERE id = ?", (new_fav, song_id))
+    conn.commit()
+    conn.close()
+    return {"status": "success", "isFavorite": bool(new_fav)}
+
+
+@router.delete("/{song_id}")
+def delete_song(song_id: int):
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    # Get file_path and album_art so we can delete them from disk
+    cursor.execute("SELECT file_path, album_art FROM songs WHERE id = ?", (song_id,))
+    row = cursor.fetchone()
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Song not found")
+        
+    file_path = row["file_path"]
+    album_art = row["album_art"]
+    
+    # Delete from database
+    cursor.execute("PRAGMA foreign_keys = ON")
+    cursor.execute("DELETE FROM songs WHERE id = ?", (song_id,))
+    conn.commit()
+    conn.close()
+    
+    # Delete audio file from disk
+    if file_path:
+        audio_file = get_songs_dir() / file_path
+        if audio_file.exists() and audio_file.is_file():
+            try:
+                audio_file.unlink()
+            except Exception as e:
+                print(f"Error deleting audio file: {e}")
+                
+    # Delete album art from disk if it's not a shared/default art
+    if album_art and "assets/album-arts/" in album_art:
+        art_filename = album_art.split("assets/album-arts/")[-1]
+        # Avoid deleting default.jpg or empty
+        if art_filename and art_filename != "default.jpg" and art_filename != "song-icon5.png":
+            art_file = get_assets_dir() / "album-arts" / art_filename
+            if art_file.exists() and art_file.is_file():
+                try:
+                    art_file.unlink()
+                except Exception as e:
+                    print(f"Error deleting album art: {e}")
+                    
+    return {"status": "success", "message": "Song deleted from library"}

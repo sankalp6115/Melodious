@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react';
+import React, { useState, use, useEffect, useCallback } from 'react';
 import { PlayerContext } from '../../contexts/PlayerContext';
 
 const VoiceControl = () => {
   const { 
     togglePlayPause, nextSong, prevSong, volume, setVolume, 
     setIsShuffled, setIsLooped, isPlaying 
-  } = useContext(PlayerContext);
+  } = use(PlayerContext);
   
   const [isListening, setIsListening] = useState(false);
   const [recognition, setRecognition] = useState(null);

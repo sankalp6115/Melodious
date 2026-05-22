@@ -1,7 +1,7 @@
 div.context-menu-container {
     position: fixed;
     border-radius: 12px;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: #e0e0e0;
     display: flex;
@@ -10,8 +10,8 @@ div.context-menu-container {
     padding: 6px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
         inset 0 0 1px rgba(255, 255, 255, 0.2);
-    overflow: hidden;
-    background-color: rgb(0, 0, 255, 0.4);
+    overflow: visible;
+    background-color: rgba(18, 18, 18, 0.85);
     user-select: none;
     transition: transform 0.2s ease;
     z-index: 99999;
@@ -28,7 +28,7 @@ div.context-menu-container {
     margin-bottom: 4px;
 }
 
-span.context-menu-option {
+.context-menu-option {
     padding: 10px 14px;
     font-size: 0.9rem;
     font-weight: 500;
@@ -42,17 +42,22 @@ span.context-menu-option {
     position: relative;
 }
 
-span.context-menu-option:last-child {
+.context-menu-option:last-child {
     margin-bottom: 0;
 }
 
 /* Glass Focus Effect */
-div.context-menu-container:hover span.context-menu-option {
+div.context-menu-container:hover .context-menu-option {
     filter: blur(0.5px);
     opacity: 0.4;
 }
 
-div.context-menu-container span.context-menu-option:hover {
+div.context-menu-container:hover .context-menu-option:hover {
+    filter: blur(0);
+    opacity: 1;
+}
+
+div.context-menu-container .context-menu-option:hover {
     filter: blur(0);
     opacity: 1;
     background: rgba(255, 255, 255, 0.08);
@@ -61,19 +66,73 @@ div.context-menu-container span.context-menu-option:hover {
 }
 
 /* Hover Shine Animation */
-span.context-menu-option::after {
+.context-menu-option::after {
     content: '';
     position: absolute;
     left: 0;
     top: 0;
     height: 100%;
     width: 2px;
-    background: #0084ff;
+    background: #a8e1d0;
     border-radius: 0 4px 4px 0;
     transform: scaleY(0);
     transition: transform 0.2s ease;
 }
 
-span.context-menu-option:hover::after {
+.context-menu-option:hover::after {
     transform: scaleY(0.7);
+}
+
+/* ── Submenu Container ── */
+.context-submenu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 180px;
+    background: rgba(20, 20, 20, 0.9);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 100000;
+    margin-left: 2px;
+}
+
+/* Show submenu on hover */
+.context-menu-option.has-submenu:hover .context-submenu {
+    display: flex;
+}
+
+/* Submenu option */
+.context-submenu-option {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px;
+    color: #e0e0e0;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.context-submenu-option:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    transform: translateX(2px);
+}
+
+.context-submenu-option.disabled {
+    color: #666;
+    cursor: not-allowed;
+}
+
+.context-submenu-option.disabled:hover {
+    background: transparent;
+    color: #666;
+    transform: none;
 }

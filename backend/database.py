@@ -23,9 +23,16 @@ def init_db():
         duration  INTEGER,
         file_path TEXT,
         album_art TEXT,
-        rating    INTEGER DEFAULT 0
+        rating    INTEGER DEFAULT 0,
+        is_favorite INTEGER DEFAULT 0
     )
     """)
+
+    # Migration: add column is_favorite to existing databases
+    try:
+        cursor.execute("ALTER TABLE songs ADD COLUMN is_favorite INTEGER DEFAULT 0")
+    except sqlite3.OperationalError:
+        pass  # Already exists
 
     # -------- ARTISTS --------
     cursor.execute("""

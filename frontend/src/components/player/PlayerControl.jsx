@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { use, useState, useEffect, useRef } from 'react';
 import { PlayerContext } from '../../contexts/PlayerContext';
 import VoiceControl from '../shared/VoiceControl';
 import Visualizer from '../shared/Visualizer';
@@ -11,7 +11,7 @@ const PlayerControl = () => {
     currentTime, duration, seek, isShuffled, setIsShuffled,
     isLooped, setIsLooped, playbackRate, setPlaybackRate,
     parsedLyrics, currentSong
-  } = useContext(PlayerContext);
+  } = use(PlayerContext);
 
   const [lyricsOpen, setLyricsOpen] = useState(false);
   const [showVolume, setShowVolume] = useState(false);
@@ -116,11 +116,28 @@ const PlayerControl = () => {
               onChange={handleProgressChange}
             />
           </div>
-          <div className="progress-container" id="progress-container" onClick={(e) => {
-             const rect = e.currentTarget.getBoundingClientRect();
-             const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-             seek(ratio * duration);
-          }}>
+          <div 
+            className="progress-container" 
+            id="progress-container" 
+            role="slider"
+            aria-label="Playback progress"
+            aria-valuenow={currentTime}
+            aria-valuemin={0}
+            aria-valuemax={duration || 100}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "ArrowRight") {
+                seek(Math.min(duration, currentTime + 5));
+              } else if (e.key === "ArrowLeft") {
+                seek(Math.max(0, currentTime - 5));
+              }
+            }}
+            onClick={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+              seek(ratio * duration);
+            }}
+          >
             <span id="elapsed_time" className="elapsed_time time">{formatTime(currentTime)}</span>
             <div className="progress-bar" id="progress-bar" style={{ width: `${currentPct}%` }}></div>
             <img
@@ -145,14 +162,22 @@ const PlayerControl = () => {
       </div>
 
       {lyricsOpen && (
-         <div id="lyrics-container" style={{display: 'block'}} ref={lyricsContainerRef}>
+         <div id="lyrics-container" style={{display: 'block'}} ref={lyricsContainerRef} role="region" aria-label="Lyrics display">
             {parsedLyrics.length > 0 ? (
-                parsedLyrics.map((line, idx) => (
+                parsedLyrics.map((line) => (
                     <div 
-                        key={idx} 
+                        key={line.time} 
                         className={`lyrics-line ${activeLyric === line ? 'active' : ''}`}
                         onClick={() => seek(line.time)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                seek(line.time);
+                            }
+                        }}
                         style={{ cursor: 'pointer', padding: '10px', transition: '0.3s' }}
+                        role="button"
+                        tabIndex={0}
                     >
                         {line.text}
                     </div>

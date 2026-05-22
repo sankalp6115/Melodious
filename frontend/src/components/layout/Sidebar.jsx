@@ -41,7 +41,10 @@ const Sidebar = () => {
         <img src="/assets/images/ui/recent.png" alt="" /> Recent
       </NavLink>
       <NavLink viewTransition className="left-menu-option" to="/favourites">
-        <img src="/assets/images/ui/favourite.png" alt="" /> Favourites
+        <img src="/assets/images/ui/heart.png" alt="" /> Favourites
+      </NavLink>
+      <NavLink viewTransition className="left-menu-option" to="/upload">
+        <img src="/assets/images/ui/upload.png" alt="" /> Upload
       </NavLink>
     </section>
   );

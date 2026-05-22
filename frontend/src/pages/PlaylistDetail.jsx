@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useEffect, useState, use, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { PlayerContext } from '../contexts/PlayerContext';
 import { getAssetUrl } from '../utils/assets';
@@ -7,7 +7,7 @@ import { backend, port } from "../backend_url";
 
 const PlaylistDetail = () => {
     const { id } = useParams();
-    const { playSong, isPlaying, currentSongIndex, activeQueue, currentSong } = useContext(PlayerContext);
+    const { playSong, isPlaying, currentSongIndex, activeQueue, currentSong } = use(PlayerContext);
     const [playlist, setPlaylist] = useState(null);
     const [headerBg, setHeaderBg] = useState('linear-gradient(to right, #333, #111)');
     const imgRef = useRef(null);
@@ -18,7 +18,7 @@ const PlaylistDetail = () => {
     const PORT = port || "8000";
     const BACKEND = `http://${BACKEND_HOST}:${PORT}`;
 
-    useEffect(() => {
+    const fetchPlaylistDetails = React.useCallback(() => {
         fetch(`${BACKEND}/api/playlists/${id}`)
             .then(res => res.json())
             .then(data => {
@@ -32,6 +32,21 @@ const PlaylistDetail = () => {
             })
             .catch(err => console.error("Failed to fetch playlist:", err));
     }, [id, BACKEND]);
+
+    useEffect(() => {
+        fetchPlaylistDetails();
+    }, [fetchPlaylistDetails]);
+
+    useEffect(() => {
+        const handleRefresh = (e) => {
+            // Refresh if no playlist ID is specified, or if it matches current
+            if (!e.detail || String(e.detail.playlistId) === String(id)) {
+                fetchPlaylistDetails();
+            }
+        };
+        window.addEventListener('refresh-playlist', handleRefresh);
+        return () => window.removeEventListener('refresh-playlist', handleRefresh);
+    }, [id, fetchPlaylistDetails]);
 
     const handleImgLoad = () => {
         if (imgRef.current && window.ColorThief) {
@@ -72,7 +87,7 @@ const PlaylistDetail = () => {
         setHighlightStyle(prev => ({ ...prev, opacity: 0 }));
     };
 
-    if (!playlist) return <div className="loading">Loading Playlist...</div>;
+    if (!playlist) return <div className="loading">Loading Playlist…</div>;
 
     return (
         <div className="playlist-detail-container">
@@ -136,7 +151,16 @@ const PlaylistDetail = () => {
                                     key={song.id} 
                                     className={`row ${isActive ? 'active-row' : ''}`}
                                     data-song-id={song.id}
+                                    data-in-playlist-id={id}
+                                    role="button"
+                                    tabIndex={0}
                                     onClick={() => playSong(index, playlist.songs)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            playSong(index, playlist.songs);
+                                        }
+                                    }}
                                 >
                                     <td className="table-index">{index + 1}</td>
                                     <td className="table-art">

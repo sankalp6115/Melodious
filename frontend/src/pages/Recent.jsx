@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { use, useMemo } from 'react';
 import { PlayerContext } from '../contexts/PlayerContext';
 import { getAssetUrl } from '../utils/assets';
 import '../styles/playlist-detail.css'; // Reusing table styles
@@ -12,13 +12,14 @@ const Recent = () => {
         currentSong,
         maxRecents,
         setMaxRecents 
-    } = useContext(PlayerContext);
+    } = use(PlayerContext);
 
     // Filter and sort songs based on recent IDs
     const recentSongs = useMemo(() => {
-        return recentSongIds
-            .map(id => songs.find(s => String(s.id) === String(id)))
-            .filter(Boolean);
+        return recentSongIds.flatMap(id => {
+            const found = songs.find(s => String(s.id) === String(id));
+            return found ? [found] : [];
+        });
     }, [recentSongIds, songs]);
 
     return (
@@ -36,8 +37,9 @@ const Recent = () => {
                         <span className="info-badge">History</span>
                         <h1 className="playlist-name">Recently Played</h1>
                         <div className="settings-row" style={{ marginTop: '10px' }}>
-                            <label style={{ color: '#aaa', fontSize: '0.9rem' }}>Show last: </label>
+                            <label htmlFor="max-recents-select" style={{ color: '#aaa', fontSize: '0.9rem' }}>Show last: </label>
                             <select 
+                                id="max-recents-select"
                                 value={maxRecents} 
                                 onChange={(e) => setMaxRecents(Number(e.target.value))}
                                 style={{ 
@@ -79,7 +81,15 @@ const Recent = () => {
                                     key={song.id} 
                                     className={`row ${isActive ? 'active-row' : ''}`}
                                     data-song-id={song.id}
+                                    role="button"
+                                    tabIndex={0}
                                     onClick={() => playSong(recentSongs.indexOf(song), recentSongs, true)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            playSong(recentSongs.indexOf(song), recentSongs, true);
+                                        }
+                                    }}
                                 >
                                     <td className="table-index">{index + 1}</td>
                                     <td className="table-art">

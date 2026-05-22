@@ -5,7 +5,10 @@ from fastapi.staticfiles import StaticFiles
 from utils.path_resolver import get_assets_dir
 
 from api import songs, playlists, artists, lyrics, debug
+from database import init_db
 
+# Initialize database
+init_db()
 
 app = FastAPI(title="Melodious Backend")
 

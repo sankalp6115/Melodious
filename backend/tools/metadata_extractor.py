@@ -32,11 +32,11 @@ ALBUM_ART_DIR.mkdir(parents=True, exist_ok=True)
 def extract_metadata(file_path: Path):
     try:
         audio = MP3(str(file_path), ID3=EasyID3)
-        title  = audio.get("title",       ["Unknown"])[0]
-        artist = audio.get("artist",      ["Unknown"])[0]
-        album  = audio.get("album",       ["Unknown"])[0]
-        year   = audio.get("date",        ["0"])[0]
-        genre  = audio.get("genre",       [""])[0]
+        title  = audio.get("title",["Unknown"])[0]
+        artist = audio.get("artist",["Unknown"])[0]
+        album  = audio.get("album",["Unknown"])[0]
+        year   = audio.get("date",["0"])[0]
+        genre  = audio.get("genre",[""])[0]
         length = int(audio.info.length)
         return title, artist, album, year, genre, length
     except Exception as e:
@@ -73,18 +73,17 @@ for idx, file_path in enumerate(mp3_files, start=1):
     songs.append({
         "id":       idx,
         "title":    title,
-        "artist":   [a.strip() for a in artist.split(",")],  # split comma-separated artists
+        "artist":   [a.strip() for a in artist.split(",")],
         "album":    album,
         "genre":    genre,
         "year":     int(year) if year.isdigit() else 0,
         "length":   length,
         "file":     file_path.name,
         "albumArt": album_art or f"assets/album-arts/{stem}.jpg",
-        "rating":   5,
     })
     print(f"  [{idx}] {title}")
 
 with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
     json.dump(songs, f, indent=2, ensure_ascii=False)
 
-print(f"\n✅ Extracted {len(songs)} songs → {OUTPUT_JSON}")
+print(f"\n Extracted {len(songs)} songs → {OUTPUT_JSON}")

@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useRef, use } from 'react';
 import { PlayerContext } from '../../contexts/PlayerContext';
 
 const Oneko = () => {
-    const { isOnekoEnabled } = useContext(PlayerContext);
+    const { isOnekoEnabled } = use(PlayerContext);
     const nekoRef = useRef(null);
 
     useEffect(() => {
@@ -21,6 +21,9 @@ const Oneko = () => {
         let idleAnimationFrame = 0;
         let lastFrameTimestamp;
         let animationHandle;
+
+        let windowWidth = window.innerWidth;
+        let windowHeight = window.innerHeight;
 
         const nekoSpeed = 12;
         const spriteSets = {
@@ -43,15 +46,28 @@ const Oneko = () => {
             NW: [[-1, 0], [-1, -1]],
         };
 
+        const handleResize = () => {
+            windowWidth = window.innerWidth;
+            windowHeight = window.innerHeight;
+            nekoPosX = Math.min(nekoPosX, windowWidth - 16);
+            nekoPosY = Math.min(nekoPosY, windowHeight - 16);
+            nekoEl.style.transform = `translate(${nekoPosX - 16}px, ${nekoPosY - 16}px)`;
+        };
+
         const init = () => {
             nekoEl.id = "oneko";
-            nekoEl.style.width = "32px";
-            nekoEl.style.height = "32px";
-            nekoEl.style.position = "fixed";
-            nekoEl.style.pointerEvents = "none";
-            nekoEl.style.imageRendering = "pixelated";
-            nekoEl.style.zIndex = "2147483647";
-            nekoEl.style.backgroundImage = "url(/assets/images/animations/oneko.gif)";
+            nekoEl.style.cssText = `
+                width: 32px;
+                height: 32px;
+                position: fixed;
+                pointer-events: none;
+                image-rendering: pixelated;
+                z-index: 2147483647;
+                background-image: url(/assets/images/icons/oneko.gif);
+                left: 0px;
+                top: 0px;
+                transform: translate(${nekoPosX - 16}px, ${nekoPosY - 16}px);
+            `;
             document.body.appendChild(nekoEl);
 
             const onMouseMove = (event) => {
@@ -59,6 +75,7 @@ const Oneko = () => {
                 mousePosY = event.clientY;
             };
             document.addEventListener("mousemove", onMouseMove);
+            window.addEventListener('resize', handleResize);
 
             const onAnimationFrame = (timestamp) => {
                 if (!nekoEl.isConnected) return;
@@ -73,6 +90,7 @@ const Oneko = () => {
 
             return () => {
                 document.removeEventListener("mousemove", onMouseMove);
+                window.removeEventListener('resize', handleResize);
                 window.cancelAnimationFrame(animationHandle);
                 if (nekoEl.isConnected) nekoEl.remove();
             };
@@ -94,8 +112,8 @@ const Oneko = () => {
                 let available = ["sleeping", "scratchSelf"];
                 if (nekoPosX < 32) available.push("scratchWallW");
                 if (nekoPosY < 32) available.push("scratchWallN");
-                if (nekoPosX > window.innerWidth - 32) available.push("scratchWallE");
-                if (nekoPosY > window.innerHeight - 32) available.push("scratchWallS");
+                if (nekoPosX > windowWidth - 32) available.push("scratchWallE");
+                if (nekoPosY > windowHeight - 32) available.push("scratchWallS");
                 idleAnimation = available[Math.floor(Math.random() * available.length)];
             }
 
@@ -147,24 +165,15 @@ const Oneko = () => {
 
             nekoPosX -= (diffX / distance) * nekoSpeed;
             nekoPosY -= (diffY / distance) * nekoSpeed;
-            nekoPosX = Math.min(Math.max(16, nekoPosX), window.innerWidth - 16);
-            nekoPosY = Math.min(Math.max(16, nekoPosY), window.innerHeight - 16);
+            nekoPosX = Math.min(Math.max(16, nekoPosX), windowWidth - 16);
+            nekoPosY = Math.min(Math.max(16, nekoPosY), windowHeight - 16);
 
-            // Edge cases for window resizing
-            const handleResize = () => {
-                nekoPosX = Math.min(nekoPosX, window.innerWidth - 16);
-                nekoPosY = Math.min(nekoPosY, window.innerHeight - 16);
-            };
-            window.addEventListener('resize', handleResize);
-
-            nekoEl.style.left = `${nekoPosX - 16}px`;
-            nekoEl.style.top = `${nekoPosY - 16}px`;
+            nekoEl.style.transform = `translate(${nekoPosX - 16}px, ${nekoPosY - 16}px)`;
         };
 
         const cleanup = init();
         return () => {
             cleanup();
-            window.removeEventListener('resize', handleResize);
         };
     }, [isOnekoEnabled]);
 

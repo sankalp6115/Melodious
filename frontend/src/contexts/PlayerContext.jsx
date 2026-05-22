@@ -1,10 +1,22 @@
 import React, { createContext, useState, useEffect, useRef } from 'react';
 import Fuse from 'fuse.js';
 import { getAssetUrl } from '../utils/assets';
-import { backend,port } from '../backend_url';
+import { backend, port } from '../backend_url';
 
 
 export const PlayerContext = createContext();
+
+const parseLyrics = (text) => {
+  if (!text) return [];
+  return text.split("\n").map(line => {
+    const match = line.match(/^\[(\d+):(\d+)\.(\d+)\](.*)/);
+    if (match) return {
+      time: parseInt(match[1]) * 60 + parseInt(match[2]) + parseInt(match[3]) / 100,
+      text: match[4].trim()
+    };
+    return null;
+  }).filter(l => l);
+};
 
 export const PlayerProvider = ({ children }) => {
   const [songs, setSongs] = useState([]);
@@ -13,48 +25,57 @@ export const PlayerProvider = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isShuffled, setIsShuffled] = useState(() => {
     try {
-      const saved = localStorage.getItem("melodious_is_shuffled");
+      const saved = localStorage.getItem("melodious_is_shuffled:v1");
       return saved !== null ? JSON.parse(saved) : false;
     } catch { return false; }
   });
   const [isLooped, setIsLooped] = useState(() => {
     try {
-      const saved = localStorage.getItem("melodious_is_looped");
+      const saved = localStorage.getItem("melodious_is_looped:v1");
       return saved !== null ? JSON.parse(saved) : false;
     } catch { return false; }
   });
   const [volume, setVolume] = useState(() => {
-    const saved = localStorage.getItem("melodious_volume");
+    const saved = localStorage.getItem("melodious_volume:v1");
     return saved !== null ? Number(saved) : 40;
   });
   const [playbackRate, setPlaybackRate] = useState(1);
   const [currentTime, setCurrentTime] = useState(() => {
-    const saved = localStorage.getItem("melodious_current_time");
+    const saved = localStorage.getItem("melodious_current_time:v1");
     return saved !== null ? Number(saved) : 0;
   });
   const [duration, setDuration] = useState(0);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [isOnekoEnabled, setIsOnekoEnabled] = useState(false);
+  const [isOnekoEnabled, setIsOnekoEnabled] = useState(() => {
+    try {
+      const saved = localStorage.getItem("melodious_is_oneko_enabled:v1");
+      return saved !== null ? JSON.parse(saved) : true;
+    } catch { return true; }
+  });
   const [isRestored, setIsRestored] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("melodious_is_oneko_enabled:v1", JSON.stringify(isOnekoEnabled));
+  }, [isOnekoEnabled]);
   const [recentSongIds, setRecentSongIds] = useState(() => {
     try {
-      const saved = localStorage.getItem("melodious_recent_songs");
+      const saved = localStorage.getItem("melodious_recent_songs:v1");
       return saved ? JSON.parse(saved) : [];
     } catch { return []; }
   });
   const [maxRecents, setMaxRecents] = useState(() => {
-    const saved = localStorage.getItem("melodious_max_recents");
+    const saved = localStorage.getItem("melodious_max_recents:v1");
     return saved ? Number(saved) : 20;
   });
 
   useEffect(() => {
-    localStorage.setItem("melodious_recent_songs", JSON.stringify(recentSongIds));
+    localStorage.setItem("melodious_recent_songs:v1", JSON.stringify(recentSongIds));
   }, [recentSongIds]);
 
   useEffect(() => {
-    localStorage.setItem("melodious_max_recents", maxRecents.toString());
+    localStorage.setItem("melodious_max_recents:v1", maxRecents.toString());
   }, [maxRecents]);
 
   // New Shuffle State
@@ -75,8 +96,23 @@ export const PlayerProvider = ({ children }) => {
 
   const audioRef = useRef(null);
 
-  // ... (fetch logic remains same)
-  useEffect(() => {
+  const [playlists, setPlaylists] = useState([]);
+
+  const refetchPlaylists = React.useCallback(async () => {
+    const BACKEND_HOST = backend || window.location.hostname;
+    const PORT = port || "8000";
+    const BACKEND = `http://${BACKEND_HOST}:${PORT}`;
+
+    try {
+      const res = await fetch(`${BACKEND}/api/playlists`);
+      const data = await res.json();
+      setPlaylists(data);
+    } catch (err) {
+      console.error("Failed to fetch playlists:", err);
+    }
+  }, []);
+
+  const refetchSongs = React.useCallback(async () => {
     // Derive backend host dynamically
     const BACKEND_HOST = backend || window.location.hostname;
     const PORT = port || "8000";
@@ -84,43 +120,38 @@ export const PlayerProvider = ({ children }) => {
     const API_BASE = `${BACKEND}/api`;
     const DEFAULT_ART = `/assets/album-arts/song-icon5.png`;
 
-    const fetchData = async () => {
-      try {
-        const [songsRes, lyricsRes] = await Promise.all([
-          fetch(`${API_BASE}/songs`),
-          fetch(`${API_BASE}/lyrics`)
-        ]);
-        let songsData = await songsRes.json();
-        const lyricsData = await lyricsRes.json();
+    try {
+      const [songsRes, lyricsRes] = await Promise.all([
+        fetch(`${API_BASE}/songs`),
+        fetch(`${API_BASE}/lyrics`)
+      ]);
+      let songsData = await songsRes.json();
+      const lyricsData = await lyricsRes.json();
 
-        songsData = songsData.map(song => ({
-          ...song,
-          file: `${BACKEND}/api/songs/stream/${encodeURIComponent(song.file)}`,
-          albumArt: getAssetUrl(song.albumArt) || DEFAULT_ART,
-          artists: Array.isArray(song.artists) ? song.artists : (song.artists ? [song.artists] : []),
-        }));
+      songsData = songsData.map(song => ({
+        ...song,
+        file: `${BACKEND}/api/songs/stream/${encodeURIComponent(song.file)}`,
+        albumArt: getAssetUrl(song.albumArt) || DEFAULT_ART,
+        artists: Array.isArray(song.artists) ? song.artists : (song.artists ? [song.artists] : []),
+      }));
 
-        setSongs(songsData);
-        setLyrics(lyricsData);
-      } catch (err) {
-        console.error("API load failed:", err);
-      } 
-    };
-    fetchData();
+      setSongs(songsData);
+      setLyrics(lyricsData);
+    } catch (err) {
+      console.error("API load failed:", err);
+    }
   }, []);
 
-  // Sync activeQueue with total library on first load
   useEffect(() => {
-    if (songs.length > 0 && activeQueue.length === 0) {
-      setActiveQueue(songs);
-    }
-  }, [songs]);
+    refetchSongs();
+    refetchPlaylists();
+  }, [refetchSongs, refetchPlaylists]);
 
   // Persist basic settings
   useEffect(() => {
-    localStorage.setItem("melodious_is_shuffled", JSON.stringify(isShuffled));
-    localStorage.setItem("melodious_is_looped", JSON.stringify(isLooped));
-    localStorage.setItem("melodious_volume", volume.toString());
+    localStorage.setItem("melodious_is_shuffled:v1", JSON.stringify(isShuffled));
+    localStorage.setItem("melodious_is_looped:v1", JSON.stringify(isLooped));
+    localStorage.setItem("melodious_volume:v1", volume.toString());
   }, [isShuffled, isLooped, volume]);
 
   // Persist current song ID and time
@@ -128,13 +159,13 @@ export const PlayerProvider = ({ children }) => {
     if (!isRestored) return;
     const queue = activeQueue.length > 0 ? activeQueue : songs;
     if (queue.length > 0 && queue[currentSongIndex]) {
-      localStorage.setItem("melodious_current_song_id", queue[currentSongIndex].id.toString());
+      localStorage.setItem("melodious_current_song_id:v1", queue[currentSongIndex].id.toString());
     }
   }, [currentSongIndex, songs, activeQueue, isRestored]);
 
   useEffect(() => {
     if (!isRestored) return;
-    localStorage.setItem("melodious_current_time", currentTime.toString());
+    localStorage.setItem("melodious_current_time:v1", currentTime.toString());
   }, [currentTime, isRestored]);
 
   // Reset time when the song ID changes
@@ -142,7 +173,7 @@ export const PlayerProvider = ({ children }) => {
   useEffect(() => {
     if (isRestored && prevSongIndex.current !== currentSongIndex) {
       setCurrentTime(0);
-      localStorage.setItem("melodious_current_time", "0");
+      localStorage.setItem("melodious_current_time:v1", "0");
       if (audioRef.current) audioRef.current.currentTime = 0;
     }
     prevSongIndex.current = currentSongIndex;
@@ -151,14 +182,14 @@ export const PlayerProvider = ({ children }) => {
   // Restore session
   useEffect(() => {
     if (songs.length > 0 && !isRestored) {
-      const savedId = localStorage.getItem("melodious_current_song_id");
-      const savedTime = localStorage.getItem("melodious_current_time");
-      
+      const savedId = localStorage.getItem("melodious_current_song_id:v1");
+      const savedTime = localStorage.getItem("melodious_current_time:v1");
+
       if (savedId) {
         const index = songs.findIndex(s => String(s.id) === String(savedId));
         if (index !== -1) {
           setCurrentSongIndex(index);
-          if (savedTime && audioRef.current) {
+          if (savedTime) {
             // We set the time in state, and we'll apply it to the audio element once it's ready
             setCurrentTime(Number(savedTime));
           }
@@ -202,8 +233,8 @@ export const PlayerProvider = ({ children }) => {
     }
 
     const fuseOptions = {
-        threshold: 0.6,
-        keys: ["title", "artists", "album", "genre"],
+      threshold: 0.6,
+      keys: ["title", "artists", "album", "genre"],
     };
     const fuse = new Fuse(songs, fuseOptions);
     const results = fuse.search(searchQuery);
@@ -223,7 +254,7 @@ export const PlayerProvider = ({ children }) => {
   const playSong = (index, queue = null, isFromRecents = false) => {
     const targetQueue = queue || (activeQueue.length > 0 ? activeQueue : songs);
     const song = targetQueue[index];
-    
+
     if (song && !isFromRecents) {
       addToRecents(song.id);
     }
@@ -233,7 +264,7 @@ export const PlayerProvider = ({ children }) => {
     }
     setCurrentSongIndex(index);
     setCurrentTime(0);
-    localStorage.setItem("melodious_current_time", "0");
+    localStorage.setItem("melodious_current_time:v1", "0");
     if (audioRef.current) audioRef.current.currentTime = 0;
 
     if (isShuffled && shuffledIndices.length > 0) {
@@ -256,9 +287,9 @@ export const PlayerProvider = ({ children }) => {
   const nextSong = () => {
     const queue = activeQueue.length > 0 ? activeQueue : songs;
     if (queue.length === 0) return;
-    
+
     setCurrentTime(0);
-    localStorage.setItem("melodious_current_time", "0");
+    localStorage.setItem("melodious_current_time:v1", "0");
     if (audioRef.current) audioRef.current.currentTime = 0;
 
     if (isShuffled && shuffledIndices.length > 0) {
@@ -281,7 +312,7 @@ export const PlayerProvider = ({ children }) => {
     }
 
     setCurrentTime(0);
-    localStorage.setItem("melodious_current_time", "0");
+    localStorage.setItem("melodious_current_time:v1", "0");
     if (audioRef.current) audioRef.current.currentTime = 0;
 
     if (isShuffled && shuffledIndices.length > 0) {
@@ -309,23 +340,23 @@ export const PlayerProvider = ({ children }) => {
   };
 
   // System controls
-if ('mediaSession' in navigator) {
-  navigator.mediaSession.setActionHandler('play', () => {
-    togglePlayPause();
-  });
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.setActionHandler('play', () => {
+      togglePlayPause();
+    });
 
-  navigator.mediaSession.setActionHandler('pause', () => {
-    togglePlayPause();
-  });
+    navigator.mediaSession.setActionHandler('pause', () => {
+      togglePlayPause();
+    });
 
-  navigator.mediaSession.setActionHandler('previoustrack', () => {
-    prevSong();
-  });
+    navigator.mediaSession.setActionHandler('previoustrack', () => {
+      prevSong();
+    });
 
-  navigator.mediaSession.setActionHandler('nexttrack', () => {
-    nextSong();
-  });
-}
+    navigator.mediaSession.setActionHandler('nexttrack', () => {
+      nextSong();
+    });
+  }
 
   // Helper for UI to know what's truly next
   const getNextSongInfo = () => {
@@ -363,7 +394,7 @@ if ('mediaSession' in navigator) {
 
   // Ensure play is reliably called on song switches so WebAudio context can resume naturally
   useEffect(() => {
-    if (audioRef.current && activeQueue.length > 0) {
+    if (audioRef.current && (activeQueue.length > 0 || songs.length > 0)) {
       // If we just restored, apply the saved time once the audio element is ready for this song
       if (isRestored && currentTime > 0 && audioRef.current.currentTime === 0) {
         audioRef.current.currentTime = currentTime;
@@ -372,12 +403,12 @@ if ('mediaSession' in navigator) {
       if (isPlaying) {
         // Small timeout to allow src to be fully patched in the DOM before playing
         const t = setTimeout(() => {
-           if (audioRef.current) audioRef.current.play().catch(() => {});
+          if (audioRef.current) audioRef.current.play().catch(() => { });
         }, 50);
         return () => clearTimeout(t);
       }
     }
-  }, [currentSongIndex, isPlaying, activeQueue, isRestored]);
+  }, [currentSongIndex, isPlaying, activeQueue, songs, isRestored]);
 
   const [parsedLyrics, setParsedLyrics] = useState([]);
 
@@ -392,45 +423,34 @@ if ('mediaSession' in navigator) {
     }
   }, [currentSongIndex, songs, lyrics]);
 
-  function parseLyrics(text) {
-    if (!text) return [];
-    return text.split("\n").map(line => {
-      const match = line.match(/^\[(\d+):(\d+)\.(\d+)\](.*)/);
-      if (match) return {
-        time: parseInt(match[1]) * 60 + parseInt(match[2]) + parseInt(match[3]) / 100,
-        text: match[4].trim()
-      };
-      return null;
-    }).filter(l => l);
-  }
-
   return (
     <>
-    <PlayerContext.Provider value={{
-      songs, activeQueue, currentSong, lyrics, parsedLyrics,
-      currentSongIndex, isPlaying, isShuffled, isLooped, volume, playbackRate, currentTime, duration,
-      searchQuery, setSearchQuery, searchResults, isOnekoEnabled,
-      recentSongIds, maxRecents, setMaxRecents,
-      getNextSongInfo,
-      setIsShuffled, setIsLooped, setVolume, setPlaybackRate, setActiveQueue,
-      playSong, togglePlayPause, nextSong, prevSong, seek,
-      addToQueueNext, addToQueueLast,
-      audioRef
-    }}>
-      {children}
-      {songs.length > 0 && (
-        <audio
-          ref={audioRef}
-          src={activeQueue[currentSongIndex]?.file || songs[currentSongIndex]?.file}
-          onTimeUpdate={handleTimeUpdate}
-          onEnded={() => {
-             if (!isLooped) nextSong();
-          }}
-          autoPlay={isPlaying}
-          crossOrigin="anonymous"
-        />
-      )}
-    </PlayerContext.Provider>
+      <PlayerContext.Provider value={{
+        songs, activeQueue, currentSong, lyrics, parsedLyrics,
+        currentSongIndex, isPlaying, isShuffled, isLooped, volume, playbackRate, currentTime, duration,
+        searchQuery, setSearchQuery, searchResults, isOnekoEnabled, setIsOnekoEnabled,
+        recentSongIds, maxRecents, setMaxRecents,
+        playlists, refetchPlaylists,
+        getNextSongInfo,
+        setIsShuffled, setIsLooped, setVolume, setPlaybackRate, setActiveQueue,
+        playSong, togglePlayPause, nextSong, prevSong, seek,
+        addToQueueNext, addToQueueLast,
+        audioRef, refetchSongs
+      }}>
+        {children}
+        {songs.length > 0 && (
+          <audio
+            ref={audioRef}
+            src={activeQueue[currentSongIndex]?.file || songs[currentSongIndex]?.file}
+            onTimeUpdate={handleTimeUpdate}
+            onEnded={() => {
+              if (!isLooped) nextSong();
+            }}
+            autoPlay={isPlaying}
+            crossOrigin="anonymous"
+          />
+        )}
+      </PlayerContext.Provider>
     </>
   );
 };

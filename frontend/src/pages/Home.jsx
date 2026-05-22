@@ -1,27 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { PlayerContext } from '../contexts/PlayerContext';
 import { getAssetUrl } from '../utils/assets';
 import '../styles/home.css';
 import { backend, port } from "../backend_url";
 
 const Home = () => {
-  const [playlists, setPlaylists] = useState([]);
-  const [popularArtists, setPopularArtists] = useState([]);
-
-  useEffect(() => {
-    // Derive backend dynamically
-    const BACKEND_HOST = backend || window.location.hostname;
-    const PORT = port || "8000";
-    const BACKEND = `http://${BACKEND_HOST}:${PORT}`;
-
-    fetch(`${BACKEND}/api/playlists`)
-      .then(res => res.json())
-      .then(data => setPlaylists(data));
-    
-    fetch(`${BACKEND}/api/artists`)
-      .then(res => res.json())
-      .then(data => setPopularArtists(data));
-  }, []);
+  const { playlists, refetchPlaylists } = useContext(PlayerContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [playlistName, setPlaylistName] = useState("");
+  const [posterFile, setPosterFile] = useState(null);
+  const [posterPreview, setPosterPreview] = useState(null);
+  const [isDragOver, setIsDragOver] = useState(false);
 
   const genres = [
     { name: 'Dance Beat', color: '#ff0844' },
@@ -29,6 +19,79 @@ const Home = () => {
     { name: 'Alternative Indie', color: 'chartreuse' },
     { name: 'Hip Hop', color: 'violet' }
   ];
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setPlaylistName("");
+    setPosterFile(null);
+    if (posterPreview) {
+      URL.revokeObjectURL(posterPreview);
+    }
+    setPosterPreview(null);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragOver(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      if (file.type.startsWith('image/')) {
+        setPosterFile(file);
+        setPosterPreview(URL.createObjectURL(file));
+      }
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      setPosterFile(file);
+      setPosterPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleCreatePlaylist = async (e) => {
+    e.preventDefault();
+    if (!playlistName.trim()) return;
+
+    const formData = new FormData();
+    formData.append("name", playlistName.trim());
+    if (posterFile) {
+      formData.append("poster", posterFile);
+    }
+
+    const BACKEND_HOST = backend || window.location.hostname;
+    const PORT = port || "8000";
+    const BACKEND = `http://${BACKEND_HOST}:${PORT}`;
+
+    try {
+      const response = await fetch(`${BACKEND}/api/playlists/`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create playlist");
+      }
+
+      await refetchPlaylists();
+      handleCloseModal();
+    } catch (err) {
+      console.error(err);
+      alert("Failed to create playlist: " + err.message);
+    }
+  };
 
   return (
     <div className="home-container">
@@ -38,10 +101,21 @@ const Home = () => {
       <div className="home-content">
         {/* Your Playlists */}
         <section className="home-section">
-          <h2 className="heading">Your Playlists</h2>
+          <div className="section-header">
+            <h2 className="heading">Your Playlists</h2>
+            <button className="create-playlist-btn" onClick={() => setIsModalOpen(true)}>
+              <span style={{ fontSize: '1.2rem', lineHeight: 1 }}>+</span> Create Playlist
+            </button>
+          </div>
           <div className="playlists-grid">
             {playlists.map(pl => (
-              <Link to={`/playlist/${pl.id}`} className="playlist-card-link" key={pl.id}>
+              <Link 
+                to={`/playlist/${pl.id}`} 
+                className="playlist-card-link" 
+                key={pl.id}
+                data-playlist-id={pl.id}
+                data-playlist-name={pl.name}
+              >
                 <div className="playlist-card">
                   <div className="playlist-poster">
                     <img 
@@ -81,6 +155,66 @@ const Home = () => {
           </div>
         </section>
       </div>
+
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={handleCloseModal}>
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <span className="modal-title">Create Playlist</span>
+              <button className="modal-close-btn" onClick={handleCloseModal}>&times;</button>
+            </div>
+            <form onSubmit={handleCreatePlaylist} className="modal-form">
+              <div className="form-group">
+                <label className="form-label">Playlist Name</label>
+                <input 
+                  type="text" 
+                  className="form-input" 
+                  value={playlistName}
+                  onChange={(e) => setPlaylistName(e.target.value)}
+                  placeholder="My Awesome Playlist"
+                  required
+                  autoFocus
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Cover Poster</label>
+                <div 
+                  className={`modal-dropzone ${isDragOver ? 'dragover' : ''}`}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  onClick={() => document.getElementById('poster-file-input').click()}
+                >
+                  <input 
+                    type="file" 
+                    id="poster-file-input" 
+                    style={{ display: 'none' }}
+                    accept="image/*"
+                    onChange={handleFileChange}
+                  />
+                  {posterPreview ? (
+                    <img src={posterPreview} className="preview-img" alt="Poster preview" />
+                  ) : (
+                    <div className="modal-dropzone-content">
+                      <div style={{ fontSize: '2rem', marginBottom: '8px' }}>🖼️</div>
+                      Drag & drop an image here, or click to browse
+                      <span>If empty, a random poster will be chosen</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="modal-actions">
+                <button type="button" className="modal-btn cancel" onClick={handleCloseModal}>
+                  Cancel
+                </button>
+                <button type="submit" className="modal-btn confirm" disabled={!playlistName.trim()}>
+                  Create
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

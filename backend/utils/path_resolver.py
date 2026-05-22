@@ -6,7 +6,7 @@ def get_data_dir():
     return BASE_DIR / "data"
 
 def get_assets_dir():
-    return BASE_DIR / "assets"
+    return BASE_DIR / "frontend" / "public" / "assets"
 
 def get_songs_dir():
     return BASE_DIR / "songs"

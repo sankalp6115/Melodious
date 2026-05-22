@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, use, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { PlayerContext } from '../../contexts/PlayerContext';
 import VoiceControl from '../shared/VoiceControl';
@@ -9,8 +9,8 @@ import bundle from '../../../cookie/bundle.ts';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [clickCount, setClickCount] = useState(0);
-  const { searchQuery, setSearchQuery } = useContext(PlayerContext);
+  const clickCount = useRef(0);
+  const { searchQuery, setSearchQuery } = use(PlayerContext);
   const [localSearch, setLocalSearch] = useState(searchQuery);
 
   // Debounce search query
@@ -23,14 +23,14 @@ const Navbar = () => {
   }, [localSearch, setSearchQuery]);
 
   const handleLogoClick = () => {
-    const newCount = clickCount + 1;
+    const newCount = clickCount.current + 1;
     console.log(newCount);
     if(newCount == 5){
       console.log("Drum mode activated");
     }
-    setClickCount(newCount);
+    clickCount.current = newCount;
     if (newCount === 5) {
-      setClickCount(0);
+      clickCount.current = 0;
     }
   };
 
@@ -61,7 +61,19 @@ const Navbar = () => {
         <VoiceControl />
 
         <section className="profile">
-          <div className="user-avatar" id="avatar-btn" onClick={() => setMenuOpen(!menuOpen)}>
+          <div 
+            className="user-avatar" 
+            id="avatar-btn" 
+            role="button"
+            tabIndex={0}
+            onClick={() => setMenuOpen(!menuOpen)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setMenuOpen(!menuOpen);
+              }
+            }}
+          >
             <img className="user-avatar" src="/assets/images/ui/user-avatar.png" alt="user-avatar" />
           </div>
           <div className="profile_menu" id="profile-menu" style={{ visibility: menuOpen ? 'visible' : 'hidden', opacity: menuOpen ? 1 : 0 }}>

@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { use, useEffect, useRef, useState } from 'react';
 import { PlayerContext } from '../contexts/PlayerContext';
 
 const Explore = () => {
-  const { songs, playSong, currentSongIndex, isPlaying, searchResults, currentSong } = useContext(PlayerContext);
+  const { songs, playSong, currentSongIndex, isPlaying, searchResults, currentSong } = use(PlayerContext);
   const containerRef = useRef(null);
   const [highlightStyle, setHighlightStyle] = useState({ top: 0, height: 0, left: 0, width: 0, opacity: 0 });
 
@@ -75,7 +75,15 @@ const Explore = () => {
                 data-id={song.id}
                 data-song-id={song.id}
                 className={`row ${isActive ? 'active-row' : ''} ${searchResults.includes(song.id) ? 'searchActive' : ''}`}
+                role="button"
+                tabIndex={0}
                 onClick={() => playSong(index, songs)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    playSong(index, songs);
+                  }
+                }}
               >
                 <td className="table-index">{index + 1}</td>
                 <td className="table-art">

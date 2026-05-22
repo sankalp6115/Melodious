@@ -1,9 +1,9 @@
-import React, { useRef, useEffect, useContext } from 'react';
+import React, { useRef, useEffect, use } from 'react';
 import AudioMotionAnalyzer from 'audiomotion-analyzer';
 import { PlayerContext } from '../../contexts/PlayerContext';
 
 const Visualizer = () => {
-    const { audioRef, currentSong } = useContext(PlayerContext);
+    const { audioRef, currentSong } = use(PlayerContext);
     const containerRef = useRef(null);
     const analyzerRef = useRef(null);
 

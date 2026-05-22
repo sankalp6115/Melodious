@@ -7,6 +7,9 @@ from pathlib import Path
 from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, APIC, TIT2, TPE1, TALB, TYER, TCON, USLT
 import platform
+import random
+import os
+import re
 
 # Import path helpers
 import sys
@@ -23,7 +26,12 @@ LYRICS_DIR = SONGS_DIR / "lyrics"
 DATA_DIR = get_data_dir()
 ASSETS_DIR = get_assets_dir()
 ALBUM_ARTS_DIR = ASSETS_DIR / "album-arts"
+FALLBACK_ARTS_DIR = ALBUM_ARTS_DIR / "fallback"
 ARTIST_IMAGES_DIR = ASSETS_DIR / "artist-images"
+
+# Fallback arts array
+global fallback_art_arr
+fallback_art_arr = [f for f in os.listdir(FALLBACK_ARTS_DIR) if f.endswith("png")]
 
 # Ensure directories exist
 ALBUM_ARTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -33,11 +41,14 @@ ALBUM_ARTS_DIR.mkdir(parents=True, exist_ok=True)
 def split_artists(artist_string):
     """Split joint artist strings into a list of unique names."""
     if not artist_string:
-        return ["Unknown Artist"]
-    # Handle common separators
+        return ["Unknown"]
     for sep in ["/", ",", " feat. ", " ft. ", "&", ";"]:
         artist_string = artist_string.replace(sep, "|")
     return [a.strip() for a in artist_string.split("|") if a.strip()]
+
+def fallback_art():
+    index = random.randint(0,len(fallback_art_arr))
+    return str("assets/album-arts/" + fallback_art_arr[index])
 
 def extract_metadata(file_path):
     """Extract metadata and album art from an MP3 file."""
@@ -75,7 +86,7 @@ def extract_metadata(file_path):
             "year": year,
             "length": duration,
             "file": rel_path,
-            "albumArt": f"assets/album-arts/{art_filename}" if art_path.exists() else None
+            "albumArt": f"assets/album-arts/{art_filename}" if art_path.exists() else fallback_art()
         }
     except Exception as e:
         print(f"Error extracting {file_path.name}: {e}")
@@ -99,7 +110,7 @@ def reset_database():
     conn.commit()
     conn.close()
     init_db()
-    print("✅ Database schema initialized.")
+    print("Database schema initialized.")
 
 # -------------------- CORE LOGIC --------------------
 
@@ -177,7 +188,7 @@ def sync(reset=False, cleanup=False):
         if len(new_songs) < original_count:
             print(f"\n🧹 Cleaned up {original_count - len(new_songs)} stale entries.")
 
-    print(f"\n✅ Final Count: {len(new_songs)} songs.")
+    print(f"\nFinal Count: {len(new_songs)} songs.")
 
     # 3. Process Artists
     artist_lookup = {a["name"]: a for a in existing_artists}

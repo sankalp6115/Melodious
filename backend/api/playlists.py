@@ -1,5 +1,11 @@
-from fastapi import APIRouter, HTTPException
+import os
+import random
+import shutil
+from pathlib import Path
+from fastapi import APIRouter, HTTPException, UploadFile, File, Form
 from database import get_connection
+from utils.path_resolver import get_assets_dir
+from .songs import sanitize_filename
 
 router = APIRouter()
 
@@ -63,3 +69,148 @@ def get_playlist(playlist_id: int):
             for s in songs
         ],
     }
+
+
+@router.post("/")
+async def create_playlist(
+    name: str = Form(...),
+    poster: UploadFile = File(None)
+):
+    assets_dir = get_assets_dir()
+    poster_dir = assets_dir / "playlist-posters"
+    poster_dir.mkdir(parents=True, exist_ok=True)
+    
+    if poster and poster.filename:
+        original_filename = Path(poster.filename).name
+        clean_filename = sanitize_filename(original_filename)
+        target_path = poster_dir / clean_filename
+        
+        counter = 1
+        while target_path.exists():
+            stem = Path(clean_filename).stem
+            suffix = Path(clean_filename).suffix
+            target_path = poster_dir / f"{stem}_{counter}{suffix}"
+            counter += 1
+            
+        try:
+            with open(target_path, "wb") as buffer:
+                shutil.copyfileobj(poster.file, buffer)
+            poster_path_db = f"playlist-posters/{target_path.name}"
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Failed to save poster: {str(e)}")
+    else:
+        # Pick a random image from the playlist-posters directory
+        if poster_dir.exists() and poster_dir.is_dir():
+            files = [f for f in os.listdir(poster_dir) if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp'))]
+            # Exclude images.jpeg if you want, or just include all
+            if files:
+                random_file = random.choice(files)
+                poster_path_db = f"playlist-posters/{random_file}"
+            else:
+                poster_path_db = "playlist-posters/playlist-poster1.jpg"
+        else:
+            poster_path_db = "playlist-posters/playlist-poster1.jpg"
+            
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("INSERT INTO playlists (name, poster) VALUES (?, ?)", (name, poster_path_db))
+        playlist_id = cursor.lastrowid
+        conn.commit()
+    except Exception as db_err:
+        conn.rollback()
+        raise HTTPException(status_code=500, detail=f"Database insertion failed: {str(db_err)}")
+    finally:
+        conn.close()
+        
+    return {
+        "status": "success",
+        "id": playlist_id,
+        "name": name,
+        "poster": poster_path_db
+    }
+
+
+@router.delete("/{playlist_id}")
+def delete_playlist(playlist_id: int):
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    # Check if playlist exists
+    cursor.execute("SELECT id, name, poster FROM playlists WHERE id = ?", (playlist_id,))
+    row = cursor.fetchone()
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Playlist not found")
+        
+    poster = row["poster"]
+    
+    # Check if default poster
+    is_default = False
+    if poster:
+        filename = Path(poster).name
+        if filename.startswith("playlist-poster") or filename == "images.jpeg" or filename == "default.jpg":
+            is_default = True
+            
+    # Delete from database
+    cursor.execute("PRAGMA foreign_keys = ON")
+    cursor.execute("DELETE FROM playlists WHERE id = ?", (playlist_id,))
+    conn.commit()
+    conn.close()
+    
+    if poster and not is_default:
+        poster_file = get_assets_dir() / poster
+        if poster_file.exists() and poster_file.is_file():
+            try:
+                poster_file.unlink()
+            except Exception as e:
+                print(f"Error deleting playlist poster: {e}")
+                
+    return {"status": "success", "message": "Playlist deleted successfully"}
+
+
+@router.post("/{playlist_id}/songs")
+def add_song_to_playlist(playlist_id: int, song_id: int = Form(...)):
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    # Check if playlist exists
+    cursor.execute("SELECT id FROM playlists WHERE id = ?", (playlist_id,))
+    if not cursor.fetchone():
+        conn.close()
+        raise HTTPException(status_code=404, detail="Playlist not found")
+        
+    # Check if song exists
+    cursor.execute("SELECT id FROM songs WHERE id = ?", (song_id,))
+    if not cursor.fetchone():
+        conn.close()
+        raise HTTPException(status_code=404, detail="Song not found")
+        
+    # Check if song is already in playlist
+    cursor.execute("SELECT 1 FROM playlist_songs WHERE playlist_id = ? AND song_id = ?", (playlist_id, song_id))
+    if cursor.fetchone():
+        conn.close()
+        return {"status": "already_exists", "message": "Song already in playlist"}
+        
+    # Get max position to append
+    cursor.execute("SELECT IFNULL(MAX(position), -1) AS max_pos FROM playlist_songs WHERE playlist_id = ?", (playlist_id,))
+    row = cursor.fetchone()
+    next_pos = row["max_pos"] + 1
+    
+    cursor.execute("INSERT INTO playlist_songs (playlist_id, song_id, position) VALUES (?, ?, ?)", (playlist_id, song_id, next_pos))
+    conn.commit()
+    conn.close()
+    
+    return {"status": "success", "message": "Song added to playlist"}
+
+
+@router.delete("/{playlist_id}/songs/{song_id}")
+def remove_song_from_playlist(playlist_id: int, song_id: int):
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute("DELETE FROM playlist_songs WHERE playlist_id = ? AND song_id = ?", (playlist_id, song_id))
+    conn.commit()
+    conn.close()
+    
+    return {"status": "success", "message": "Song removed from playlist"}

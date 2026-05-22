@@ -26,7 +26,7 @@
 }
 
 body {
-  background-image: url(/public/assets/images/backgrounds/BG2.jpg);
+  background-image: url(/assets/images/backgrounds/BG2.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -330,7 +330,7 @@ div.profile_menu a {
 
 /* ── Playlist Poster ────────────────────────────────────────────── */
 section.playlist_poster {
-  background-image: url("/public/assets/playlist-posters/playlist-poster2.jpg");
+  background-image: url("/assets/playlist-posters/playlist-poster2.jpg");
   background-size: cover;
   background-position: center;
   border: 3px solid #fff;
@@ -634,7 +634,7 @@ img#rightAlbumArt {
 }
 
 .inactiveShuffle {
-  background-image: url(/public/assets/images/ui/loop-disabled.png);
+  background-image: url(/assets/images/ui/loop-disabled.png);
   background-repeat: no-repeat;
   background-size: 90%;
   background-position: center;
@@ -643,7 +643,7 @@ img#rightAlbumArt {
 
 .activeShuffle {
   box-shadow: 0 0 10px white;
-  background-image: url(/public/assets/images/ui/loop-enabled.png);
+  background-image: url(/assets/images/ui/loop-enabled.png);
   background-repeat: no-repeat;
   background-size: 90%;
   background-position: center;
@@ -651,11 +651,11 @@ img#rightAlbumArt {
 }
 
 .paused {
-  background-image: url(/public/assets/images/ui/pause.jpg);
+  background-image: url(/assets/images/ui/pause.jpg);
 }
 
 .playing {
-  background-image: url(/public/assets/images/ui/play.jpg);
+  background-image: url(/assets/images/ui/play.jpg);
 }
 
 canvas {
@@ -824,20 +824,7 @@ button.lyrics-open:hover+.lyric-open-tooltip {
   font-style: italic;
 }
 
-/* ── Konami Cheat Code ──────────────────────────────────────────── */
-.cheat-code {
-  top: 0;
-  left: 0;
-  position: fixed;
-  display: none;
-  pointer-events: none;
-  z-index: 100;
-}
 
-.cheat-code img {
-  height: 100vh;
-  width: 100vw;
-}
 
 /* ══════════════════════════════════════════════════════════════════
    IMPORTED FROM LAYOUT.CSS (Component Rules & Overrides)
@@ -1210,4 +1197,42 @@ button.lyrics-open:hover+.lyric-open-tooltip {
     height: 18px;
     width: 18px;
   }
+}
+
+/* ── Cheat Code / Rain Mode ── */
+.cheat-code {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.cheat-code-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: cyan;
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px cyan;
+  text-align: center;
+}
+
+.cheat-code-content span {
+  font-size: 1.2rem;
+}
+
+.cheat-code-rain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+  background: url("/assets/images/icons/rain.gif");
 }

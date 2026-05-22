@@ -2,9 +2,20 @@ node_modules
 .env
 .vscode
 .directorymap
-.DS_Store
-__pycache__
+.DS_Store/
+
+__pycache__/
+**/__pycache__/
+.pyc
+.pyo
+
 
 
 *.mp3
 *.lrc
+*.flac
+
+*.png
+*.jpg
+*.avif
+*.webp

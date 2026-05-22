@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useEffect, useState, use, useRef } from 'react';
 import { useParams } from 'react-router-dom'; 
 import { PlayerContext } from '../contexts/PlayerContext';
 import '../styles/artists.css';
@@ -7,7 +7,7 @@ import { backend, port } from "../backend_url";
 
 const ArtistDetail = () => {
     const { id } = useParams();
-    const { playSong, isPlaying, currentSongIndex, activeQueue, currentSong } = useContext(PlayerContext);
+    const { playSong, isPlaying, currentSongIndex, activeQueue, currentSong } = use(PlayerContext);
     const [artist, setArtist] = useState(null);
     const [headerBg, setHeaderBg] = useState('linear-gradient(to right, #333, #111)');
     const imgRef = useRef(null);
@@ -43,7 +43,7 @@ const ArtistDetail = () => {
         }
     };
 
-    if (!artist) return <div className="loading">Loading Artist...</div>;
+    if (!artist) return <div className="loading">Loading Artist…</div>;
 
     return (
         <div className="artist-detail-container">
@@ -88,8 +88,15 @@ const ArtistDetail = () => {
                                 <tr 
                                     key={song.id} 
                                     className={`row ${isActive ? 'active-row' : ''}`}
-                                    data-song-id={song.id}
+                                    role="button"
+                                    tabIndex={0}
                                     onClick={() => playSong(index, artist.songs)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            playSong(index, artist.songs);
+                                        }
+                                    }}
                                 >
                                     <td className="table-index">{index + 1}</td>
                                     <td className="table-art">
