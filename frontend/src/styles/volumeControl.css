@@ -1,140 +1,98 @@
 /* =========================================================================
-   VOLUME CONTROL -- NEUMORPHIC KNOB
+   VOLUME CONTROL -- MODERN SLIDER
    ========================================================================= */
 
-.neumorphic-volume-container {
+.volume-control-container {
     display: flex;
-    justify-content: center;
     align-items: center;
-}
-
-.volume-shell {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    background: #393e4b;
-    /* Base reference color from image */
-    border-radius: 12px;
-    box-shadow:
-        5px 5px 10px rgba(0, 0, 0, 0.4),
-        -5px -5px 10px rgba(255, 255, 255, 0.05);
-    /* Neumorphic outer bevel */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Base structural dimensions */
-.led-ring {
-    position: absolute;
+    gap: 10px;
+    user-select: none;
     width: 100%;
+    min-width: 140px;
+    max-width: 200px;
+}
+
+.mute-toggle-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.15rem;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    opacity: 0.85;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.mute-toggle-btn:hover {
+    transform: scale(1.15);
+    opacity: 1;
+}
+
+.speaker-icon-img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+}
+
+.volume-slider-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    overflow: visible; /* so thumb can overflow track height */
+    outline: none;
+    display: flex;
+    align-items: center;
+}
+
+.volume-slider-fill {
     height: 100%;
-    top: 0;
+    background: linear-gradient(90deg, #007bff, #00d2ff);
+    box-shadow: 0 0 8px rgba(0, 210, 255, 0.5);
+    border-radius: 10px;
+    position: absolute;
     left: 0;
+    top: 0;
     pointer-events: none;
 }
 
-/* Individual LED Dots */
-.led-dot {
+.volume-slider-thumb {
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    border: 2px solid #00d2ff;
+    box-shadow: 0 0 6px rgba(0, 210, 255, 0.8), 0 2px 4px rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
     position: absolute;
     top: 50%;
-    left: 50%;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    transform-origin: center center;
-    transition: all 0.2s ease-out;
-}
-
-.led-inactive {
-    background-color: #1a1c22;
-    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.8), inset -1px -1px 2px rgba(255, 255, 255, 0.1);
-}
-
-.led-active {
-    background-color: cyan;
-    /* Bright Cyan */
-    box-shadow:
-        0 0 3px #4df0ff,
-        0 0 6px #4df0ff,
-        inset 1px 1px 2px rgba(255, 255, 255, 0.5);
-    /* Glowing embedded light */
-}
-
-/* The Spin Metallic Knob */
-.volume-knob {
-    position: relative;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: conic-gradient(#2a2d36 0deg,
-            #495062 45deg,
-            #2a2d36 90deg,
-            #495062 135deg,
-            #2a2d36 180deg,
-            #495062 225deg,
-            #2a2d36 270deg,
-            #495062 315deg,
-            #2a2d36 360deg);
-    box-shadow:
-        inset 0px 3px 3px rgba(255, 255, 255, 0.2),
-        inset 0px -3px 3px rgba(0, 0, 0, 0.6),
-        4px 4px 10px rgba(0, 0, 0, 0.8),
-        -2px -2px 5px rgba(255, 255, 255, 0.05);
-    /* Outer drop shadow for 3D extrusion */
-
-    cursor: grab;
-    transition: transform 0.1s linear, outline 0.1s ease;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-/* Soft overlay for metallic sheen */
-.volume-knob::after {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    right: 2px;
-    bottom: 2px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.4) 100%);
+    transform: translate(-50%, -50%);
     pointer-events: none;
+    transition: width 0.1s ease, height 0.1s ease;
 }
 
-/* The indicator dot on the knob itself */
-.knob-indicator {
-    position: absolute;
-    top: 4px;
-    /* Near the top edge (which equals the 12 o'clock position when unrotated) */
-    width: 3px;
-    height: 6px;
-    background-color: #20232a;
-    border-radius: 2px;
-    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.8), inset 0px -1px 1px rgba(255, 255, 255, 0.2);
-    z-index: 2;
+/* Hover effects */
+.volume-slider-track:hover .volume-slider-thumb {
+    width: 14px;
+    height: 14px;
+    box-shadow: 0 0 10px rgba(0, 210, 255, 1), 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
-.knob-pressed {
-    box-shadow:
-        inset 0px 1px 3px rgba(255, 255, 255, 0.1),
-        inset 0px -1px 3px rgba(0, 0, 0, 0.8),
-        2px 2px 5px rgba(0, 0, 0, 0.8),
-        -1px -1px 2px rgba(255, 255, 255, 0.05);
-    cursor: grabbing;
+.volume-slider-track:hover .volume-slider-fill {
+    background: linear-gradient(90deg, #0056b3, #00f0ff);
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.8);
 }
 
-.volume-label {
-    position: absolute;
-    bottom: 4px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: inherit;
-    font-size: 6px;
-    color: #1a1c22;
-    font-weight: 800;
-    letter-spacing: 1px;
-    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.1);
-    /* Engraved effect */
+.volume-value-display {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    min-width: 32px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
 }

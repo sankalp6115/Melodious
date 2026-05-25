@@ -29,15 +29,15 @@
   },
   {
     "name": "Ace of Base",
-    "image": null
+    "image": "/artist-images/ace of base.jpg"
   },
   {
     "name": "Adam Levine",
-    "image": null
+    "image": "/artist-images/adam levine.jpeg"
   },
   {
     "name": "Aditya Rikhari",
-    "image": null
+    "image": "/artist-images/aditya rikhari.jpg"
   },
   {
     "name": "Ajay Gogavale",
@@ -57,7 +57,7 @@
   },
   {
     "name": "Alex Warren",
-    "image": null
+    "image": "/artist-images/alex warren.webp"
   },
   {
     "name": "Alexander Rybak",
@@ -65,23 +65,27 @@
   },
   {
     "name": "Alisha Chinai",
-    "image": "/artist-images/alisha chinai.jpg"
+    "image": null
   },
   {
     "name": "Alka Yagnik",
-    "image": "/artist-images/alka yagnik.jpg"
+    "image": "/artist-images/alka yagnik.jpeg"
   },
   {
     "name": "Altamash Faridi",
-    "image": "/artist-images/altamash faridi.jpg"
+    "image": null
   },
   {
     "name": "Amaal Mallik",
-    "image": "/artist-images/amaal mallik.jpg"
+    "image": null
+  },
+  {
+    "name": "Ami Mishra",
+    "image": null
   },
   {
     "name": "Amit Mishra",
-    "image": "/artist-images/amit mishra.jpg"
+    "image": null
   },
   {
     "name": "Amit Trivedi",
@@ -97,27 +101,27 @@
   },
   {
     "name": "Anand Bakshi",
-    "image": "/artist-images/anand bakshi.jpg"
+    "image": null
   },
   {
     "name": "André Antunes",
-    "image": "/artist-images/andré antunes.jpg"
+    "image": null
   },
   {
     "name": "Anjulie",
-    "image": "/artist-images/anjulie.jpg"
+    "image": null
   },
   {
     "name": "Ankit Tiwari",
-    "image": "/artist-images/ankit tiwari.jpg"
+    "image": null
   },
   {
     "name": "Anuv Jain",
-    "image": "/artist-images/anuv jain.jpg"
+    "image": "/artist-images/anuv jain.jpeg"
   },
   {
     "name": "Arcane",
-    "image": "/artist-images/arcane.jpg"
+    "image": null
   },
   {
     "name": "Arijit Singh",
@@ -125,7 +129,7 @@
   },
   {
     "name": "Arko",
-    "image": "/artist-images/arko.jpg"
+    "image": null
   },
   {
     "name": "Armaan Khan",
@@ -133,15 +137,15 @@
   },
   {
     "name": "Armaan Malik",
-    "image": "/artist-images/armaan malik.jpg"
+    "image": null
   },
   {
     "name": "Asees Kaur",
-    "image": "/artist-images/asees kaur.jpg"
+    "image": null
   },
   {
     "name": "Asha Bhosle",
-    "image": "/artist-images/asha bhosle.jpg"
+    "image": null
   },
   {
     "name": "Atif Aslam",
@@ -161,23 +165,23 @@
   },
   {
     "name": "Bebe Rexha",
-    "image": "/artist-images/bebe rexha.jpg"
+    "image": null
   },
   {
     "name": "Benny Dayal",
-    "image": "/artist-images/benny dayal.jpg"
+    "image": null
   },
   {
     "name": "Bhupinder Babbal",
-    "image": "/artist-images/bhupinder babbal.jpg"
+    "image": null
   },
   {
     "name": "Bilal Saeed",
-    "image": "/artist-images/bilal saeed.jpg"
+    "image": null
   },
   {
     "name": "Boney M.",
-    "image": "/artist-images/boney m..jpg"
+    "image": null
   },
   {
     "name": "BoyWithUke",
@@ -189,7 +193,7 @@
   },
   {
     "name": "CVRTOON",
-    "image": "/artist-images/cvrtoon.jpg"
+    "image": null
   },
   {
     "name": "Camila Cabello",
@@ -201,11 +205,11 @@
   },
   {
     "name": "Charan",
-    "image": "/artist-images/charan.jpg"
+    "image": null
   },
   {
     "name": "Chinmayi",
-    "image": "/artist-images/chinmayi.jpg"
+    "image": null
   },
   {
     "name": "Chinmayi Sripaada",
@@ -221,7 +225,7 @@
   },
   {
     "name": "Chris Linton",
-    "image": "/artist-images/chris linton.jpg"
+    "image": null
   },
   {
     "name": "Chromance",
@@ -233,15 +237,15 @@
   },
   {
     "name": "DJ Harshit Shah",
-    "image": "/artist-images/dj harshit shah.jpg"
+    "image": null
   },
   {
     "name": "DJ MHD IND",
-    "image": "/artist-images/dj mhd ind.jpg"
+    "image": null
   },
   {
     "name": "Dabro remix",
-    "image": "/artist-images/dabro remix.jpg"
+    "image": null
   },
   {
     "name": "Darshan Raval",
@@ -249,23 +253,23 @@
   },
   {
     "name": "David Guetta",
-    "image": "/artist-images/david guetta.jpg"
+    "image": null
   },
   {
     "name": "Deep Money",
-    "image": "/artist-images/deep money.jpg"
+    "image": null
   },
   {
     "name": "Dhvani Bhanushali",
-    "image": "/artist-images/dhvani bhanushali.jpg"
+    "image": null
   },
   {
     "name": "Diljit Dosanjh",
-    "image": "/artist-images/diljit dosanjh.jpg"
+    "image": null
   },
   {
     "name": "Divya Kumar",
-    "image": "/artist-images/divya kumar.jpg"
+    "image": null
   },
   {
     "name": "Dominique Cerejo",
@@ -285,7 +289,7 @@
   },
   {
     "name": "Egzod",
-    "image": "/artist-images/egzod.jpg"
+    "image": null
   },
   {
     "name": "Eibell",
@@ -301,15 +305,15 @@
   },
   {
     "name": "Faheem Abdullah",
-    "image": "/artist-images/faheem abdullah.jpg"
+    "image": null
   },
   {
     "name": "Farruko",
-    "image": "/artist-images/farruko.jpg"
+    "image": null
   },
   {
     "name": "Fleurie",
-    "image": "/artist-images/fleurie.jpg"
+    "image": null
   },
   {
     "name": "Gajendra Verma",
@@ -317,15 +321,15 @@
   },
   {
     "name": "Glass Animals",
-    "image": "/artist-images/glass animals.jpg"
+    "image": null
   },
   {
     "name": "Gurinder Gill",
-    "image": "/artist-images/gurinder gill.jpg"
+    "image": null
   },
   {
     "name": "Gym Class Heroes",
-    "image": "/artist-images/gym class heroes.jpg"
+    "image": null
   },
   {
     "name": "Hanumankind",
@@ -341,11 +345,11 @@
   },
   {
     "name": "Hemant Kumar",
-    "image": "/artist-images/hemant kumar.jpg"
+    "image": null
   },
   {
     "name": "Imagine Dragons",
-    "image": "/artist-images/imagine dragons.jpg"
+    "image": null
   },
   {
     "name": "Indila",
@@ -353,35 +357,35 @@
   },
   {
     "name": "Indraneel",
-    "image": "/artist-images/indraneel.jpg"
+    "image": null
   },
   {
     "name": "Intense",
-    "image": "/artist-images/intense.jpg"
+    "image": null
   },
   {
     "name": "Irshad Kamil",
-    "image": "/artist-images/irshad kamil.jpg"
+    "image": null
   },
   {
     "name": "Irshan Ashraf",
-    "image": "/artist-images/irshan ashraf.jpg"
+    "image": null
   },
   {
     "name": "Ishaan",
-    "image": "/artist-images/ishaan.jpg"
+    "image": null
   },
   {
     "name": "JDneX",
-    "image": "/artist-images/jdnex.jpg"
+    "image": null
   },
   {
     "name": "JID",
-    "image": "/artist-images/jid.jpg"
+    "image": null
   },
   {
     "name": "Jack Harlow",
-    "image": "/artist-images/jack harlow.jpg"
+    "image": null
   },
   {
     "name": "Jasleen Royal",
@@ -393,15 +397,15 @@
   },
   {
     "name": "Jaswinder Singh",
-    "image": "/artist-images/jaswinder singh.jpg"
+    "image": null
   },
   {
     "name": "Jatin-Lalit",
-    "image": "/artist-images/jatin-lalit.jpg"
+    "image": null
   },
   {
     "name": "Javed Ali",
-    "image": "/artist-images/javed ali.jpg"
+    "image": null
   },
   {
     "name": "Jawad Ahmed",
@@ -417,27 +421,27 @@
   },
   {
     "name": "Jeet Gannguli",
-    "image": "/artist-images/jeet gannguli.jpg"
+    "image": null
   },
   {
     "name": "Jelly Roll",
-    "image": "/artist-images/jelly roll.jpg"
+    "image": null
   },
   {
     "name": "Joel Sunny",
-    "image": "/artist-images/joel sunny.jpg"
+    "image": null
   },
   {
     "name": "Jonita Gandhi",
-    "image": "/artist-images/jonita gandhi.jpg"
+    "image": null
   },
   {
     "name": "Jubin Nautiyal",
-    "image": "/artist-images/jubin nautiyal.jpg"
+    "image": null
   },
   {
     "name": "Juss",
-    "image": "/artist-images/juss.jpg"
+    "image": null
   },
   {
     "name": "Justin Bieber",
@@ -449,7 +453,7 @@
   },
   {
     "name": "KK",
-    "image": "/artist-images/kk.jpg"
+    "image": null
   },
   {
     "name": "Kalyanji - Anandji",
@@ -465,19 +469,19 @@
   },
   {
     "name": "Kim Petras",
-    "image": "/artist-images/kim petras.jpg"
+    "image": null
   },
   {
     "name": "Kishore Kumar",
-    "image": "/artist-images/kishore kumar.jpg"
+    "image": null
   },
   {
     "name": "Kumaar",
-    "image": "/artist-images/kumaar.jpg"
+    "image": null
   },
   {
     "name": "Kunaal Vermaa",
-    "image": "/artist-images/kunaal vermaa.jpg"
+    "image": null
   },
   {
     "name": "Lady Gaga",
@@ -485,7 +489,7 @@
   },
   {
     "name": "Lata Mangeshkar",
-    "image": "/artist-images/lata mangeshkar.jpg"
+    "image": null
   },
   {
     "name": "Laura Brehm",
@@ -493,7 +497,7 @@
   },
   {
     "name": "Laxmikant–Pyarelal",
-    "image": "/artist-images/laxmikant–pyarelal.jpg"
+    "image": null
   },
   {
     "name": "League Of Legends",
@@ -501,15 +505,15 @@
   },
   {
     "name": "League of Legends",
-    "image": "/artist-images/league of legends.jpg"
+    "image": null
   },
   {
     "name": "Lil Nas X",
-    "image": "/artist-images/lil nas x.jpg"
+    "image": null
   },
   {
     "name": "Lost Sky",
-    "image": "/artist-images/lost sky.jpg"
+    "image": null
   },
   {
     "name": "Loy Mendonsa",
@@ -517,11 +521,11 @@
   },
   {
     "name": "Madelline",
-    "image": "/artist-images/madelline.jpg"
+    "image": null
   },
   {
     "name": "Maestro Chives",
-    "image": "/artist-images/maestro chives.jpg"
+    "image": null
   },
   {
     "name": "Majestic",
@@ -529,23 +533,23 @@
   },
   {
     "name": "Manan Bhardwaj",
-    "image": "/artist-images/manan bhardwaj.jpg"
+    "image": null
   },
   {
     "name": "Manna Dey",
-    "image": "/artist-images/manna dey.jpg"
+    "image": null
   },
   {
     "name": "Manohar Shetty",
-    "image": "/artist-images/manohar shetty.jpg"
+    "image": null
   },
   {
     "name": "Manoj Muntashir",
-    "image": "/artist-images/manoj muntashir.jpg"
+    "image": null
   },
   {
     "name": "Manoj Yadav",
-    "image": "/artist-images/manoj yadav.jpg"
+    "image": null
   },
   {
     "name": "Marcus Layton",
@@ -553,15 +557,15 @@
   },
   {
     "name": "Masked Wolf",
-    "image": "/artist-images/masked wolf.jpg"
+    "image": null
   },
   {
     "name": "Mellen Gi",
-    "image": "/artist-images/mellen gi.jpg"
+    "image": null
   },
   {
     "name": "Mithoon",
-    "image": "/artist-images/mithoon.jpg"
+    "image": null
   },
   {
     "name": "Mithun Sharma",
@@ -569,27 +573,27 @@
   },
   {
     "name": "Mitraz",
-    "image": "/artist-images/mitraz.jpg"
+    "image": null
   },
   {
     "name": "MixSingh",
-    "image": "/artist-images/mixsingh.jpg"
+    "image": null
   },
   {
     "name": "Modern Talking",
-    "image": "/artist-images/modern talking.jpg"
+    "image": null
   },
   {
     "name": "Mohammed Irfan",
-    "image": "/artist-images/mohammed irfan.jpg"
+    "image": null
   },
   {
     "name": "Mohammed Rafi",
-    "image": "/artist-images/mohammed rafi.jpg"
+    "image": null
   },
   {
     "name": "Mohit Chauhan",
-    "image": "/artist-images/mohit chauhan.jpg"
+    "image": null
   },
   {
     "name": "Muhammad Sadiq",
@@ -597,11 +601,11 @@
   },
   {
     "name": "Mukesh",
-    "image": "/artist-images/mukesh.jpg"
+    "image": null
   },
   {
     "name": "Mustafa Zahid",
-    "image": "/artist-images/mustafa zahid.jpg"
+    "image": null
   },
   {
     "name": "Måneskin",
@@ -613,7 +617,7 @@
   },
   {
     "name": "NCTS",
-    "image": "/artist-images/ncts.jpg"
+    "image": null
   },
   {
     "name": "Naresh Sharma",
@@ -621,35 +625,35 @@
   },
   {
     "name": "Nathan Evans",
-    "image": "/artist-images/nathan evans.jpg"
+    "image": null
   },
   {
     "name": "Neelesh Misra",
-    "image": "/artist-images/neelesh misra.jpg"
+    "image": null
   },
   {
     "name": "Neeti Mohan",
-    "image": "/artist-images/neeti mohan.jpg"
+    "image": null
   },
   {
     "name": "Neoni",
-    "image": "/artist-images/neoni.jpg"
+    "image": null
   },
   {
     "name": "Nicki Minaj",
-    "image": "/artist-images/nicki minaj.jpg"
+    "image": null
   },
   {
     "name": "Nikhita Gandhi",
-    "image": "/artist-images/nikhita gandhi.jpg"
+    "image": null
   },
   {
     "name": "Nilesh Ahuja",
-    "image": "/artist-images/nilesh ahuja.jpg"
+    "image": null
   },
   {
     "name": "Nusrat Fateh Ali Khan",
-    "image": "/artist-images/nusrat fateh ali khan.jpg"
+    "image": null
   },
   {
     "name": "Otomania",
@@ -657,31 +661,31 @@
   },
   {
     "name": "Palak Muchhal",
-    "image": "/artist-images/palak muchhal.jpg"
+    "image": null
   },
   {
     "name": "Parampara Tandon",
-    "image": "/artist-images/parampara tandon.jpg"
+    "image": null
   },
   {
     "name": "Parampara Thakur",
-    "image": "/artist-images/parampara thakur.jpg"
+    "image": null
   },
   {
     "name": "Payal Dev",
-    "image": "/artist-images/payal dev.jpg"
+    "image": null
   },
   {
     "name": "Post Malone",
-    "image": "/artist-images/post malone.jpg"
+    "image": null
   },
   {
     "name": "Prateek Kuhad",
-    "image": "/artist-images/prateek kuhad.jpg"
+    "image": null
   },
   {
     "name": "Pritam",
-    "image": "/artist-images/pritam.jpg"
+    "image": null
   },
   {
     "name": "Pritam Chakraborty",
@@ -689,15 +693,15 @@
   },
   {
     "name": "Pritha Mazumdar",
-    "image": "/artist-images/pritha mazumdar.jpg"
+    "image": null
   },
   {
     "name": "Priya Saraiya",
-    "image": "/artist-images/priya saraiya.jpg"
+    "image": null
   },
   {
     "name": "R. D. Burman",
-    "image": "/artist-images/r. d. burman.jpg"
+    "image": null
   },
   {
     "name": "R.D. Burman",
@@ -709,7 +713,7 @@
   },
   {
     "name": "Raghav Chaitanya",
-    "image": "/artist-images/raghav chaitanya.jpg"
+    "image": null
   },
   {
     "name": "Rajendra Krishan",
@@ -725,23 +729,23 @@
   },
   {
     "name": "Rashid Ali",
-    "image": "/artist-images/rashid ali.jpg"
+    "image": null
   },
   {
     "name": "Rashmi Virag",
-    "image": "/artist-images/rashmi virag.jpg"
+    "image": null
   },
   {
     "name": "Rauhan Malik",
-    "image": "/artist-images/rauhan malik.jpg"
+    "image": null
   },
   {
     "name": "Rekha Bhardwaj",
-    "image": "/artist-images/rekha bhardwaj.jpg"
+    "image": null
   },
   {
     "name": "Rochak Kohli",
-    "image": "/artist-images/rochak kohli.jpg"
+    "image": null
   },
   {
     "name": "Roop Kumar Rathod",
@@ -757,7 +761,7 @@
   },
   {
     "name": "S. D. Burman",
-    "image": "/artist-images/s. d. burman.jpg"
+    "image": null
   },
   {
     "name": "SACHIN - JIGAR",
@@ -765,27 +769,27 @@
   },
   {
     "name": "SPECRO X SKETCH",
-    "image": "/artist-images/specro x sketch.jpg"
+    "image": null
   },
   {
     "name": "Sabrina Carpenter",
-    "image": "/artist-images/sabrina carpenter.jpg"
+    "image": null
   },
   {
     "name": "Sachet Tandon",
-    "image": "/artist-images/sachet tandon.jpg"
+    "image": null
   },
   {
     "name": "Sachet-Parampara",
-    "image": "/artist-images/sachet-parampara.jpg"
+    "image": null
   },
   {
     "name": "Sachin-Jigar",
-    "image": "/artist-images/sachin-jigar.jpg"
+    "image": null
   },
   {
     "name": "Sahil Kaushal",
-    "image": "/artist-images/sahil kaushal.jpg"
+    "image": null
   },
   {
     "name": "Sahir Ludhianvi",
@@ -793,19 +797,19 @@
   },
   {
     "name": "Sam Smith",
-    "image": "/artist-images/sam smith.jpg"
+    "image": null
   },
   {
     "name": "Sanam",
-    "image": "/artist-images/sanam.jpg"
+    "image": null
   },
   {
     "name": "Shadab",
-    "image": "/artist-images/shadab.jpg"
+    "image": null
   },
   {
     "name": "Shadab Faridi",
-    "image": "/artist-images/shadab faridi.jpg"
+    "image": null
   },
   {
     "name": "Shafqat Amanat Ali",
@@ -817,7 +821,7 @@
   },
   {
     "name": "Shan Padman",
-    "image": "/artist-images/shan padman.jpg"
+    "image": null
   },
   {
     "name": "Shankar Ehsaan Loy",
@@ -841,7 +845,7 @@
   },
   {
     "name": "Shashaa Tirupati",
-    "image": "/artist-images/shashaa tirupati.jpg"
+    "image": null
   },
   {
     "name": "Shashwat Sachdev",
@@ -853,7 +857,7 @@
   },
   {
     "name": "Sheet Music Boss",
-    "image": "/artist-images/sheet music boss.jpg"
+    "image": null
   },
   {
     "name": "Shellee",
@@ -861,55 +865,55 @@
   },
   {
     "name": "Shilpa Rao",
-    "image": "/artist-images/shilpa rao.jpg"
+    "image": null
   },
   {
     "name": "Shiraz Uppal",
-    "image": "/artist-images/shiraz uppal.jpg"
+    "image": null
   },
   {
     "name": "Shirley Setia",
-    "image": "/artist-images/shirley setia.jpg"
+    "image": null
   },
   {
     "name": "Shreya Ghoshal",
-    "image": "/artist-images/shreya ghoshal.jpg"
+    "image": null
   },
   {
     "name": "Shreyas Puranik",
-    "image": "/artist-images/shreyas puranik.jpg"
+    "image": null
   },
   {
     "name": "Shubh",
-    "image": "/artist-images/shubh.jpg"
+    "image": null
   },
   {
     "name": "Shweta Pandit",
-    "image": "/artist-images/shweta pandit.jpg"
+    "image": null
   },
   {
     "name": "Siddharth - Garima",
-    "image": "/artist-images/siddharth - garima.jpg"
+    "image": null
   },
   {
     "name": "Simran Sehgal",
-    "image": "/artist-images/simran sehgal.jpg"
+    "image": null
   },
   {
     "name": "Slaydit",
-    "image": "/artist-images/slaydit.jpg"
+    "image": null
   },
   {
     "name": "Sonali Bhatawdekar",
-    "image": "/artist-images/sonali bhatawdekar.jpg"
+    "image": null
   },
   {
     "name": "Sonu Nigam",
-    "image": "/artist-images/sonu nigam.jpg"
+    "image": null
   },
   {
     "name": "Stebin Ben",
-    "image": "/artist-images/stebin ben.jpg"
+    "image": null
   },
   {
     "name": "Stephen Sanchez",
@@ -932,20 +936,24 @@
     "image": null
   },
   {
+    "name": "Sushma Shrestha",
+    "image": null
+  },
+  {
     "name": "Swae Lee",
-    "image": "/artist-images/swae lee.jpg"
+    "image": null
   },
   {
     "name": "T3NZU",
-    "image": "/artist-images/t3nzu.jpg"
+    "image": null
   },
   {
     "name": "Tanishk Bagchi",
-    "image": "/artist-images/tanishk bagchi.jpg"
+    "image": null
   },
   {
     "name": "The Intermezzo Orchestra",
-    "image": "/artist-images/the intermezzo orchestra.jpg"
+    "image": null
   },
   {
     "name": "The Kid LAROI",
@@ -957,7 +965,7 @@
   },
   {
     "name": "The Weeknd",
-    "image": "/artist-images/the weeknd.jpg"
+    "image": null
   },
   {
     "name": "TheFatRat",
@@ -965,7 +973,7 @@
   },
   {
     "name": "Tommee Profitt",
-    "image": "/artist-images/tommee profitt.jpg"
+    "image": null
   },
   {
     "name": "Trippy Music",
@@ -973,7 +981,7 @@
   },
   {
     "name": "Tulsi Kumar",
-    "image": "/artist-images/tulsi kumar.jpg"
+    "image": null
   },
   {
     "name": "Tupac Shakur",
@@ -981,11 +989,11 @@
   },
   {
     "name": "Udbhav",
-    "image": "/artist-images/udbhav.jpg"
+    "image": null
   },
   {
     "name": "Udit Narayan",
-    "image": "/artist-images/udit narayan.jpg"
+    "image": null
   },
   {
     "name": "Unknown Artist",
@@ -993,19 +1001,19 @@
   },
   {
     "name": "Varun Jain",
-    "image": "/artist-images/varun jain.jpg"
+    "image": null
   },
   {
     "name": "Vishal Mishra",
-    "image": "/artist-images/vishal mishra.jpg"
+    "image": null
   },
   {
     "name": "Vishal-Shekhar",
-    "image": "/artist-images/vishal-shekhar.jpg"
+    "image": "/artist-images/vishal-shekhar.jpeg"
   },
   {
     "name": "Warriyo",
-    "image": "/artist-images/warriyo.jpg"
+    "image": null
   },
   {
     "name": "Xariya",
@@ -1021,14 +1029,18 @@
   },
   {
     "name": "g3ox_em",
-    "image": "/artist-images/g3ox_em.jpg"
+    "image": null
   },
   {
     "name": "satirin",
-    "image": "/artist-images/satirin.jpg"
+    "image": null
+  },
+  {
+    "name": "x3L",
+    "image": null
   },
   {
     "name": "Татьяна Куртукова",
-    "image": "/artist-images/татьяна куртукова.jpg"
+    "image": null
   }
 ]

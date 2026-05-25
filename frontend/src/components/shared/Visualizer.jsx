@@ -20,32 +20,30 @@ const Visualizer = () => {
             audioElement.__audioMotion = new AudioMotionAnalyzer(containerRef.current, {
                 source: audioElement,
                 height: 100,
-                    mode: 2, // 1/12 octave bands (good balance)
-                    overlay: true,
-  showBgColor: false,
-  height: 100,
-    fftSize: 8192,
-    smoothing: 0.7,
-    ledBars: true,
-    trueLeds: true,
-    minFreq: 20,
-    maxFreq: 16000,
-    mode: 3,
-    gradient: 'rainbow',
-    colorMode: 'bar-level',
-    showPeaks: true,
-    peakHoldTime: 400,
-    peakFadeTime: 600,
-    fadePeaks: true,
-    channelLayout: 'single',
-    mirror: 0,
-    showScaleX: false,
-    showScaleY: false,
-    maxFPS: 45,
-    loRes: false,
-    overlay: true,
-    bgAlpha: 1,
-    reflexRatio: 0.3,
+                mode: 4, // 1/12 octave bands (good balance)
+                overlay: true,
+                showBgColor: false,
+                height: 100,
+                fftSize: 512,
+                smoothing: 0.7,
+                ledBars: false,
+                minFreq: 20,
+                maxFreq: 16000,
+                gradient: 'prism',
+                colorMode: 'bar-level',
+                showPeaks: true,
+                peakHoldTime: 400,
+                peakFadeTime: 600,
+                fadePeaks: true,
+                channelLayout: 'single',
+                mirror: 1,
+                showScaleX: false,
+                showScaleY: false,
+                maxFPS: 40,
+                loRes: true,
+                overlay: true,
+                bgAlpha: 1,
+                reflexRatio: 0.3,
             });
         } else {
             // If the analyzer survived an unmount (HMR), simply snatch its canvas and reparent it into the newly remounted container
@@ -56,11 +54,11 @@ const Visualizer = () => {
 
         // Force AudioContext to resume when playback starts if it was suspended by browser autoplay policies
         const handlePlay = () => {
-             if (audioElement.__audioMotion && audioElement.__audioMotion.audioCtx.state === 'suspended') {
-                 audioElement.__audioMotion.audioCtx.resume();
-             }
+            if (audioElement.__audioMotion && audioElement.__audioMotion.audioCtx.state === 'suspended') {
+                audioElement.__audioMotion.audioCtx.resume();
+            }
         };
-        
+
         audioElement.addEventListener('play', handlePlay);
 
         return () => {

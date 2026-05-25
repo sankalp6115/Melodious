@@ -68,11 +68,6 @@
     width: 100%;
 }
 
-.active-row {
-    background: rgba(0, 115, 255, 0.4) !important;
-    color: rgb(38, 255, 0) !important;
-}
-
 .active-album-art {
     animation: rotate 10s linear infinite;
 }

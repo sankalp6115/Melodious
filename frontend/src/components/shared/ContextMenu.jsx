@@ -256,7 +256,7 @@ const ContextMenu = () => {
                                     setMenuData(prev => ({ ...prev, visible: false }));
                                 }}
                             >
-                                <span className="menu-icon">▶️</span> Play Now
+                                <span className="menu-icon"></span> Play Now
                             </span>
                             <span
                                 className='context-menu-option'
@@ -267,7 +267,7 @@ const ContextMenu = () => {
                                     setMenuData(prev => ({ ...prev, visible: false }));
                                 }}
                             >
-                                <span className="menu-icon">⏭️</span> Play Next
+                                <span className="menu-icon"></span> Play Next
                             </span>
                             <span
                                 className='context-menu-option'
@@ -278,12 +278,12 @@ const ContextMenu = () => {
                                     setMenuData(prev => ({ ...prev, visible: false }));
                                 }}
                             >
-                                <span className="menu-icon">➕</span> Add to Queue
+                                <span className="menu-icon"></span> Add to Queue
                             </span>
 
                             {/* Add to Playlist Submenu */}
                             <span className='context-menu-option has-submenu'>
-                                <span className="menu-icon">📂</span> Add to Playlist
+                                <span className="menu-icon"></span> Add to Playlist
                                 <div className="context-submenu">
                                     {playlists.map(pl => (
                                         <div
@@ -309,7 +309,7 @@ const ContextMenu = () => {
                                     onClick={handleRemoveFromPlaylist}
                                     style={{ color: '#ffb199' }}
                                 >
-                                    <span className="menu-icon">❌</span> Remove from Playlist
+                                    <span className="menu-icon"></span> Remove from Playlist
                                 </span>
                             )}
 
@@ -321,7 +321,7 @@ const ContextMenu = () => {
                                 onClick={handleToggleFavorite}
                             >
                                 <span className="menu-icon">
-                                    {menuData.song.isFavorite ? "💔" : "❤️"}
+                                    {/* {menuData.song.isFavorite ? "💔" : "❤️"} */}
                                 </span>
                                 {menuData.song.isFavorite ? "Unfavourite" : "Favourite"}
                             </span>
@@ -364,7 +364,7 @@ const ContextMenu = () => {
                             <span className="modal-title" style={{ color: '#ff4d4d' }}>
                                 {deleteModalState.step === 1 ? "Remove from Library?" : "⚠️ CRITICAL WARNING!"}
                             </span>
-                            <button className="modal-close-btn" onClick={closeDeleteModal}>&times;</button>
+                            <button type="button" className="modal-close-btn" onClick={closeDeleteModal}>&times;</button>
                         </div>
 
                         <div className="modal-body" style={{ color: '#eee', lineHeight: 1.6, fontSize: '0.95rem' }}>
@@ -396,11 +396,11 @@ const ContextMenu = () => {
                         </div>
 
                         <div className="modal-actions">
-                            <button className="modal-btn cancel" onClick={closeDeleteModal}>
+                            <button type="button" className="modal-btn cancel" onClick={closeDeleteModal}>
                                 Cancel
                             </button>
                             {deleteModalState.step === 1 ? (
-                                <button
+                                <button type="button"
                                     className="modal-btn confirm"
                                     style={{ background: '#ff4d4d', color: '#fff' }}
                                     onClick={handleConfirmDeleteStep1}
@@ -408,7 +408,7 @@ const ContextMenu = () => {
                                     Yes, Delete Song
                                 </button>
                             ) : (
-                                <button
+                                <button type="button"
                                     className="modal-btn confirm"
                                     style={{ background: '#e60000', color: '#fff', boxShadow: '0 0 15px rgba(230,0,0,0.4)' }}
                                     onClick={handleConfirmDeleteStep2}

@@ -182,7 +182,7 @@ const Upload = () => {
             return;
         }
 
-        showToast(`Starting upload of ${readySongs.length} song(s)...`, 'info');
+        showToast(`Starting upload of ${readySongs.length} song(s)…`, 'info');
 
         const BACKEND_HOST = backend || window.location.hostname;
         const PORT = port || "8000";
@@ -240,8 +240,8 @@ const Upload = () => {
                 console.error("Upload error for", song.fileName, err);
                 setSongs(prev => prev.map(s => {
                     if (s.id === song.id) {
-                        return { 
-                            ...s, 
+                        return {
+                            ...s,
                             status: 'upload-error',
                             error: err.message || 'Upload error'
                         };
@@ -372,7 +372,7 @@ const Upload = () => {
                         </div>
                     ) : (
                         <div className="full-text">
-                            <img src="https://cdn-icons-png.flaticon.com/512/10181/10181172.png" className="uploadImg" />
+                            <img src="https://cdn-icons-png.flaticon.com/512/10181/10181172.png" className="uploadImg" alt="uploadimg" />
                             <h3>Drag and drop one or more audio files here</h3>
                         </div>
                     )}
@@ -387,9 +387,9 @@ const Upload = () => {
                             Files: {songs.length} ({songs.filter(s => s.status === 'uploaded').length} uploaded)
                         </span>
                         <div className="control-buttons">
-                            <button className="btn-secondary" onClick={clearAll}>Clear All</button>
-                            <button 
-                                className="btn-primary" 
+                            <button type="button" className="btn-secondary" onClick={clearAll}>Clear All</button>
+                            <button type="button"
+                                className="btn-primary"
                                 onClick={handleUpload}
                                 disabled={!hasUploadableSongs}
                                 style={{ opacity: hasUploadableSongs ? 1 : 0.5, cursor: hasUploadableSongs ? 'pointer' : 'not-allowed' }}
@@ -420,7 +420,7 @@ const Upload = () => {
                             if (song.status === 'error') {
                                 return (
                                     <div className="metadata-card error-card" key={song.id}>
-                                        <button className="card-remove-btn" onClick={() => removeSong(song.id)} aria-label="Remove card">×</button>
+                                        <button type="button" className="card-remove-btn" onClick={() => removeSong(song.id)} aria-label="Remove card">×</button>
                                         <div className="album-art-side error-art">⚠</div>
                                         <div className="metadata-details-side">
                                             <h4 className="error-title">{song.fileName}</h4>
@@ -445,24 +445,23 @@ const Upload = () => {
 
                             return (
                                 <div
-                                    className={`metadata-card ${
-                                        song.status === 'uploading' ? 'uploading-card' :
+                                    className={`metadata-card ${song.status === 'uploading' ? 'uploading-card' :
                                         song.status === 'uploaded' ? 'uploaded-card' :
-                                        isPerfect ? 'perfect-card' : 'warning-card'
-                                    }`}
+                                            isPerfect ? 'perfect-card' : 'warning-card'
+                                        }`}
                                     key={song.id}
                                 >
                                     <div className="card-actions">
                                         {song.status !== 'uploaded' && song.status !== 'uploading' && (
-                                            <button className="card-edit-btn" onClick={() => toggleEdit(song.id)} aria-label="Edit metadata">
+                                            <button type="button" className="card-edit-btn" onClick={() => toggleEdit(song.id)} aria-label="Edit metadata">
                                                 {song.isEditing ? 'Save' : 'Edit'}
                                             </button>
                                         )}
-                                        <button className="card-remove-btn" onClick={() => removeSong(song.id)} aria-label="Remove card">×</button>
+                                        <button type="button" className="card-remove-btn" onClick={() => removeSong(song.id)} aria-label="Remove card">×</button>
                                     </div>
 
                                     {/* Left Side: Album Art */}
-                                    <div 
+                                    <div
                                         className={`album-art-side ${song.isEditing ? 'editable-art' : ''}`}
                                         onClick={() => {
                                             if (song.isEditing) {
@@ -481,15 +480,15 @@ const Upload = () => {
                                             </div>
                                         )}
                                         {!meta.albumArt && <span className="no-art-badge">No Cover</span>}
-                                        
+
                                         {song.isEditing && (
                                             <div className="change-art-overlay">
                                                 <span>Change Cover</span>
                                             </div>
                                         )}
-                                        
+
                                         {song.isEditing && (
-                                            <input 
+                                            <input
                                                 type="file"
                                                 id={`art-input-${song.id}`}
                                                 accept="image/*"
@@ -506,7 +505,7 @@ const Upload = () => {
                                                 {meta.title}
                                             </h3>
                                             {song.status === 'uploading' ? (
-                                                <span className="status-badge uploading">Uploading...</span>
+                                                <span className="status-badge uploading">Uploading…</span>
                                             ) : song.status === 'uploaded' ? (
                                                 <span className="status-badge uploaded">✓ Uploaded</span>
                                             ) : song.status === 'upload-error' ? (
@@ -524,11 +523,11 @@ const Upload = () => {
                                             <li className={!meta.title || meta.title === "Unknown Title" ? "missing-field" : ""}>
                                                 <span className="field-label">Title</span>
                                                 {song.isEditing ? (
-                                                    <input 
-                                                        type="text" 
-                                                        className="metadata-field-input" 
-                                                        value={meta.title || ''} 
-                                                        onChange={(e) => handleFieldChange(song.id, 'title', e.target.value)} 
+                                                    <input
+                                                        type="text"
+                                                        className="metadata-field-input"
+                                                        value={meta.title || ''}
+                                                        onChange={(e) => handleFieldChange(song.id, 'title', e.target.value)}
                                                     />
                                                 ) : (
                                                     <span className="field-value">{meta.title}</span>
@@ -537,11 +536,11 @@ const Upload = () => {
                                             <li className={!meta.artist || meta.artist === "Unknown Artist" ? "missing-field" : ""}>
                                                 <span className="field-label">Artist</span>
                                                 {song.isEditing ? (
-                                                    <input 
-                                                        type="text" 
-                                                        className="metadata-field-input" 
-                                                        value={meta.artist || ''} 
-                                                        onChange={(e) => handleFieldChange(song.id, 'artist', e.target.value)} 
+                                                    <input
+                                                        type="text"
+                                                        className="metadata-field-input"
+                                                        value={meta.artist || ''}
+                                                        onChange={(e) => handleFieldChange(song.id, 'artist', e.target.value)}
                                                     />
                                                 ) : (
                                                     <span className="field-value">{meta.artist}</span>
@@ -550,11 +549,11 @@ const Upload = () => {
                                             <li className={!meta.album ? "missing-field" : ""}>
                                                 <span className="field-label">Album</span>
                                                 {song.isEditing ? (
-                                                    <input 
-                                                        type="text" 
-                                                        className="metadata-field-input" 
-                                                        value={meta.album || ''} 
-                                                        onChange={(e) => handleFieldChange(song.id, 'album', e.target.value)} 
+                                                    <input
+                                                        type="text"
+                                                        className="metadata-field-input"
+                                                        value={meta.album || ''}
+                                                        onChange={(e) => handleFieldChange(song.id, 'album', e.target.value)}
                                                     />
                                                 ) : (
                                                     <span className="field-value">{meta.album || <span className="empty-placeholder">Not Found</span>}</span>
@@ -563,11 +562,11 @@ const Upload = () => {
                                             <li className={!meta.genre ? "missing-field" : ""}>
                                                 <span className="field-label">Genre</span>
                                                 {song.isEditing ? (
-                                                    <input 
-                                                        type="text" 
-                                                        className="metadata-field-input" 
-                                                        value={meta.genre || ''} 
-                                                        onChange={(e) => handleFieldChange(song.id, 'genre', e.target.value)} 
+                                                    <input
+                                                        type="text"
+                                                        className="metadata-field-input"
+                                                        value={meta.genre || ''}
+                                                        onChange={(e) => handleFieldChange(song.id, 'genre', e.target.value)}
                                                     />
                                                 ) : (
                                                     <span className="field-value">{meta.genre || <span className="empty-placeholder">Not Found</span>}</span>
@@ -576,11 +575,11 @@ const Upload = () => {
                                             <li className={!meta.year ? "missing-field" : ""}>
                                                 <span className="field-label">Year</span>
                                                 {song.isEditing ? (
-                                                    <input 
-                                                        type="number" 
-                                                        className="metadata-field-input" 
-                                                        value={meta.year || ''} 
-                                                        onChange={(e) => handleFieldChange(song.id, 'year', e.target.value)} 
+                                                    <input
+                                                        type="number"
+                                                        className="metadata-field-input"
+                                                        value={meta.year || ''}
+                                                        onChange={(e) => handleFieldChange(song.id, 'year', e.target.value)}
                                                     />
                                                 ) : (
                                                     <span className="field-value">{meta.year || <span className="empty-placeholder">Not Found</span>}</span>

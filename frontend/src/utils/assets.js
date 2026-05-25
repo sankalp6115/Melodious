@@ -11,13 +11,14 @@ export const getAssetUrl = (path) => {
 
   // Normalize legacy paths and singular/plural mismatches
   let cleanPath = path
+    .replace(/^\/+/, "") // Remove leading slashes first
     .replace(/^\.\.\/\.\.\/Assets\/Images\//i, "") // Remove legacy Assets/Images/ prefix
     .replace(/^\.\.\/\.\.\//, "") // Remove relative dots
     .replace(/^assets\//i, "") // Remove existing assets/ prefix
     .replace(/^playlist-poster\//i, "playlist-posters/") // Fix singular/plural mismatch
     .replace(/^album-art\//i, "album-arts/") // Fix singular/plural mismatch
     .replace(/^artist-image\//i, "artist-images/") // Fix singular/plural mismatch
-    .replace(/^\/+/, ""); // Remove leading slashes
+    .replace(/^\/+/, ""); // Remove leading slashes again if needed
 
   // Ensure we are pointing to the backend's /assets mount point
   return path ? `${BACKEND}/assets/${cleanPath}` : null;

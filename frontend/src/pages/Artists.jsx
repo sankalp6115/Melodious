@@ -6,7 +6,7 @@ import { backend, port } from "../backend_url";
 
 const Artists = () => {
     const [artists, setArtists] = useState([]);
-    
+
     const BACKEND_HOST = backend || window.location.hostname;
     const PORT = port || "8000";
     const BACKEND = `http://${BACKEND_HOST}:${PORT}`;
@@ -28,10 +28,10 @@ const Artists = () => {
                 {featuredArtists.map(artist => (
                     <Link to={`/artist/${artist.id}`} className="artist-card" key={artist.id}>
                         <div className="artist-poster">
-                            <img 
-                                src={getAssetUrl(artist.image)} 
-                                alt={artist.name} 
-                                onError={(e) => { e.target.src = getAssetUrl('album-arts/default.jpg'); }}
+                            <img
+                                src={getAssetUrl(artist.image)}
+                                alt={artist.name}
+                                onError={(e) => { e.target.src = getAssetUrl('/assets/artist-images/default.jpg'); }}
                             />
                         </div>
                         <span className="artist-title">{artist.name}</span>

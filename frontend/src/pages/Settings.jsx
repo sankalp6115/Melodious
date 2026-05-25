@@ -48,7 +48,7 @@ const Settings = () => {
         alignItems: 'center'
       }}>
         <span style={{ fontSize: '18px' }}>Oneko Cat:</span>
-        <button
+        <button type="button"
           onClick={toggleOneko}
           style={{
             padding: '10px 20px',
@@ -74,7 +74,7 @@ const Settings = () => {
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ fontSize: '18px' }}>Speed Control UI:</span>
-          <button
+          <button type="button"
             onClick={toggleSpeed}
             style={{
               padding: '10px 20px',
@@ -95,10 +95,9 @@ const Settings = () => {
           </div>
         )}
       </div>
-
-      <p style={{ opacity: 0.6, textAlign: 'center', marginTop: '40px' }}>
+      {/* <p style={{ opacity: 0.6, textAlign: 'center', marginTop: '40px' }}>
         Settings are synced across active player windows via Broadcast Channel.
-      </p>
+      </p> */}
     </section>
   );
 };

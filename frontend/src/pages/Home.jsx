@@ -103,24 +103,24 @@ const Home = () => {
         <section className="home-section">
           <div className="section-header">
             <h2 className="heading">Your Playlists</h2>
-            <button className="create-playlist-btn" onClick={() => setIsModalOpen(true)}>
+            <button type="button" className="create-playlist-btn" onClick={() => setIsModalOpen(true)}>
               <span style={{ fontSize: '1.2rem', lineHeight: 1 }}>+</span> Create Playlist
             </button>
           </div>
           <div className="playlists-grid">
             {playlists.map(pl => (
-              <Link 
-                to={`/playlist/${pl.id}`} 
-                className="playlist-card-link" 
+              <Link
+                to={`/playlist/${pl.id}`}
+                className="playlist-card-link"
                 key={pl.id}
                 data-playlist-id={pl.id}
                 data-playlist-name={pl.name}
               >
                 <div className="playlist-card">
                   <div className="playlist-poster">
-                    <img 
-                      src={getAssetUrl(pl.poster)} 
-                      alt={pl.name} 
+                    <img
+                      src={getAssetUrl(pl.poster)}
+                      alt={pl.name}
                       loading="lazy"
                       onError={(e) => { e.target.src = getAssetUrl('album-arts/default.jpg'); }}
                     />
@@ -128,8 +128,8 @@ const Home = () => {
                       <span className="playlist-title">{pl.name}</span>
                     </div>
                   </div>
-                  <button className="playPauseBtn">
-                    <img src="/assets/images/ui/play.jpg" alt="Play" />
+                  <button type="button" className="playPauseBtn">
+                    <img src="/assets/images/ui/play.png" alt="Play" />
                   </button>
                 </div>
               </Link>
@@ -140,13 +140,13 @@ const Home = () => {
         {/* Top Genres */}
         <section className="home-section">
           <div className="section-header">
-             <h2 className="heading">Top Genres</h2>
+            <h2 className="heading">Top Genres</h2>
           </div>
           <div className="genres-flex">
             {genres.map(genre => (
-              <div 
-                className="genre-chip" 
-                key={genre.name} 
+              <div
+                className="genre-chip"
+                key={genre.name}
                 style={{ backgroundColor: genre.color }}
               >
                 {genre.name}
@@ -160,15 +160,14 @@ const Home = () => {
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <span className="modal-title">Create Playlist</span>
-              <button className="modal-close-btn" onClick={handleCloseModal}>&times;</button>
+              <button type="button" className="modal-close-btn" onClick={handleCloseModal}>&times;</button>
             </div>
             <form onSubmit={handleCreatePlaylist} className="modal-form">
               <div className="form-group">
                 <label className="form-label">Playlist Name</label>
-                <input 
-                  type="text" 
-                  className="form-input" 
+                <input
+                  type="text"
+                  className="form-input"
                   value={playlistName}
                   onChange={(e) => setPlaylistName(e.target.value)}
                   placeholder="My Awesome Playlist"
@@ -178,16 +177,16 @@ const Home = () => {
               </div>
               <div className="form-group">
                 <label className="form-label">Cover Poster</label>
-                <div 
+                <div
                   className={`modal-dropzone ${isDragOver ? 'dragover' : ''}`}
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   onDrop={handleDrop}
                   onClick={() => document.getElementById('poster-file-input').click()}
                 >
-                  <input 
-                    type="file" 
-                    id="poster-file-input" 
+                  <input
+                    type="file"
+                    id="poster-file-input"
                     style={{ display: 'none' }}
                     accept="image/*"
                     onChange={handleFileChange}
@@ -196,7 +195,7 @@ const Home = () => {
                     <img src={posterPreview} className="preview-img" alt="Poster preview" />
                   ) : (
                     <div className="modal-dropzone-content">
-                      <div style={{ fontSize: '2rem', marginBottom: '8px' }}>🖼️</div>
+                      <div style={{ fontSize: '2rem', marginBottom: '8px' }}></div>
                       Drag & drop an image here, or click to browse
                       <span>If empty, a random poster will be chosen</span>
                     </div>

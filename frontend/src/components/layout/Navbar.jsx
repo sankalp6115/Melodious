@@ -5,9 +5,10 @@ import VoiceControl from '../shared/VoiceControl';
 import { TegakiRenderer } from 'tegaki';
 // import bundle from 'tegaki/fonts/caveat';
 import bundle from '../../../cookie/bundle.ts';
+import Searchbar from '../shared/Searchbar.jsx';
 
 
-const Navbar = () => {
+const Navbar = ({ onToggleSidebar }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const clickCount = useRef(0);
   const { searchQuery, setSearchQuery } = use(PlayerContext);
@@ -22,48 +23,24 @@ const Navbar = () => {
     return () => clearTimeout(handler);
   }, [localSearch, setSearchQuery]);
 
-  const handleLogoClick = () => {
-    const newCount = clickCount.current + 1;
-    console.log(newCount);
-    if(newCount == 5){
-      console.log("Drum mode activated");
-    }
-    clickCount.current = newCount;
-    if (newCount === 5) {
-      clickCount.current = 0;
-    }
-  };
-
   return (
     <header className="main-header">
-      {/* <div className="title" onClick={handleLogoClick}>
+      <button type="button" className="burger-menu-btn" onClick={onToggleSidebar} aria-label="Toggle Menu">
+        <span className="burger-bar"></span>
+        <span className="burger-bar"></span>
+        <span className="burger-bar"></span>
+      </button>
+      <div className="title">
         <span className="logo-text">Melodious</span>
-      </div> */}
-      <div className="header-center">
-      <TegakiRenderer onClick={handleLogoClick} font={bundle}> Melodious </TegakiRenderer>
       </div>
 
       <div className="header-right">
-        <div className="search-container">
-          <input 
-            type="text" 
-            className="search-input" 
-            name="searchBar" 
-            placeholder="Type Here to Search" 
-            id="search"
-            value={localSearch}
-            onChange={(e) => setLocalSearch(e.target.value)}
-          />
-          <button className="search-icon-btn">
-            <img src="/assets/images/ui/search.png" alt="Search" />
-          </button>
-        </div>
-        <VoiceControl />
-
+        {/* Insert searchbar comp here */}
+        <Searchbar localSearch={localSearch} setLocalSearch={setLocalSearch} />
         <section className="profile">
-          <div 
-            className="user-avatar" 
-            id="avatar-btn" 
+          <div
+            className="user-avatar"
+            id="avatar-btn"
             role="button"
             tabIndex={0}
             onClick={() => setMenuOpen(!menuOpen)}

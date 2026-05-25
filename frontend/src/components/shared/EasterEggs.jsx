@@ -57,14 +57,4 @@ const EasterEggs = () => {
   );
 };
 
-// We will export a simple handler for the logo click egg as well
-export const handleLogoClick = (count) => {
-  if (count === 5) {
-    alert("Congo! You Unlocked the Easter Egg!");
-    // Logic for unlocking drum kit could go here
-    return true;
-  }
-  return false;
-};
-
 export default EasterEggs;

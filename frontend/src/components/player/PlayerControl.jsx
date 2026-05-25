@@ -1,5 +1,5 @@
 import React, { use, useState, useEffect, useRef } from 'react';
-import { PlayerContext } from '../../contexts/PlayerContext';
+import { PlayerContext, PlayerProgressContext } from '../../contexts/PlayerContext';
 import VoiceControl from '../shared/VoiceControl';
 import Visualizer from '../shared/Visualizer';
 import VolumeControl from '../shared/VolumeControl';
@@ -8,10 +8,14 @@ const PlayerControl = () => {
   const {
     songs, currentSongIndex, isPlaying, togglePlayPause,
     nextSong, prevSong, volume, setVolume,
-    currentTime, duration, seek, isShuffled, setIsShuffled,
+    isShuffled, setIsShuffled,
     isLooped, setIsLooped, playbackRate, setPlaybackRate,
     parsedLyrics, currentSong
   } = use(PlayerContext);
+
+  const {
+    currentTime, duration, seek
+  } = use(PlayerProgressContext);
 
   const [lyricsOpen, setLyricsOpen] = useState(false);
   const [showVolume, setShowVolume] = useState(false);
@@ -26,10 +30,10 @@ const PlayerControl = () => {
   // Auto-scroll logic
   useEffect(() => {
     if (lyricsOpen && activeLyric && lyricsContainerRef.current) {
-        const activeEl = lyricsContainerRef.current.querySelector('.lyrics-line.active');
-        if (activeEl) {
-            activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+      const activeEl = lyricsContainerRef.current.querySelector('.lyrics-line.active');
+      if (activeEl) {
+        activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
   }, [activeLyric, lyricsOpen]);
 
@@ -53,7 +57,7 @@ const PlayerControl = () => {
       <div className="player">
         <div className="albumArt_and_songInfo">
           <div className="player-album-art">
-            <img src={currentSong?.albumArt} alt="" id="player-album-art-img" />
+            <img src={currentSong?.albumArt} alt="ui" id="player-album-art-img" />
           </div>
           <div className="player-song-info">
             <div className="player-song-title" id="songTitle">
@@ -67,43 +71,45 @@ const PlayerControl = () => {
 
         <div className="controls_and_progress">
           <div className="controls">
-            <button
+            <VoiceControl />
+            <button type="button"
               className={`control_button ${isLooped ? "activeShuffle" : "inactiveShuffle"}`}
               onClick={() => setIsLooped(!isLooped)}
               id="repeatBtn"
             />
-            <button className="control_button" id="prevBtn" onClick={prevSong}>
-              <img src="/assets/images/ui/previous.jpg" alt="back" />
+            <button type="button" className="control_button" id="prevBtn" onClick={prevSong}>
+              <img src="/assets/images/ui/previous.png" alt="back" />
             </button>
-            <button className="control_button" id="playPauseBtn" onClick={togglePlayPause}>
+            <button type="button" className="control_button" id="playPauseBtn" onClick={togglePlayPause}>
               <img
-                src={isPlaying ? "/assets/images/ui/pause.jpg" : "/assets/images/ui/play.jpg"}
+                src={isPlaying ? "/assets/images/ui/pause.png" : "/assets/images/ui/play.png"}
                 id="play-pause-image"
                 alt="start-stop"
               />
             </button>
-            <button className="control_button" id="nextBtn" onClick={nextSong}>
-              <img src="/assets/images/ui/next.jpg" alt="next" />
+            <button type="button" className="control_button" id="nextBtn" onClick={nextSong}>
+              <img src="/assets/images/ui/next.png" alt="next" />
             </button>
-            <button
+            <button type="button"
               className={`control_button shuffleBtn ${isShuffled ? "active-shuffle" : ""}`}
               id="shuffleBtn"
               onClick={() => setIsShuffled(!isShuffled)}
             >
-              <img src="/assets/images/ui/shuffle-enabled.jpg" alt="shuffle" />
+              <img src="/assets/images/ui/shuffle-enabled.png" alt="shuffle" />
             </button>
-            <button className="lyrics-open" onClick={() => setLyricsOpen(!lyricsOpen)}>
-          <img
-            src="/assets/images/ui/menu_open.png"
-            alt="lyrics"
-            className="lyric-open-img"
-            style={{ transform: lyricsOpen ? "rotate(0deg)" : "rotate(90deg)", filter: lyricsOpen ? 'none' : 'grayscale(100%)' }}
-          />
-        </button>
+
+            <button type="button" className="lyrics-open" onClick={() => setLyricsOpen(!lyricsOpen)}>
+              <img
+                src="/assets/images/ui/menu_open.png"
+                alt="lyrics"
+                className="lyric-open-img"
+                style={{ transform: lyricsOpen ? "rotate(0deg)" : "rotate(90deg)", filter: lyricsOpen ? 'none' : 'grayscale(100%)' }}
+              />
+            </button>
           </div>
 
           <Visualizer />
-          
+
           <div className="progress-bar">
             {/* Native hidden range fallback */}
             <input
@@ -116,9 +122,9 @@ const PlayerControl = () => {
               onChange={handleProgressChange}
             />
           </div>
-          <div 
-            className="progress-container" 
-            id="progress-container" 
+          <div
+            className="progress-container"
+            id="progress-container"
             role="slider"
             aria-label="Playback progress"
             aria-valuenow={currentTime}
@@ -151,41 +157,42 @@ const PlayerControl = () => {
           </div>
         </div>
 
-        <div className="volume-control">
-          <VolumeControl />
+        <div className="player-right-container">
+          <div className="volume-control">
+            <VolumeControl />
+          </div>
+          <img src="/assets/images/icons/side_cartoon.gif" className="side_cartoon" alt="cartoon" />
         </div>
 
         <div className="active-lyric-line">{activeLyric?.text || ""}</div>
         <div className="lyric-open-tooltip">Open Lyrics</div>
-
-        <img src="/assets/images/icons/side_cartoon.gif" style={{ position: "absolute", height: "50px", right: 0, bottom: 0 }} className="side_cartoon" alt="" />
       </div>
 
       {lyricsOpen && (
-         <div id="lyrics-container" style={{display: 'block'}} ref={lyricsContainerRef} role="region" aria-label="Lyrics display">
-            {parsedLyrics.length > 0 ? (
-                parsedLyrics.map((line) => (
-                    <div 
-                        key={line.time} 
-                        className={`lyrics-line ${activeLyric === line ? 'active' : ''}`}
-                        onClick={() => seek(line.time)}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault();
-                                seek(line.time);
-                            }
-                        }}
-                        style={{ cursor: 'pointer', padding: '10px', transition: '0.3s' }}
-                        role="button"
-                        tabIndex={0}
-                    >
-                        {line.text}
-                    </div>
-                ))
-            ) : (
-                <div className="no-lyrics" style={{color: '#fff', textAlign: 'center', marginTop: 20}}>No lyrics found</div>
-            )}
-         </div>
+        <div id="lyrics-container" style={{ display: 'block' }} ref={lyricsContainerRef} role="region" aria-label="Lyrics display">
+          {parsedLyrics.length > 0 ? (
+            parsedLyrics.map((line) => (
+              <div
+                key={line.time}
+                className={`lyrics-line ${activeLyric === line ? 'active' : ''}`}
+                onClick={() => seek(line.time)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    seek(line.time);
+                  }
+                }}
+                style={{ cursor: 'pointer', padding: '10px', transition: '0.3s' }}
+                role="button"
+                tabIndex={0}
+              >
+                {line.text}
+              </div>
+            ))
+          ) : (
+            <div className="no-lyrics" style={{ color: '#fff', textAlign: 'center', marginTop: 20 }}>No lyrics found</div>
+          )}
+        </div>
       )}
     </div>
   );

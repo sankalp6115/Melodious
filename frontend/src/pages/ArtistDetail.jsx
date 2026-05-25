@@ -1,5 +1,5 @@
 import React, { useEffect, useState, use, useRef } from 'react';
-import { useParams } from 'react-router-dom'; 
+import { useParams } from 'react-router-dom';
 import { PlayerContext } from '../contexts/PlayerContext';
 import '../styles/artists.css';
 import { getAssetUrl } from '../utils/assets';
@@ -36,7 +36,7 @@ const ArtistDetail = () => {
             try {
                 const colorThief = new window.ColorThief();
                 const [r, g, b] = colorThief.getColor(imgRef.current);
-                setHeaderBg(`linear-gradient(to right, rgb(${r},${g},${b}), rgb(${Math.max(r-60,0)}, ${Math.max(g-60,0)}, ${Math.max(b-60,0)}))`);
+                setHeaderBg(`linear-gradient(to right, rgb(${r},${g},${b}), rgb(${Math.max(r - 60, 0)}, ${Math.max(g - 60, 0)}, ${Math.max(b - 60, 0)}))`);
             } catch (e) {
                 console.error("ColorThief failed", e);
             }
@@ -50,10 +50,10 @@ const ArtistDetail = () => {
             <section className="artist-hero" style={{ background: headerBg }}>
                 <div className="artist-hero-content">
                     <div className="artist-big-poster">
-                        <img 
+                        <img
                             ref={imgRef}
-                            src={artist.image || `${BACKEND}/assets/artist-images/default-artist.jpg`} 
-                            alt={artist.name} 
+                            src={artist.image || `${BACKEND}/assets/artist-images/default-artist.jpg`}
+                            alt={artist.name}
                             onLoad={handleImgLoad}
                             onError={(e) => { e.target.src = getAssetUrl('album-arts/default.jpg'); }}
                             crossOrigin="anonymous"
@@ -85,8 +85,8 @@ const ArtistDetail = () => {
                         {artist.songs.map((song, index) => {
                             const isActive = song.id === currentSong?.id;
                             return (
-                                <tr 
-                                    key={song.id} 
+                                <tr
+                                    key={song.id}
                                     className={`row ${isActive ? 'active-row' : ''}`}
                                     role="button"
                                     tabIndex={0}
@@ -100,11 +100,11 @@ const ArtistDetail = () => {
                                 >
                                     <td className="table-index">{index + 1}</td>
                                     <td className="table-art">
-                                        <img 
-                                            src={song.albumArt} 
+                                        <img
+                                            src={song.albumArt}
                                             loading="lazy"
-                                            className={`album-art ${isActive && isPlaying ? 'active-album-art' : ''}`} 
-                                            alt="" 
+                                            className={`album-art ${isActive && isPlaying ? 'active-album-art' : ''}`}
+                                            alt={song.title}
                                             onError={(e) => { e.target.src = getAssetUrl('album-arts/default.jpg'); }}
                                         />
                                     </td>

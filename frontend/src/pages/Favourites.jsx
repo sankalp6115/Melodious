@@ -4,10 +4,10 @@ import { getAssetUrl } from '../utils/assets';
 import '../styles/playlist-detail.css'; // Reusing table styles
 
 const Favourites = () => {
-    const { 
-        songs, 
-        playSong, 
-        isPlaying, 
+    const {
+        songs,
+        playSong,
+        isPlaying,
         currentSong
     } = use(PlayerContext);
 
@@ -21,9 +21,9 @@ const Favourites = () => {
             <section className="playlist-hero" style={{ background: 'linear-gradient(to bottom, #4a0e17, #000)' }}>
                 <div className="playlist-hero-content">
                     <div className="hero-poster" style={{ padding: '20px', background: 'rgba(255,255,255,0.05)', borderRadius: '15px' }}>
-                        <img 
-                            src="/assets/images/ui/heart.png" 
-                            alt="Favourites" 
+                        <img
+                            src="/assets/images/ui/heart.png"
+                            alt="Favourites"
                             style={{ objectFit: 'contain', filter: 'drop-shadow(0 0 10px rgba(255,0,0,0.4))' }}
                             onError={(e) => { e.target.src = getAssetUrl('album-arts/default.jpg'); }}
                         />
@@ -47,15 +47,15 @@ const Favourites = () => {
                             <th>Title</th>
                             <th>Artist</th>
                             <th>Album</th>
-                            <th>⏱︎</th>
+                            <th className="table-length-header">⏱︎</th>
                         </tr>
                     </thead>
                     <tbody>
                         {favouriteSongs.map((song, index) => {
                             const isActive = song.id === currentSong?.id;
                             return (
-                                <tr 
-                                    key={song.id} 
+                                <tr
+                                    key={song.id}
                                     className={`row ${isActive ? 'active-row' : ''}`}
                                     data-song-id={song.id}
                                     role="button"
@@ -70,11 +70,11 @@ const Favourites = () => {
                                 >
                                     <td className="table-index">{index + 1}</td>
                                     <td className="table-art">
-                                        <img 
-                                            src={song.albumArt} 
+                                        <img
+                                            src={song.albumArt}
                                             loading="lazy"
-                                            className={`album-art ${isActive && isPlaying ? 'active-album-art' : ''}`} 
-                                            alt="" 
+                                            className={`album-art ${isActive && isPlaying ? 'active-album-art' : ''}`}
+                                            alt={song.title}
                                             onError={(e) => { e.target.src = getAssetUrl('album-arts/default.jpg'); }}
                                         />
                                     </td>

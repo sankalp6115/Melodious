@@ -1,10 +1,11 @@
-import React, { createContext, useState, useEffect, useRef } from 'react';
+import React, { createContext, useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Fuse from 'fuse.js';
 import { getAssetUrl } from '../utils/assets';
 import { backend, port } from '../backend_url';
 
 
 export const PlayerContext = createContext();
+export const PlayerProgressContext = createContext();
 
 const parseLyrics = (text) => {
   if (!text) return [];
@@ -233,7 +234,7 @@ export const PlayerProvider = ({ children }) => {
     }
 
     const fuseOptions = {
-      threshold: 0.6,
+      threshold: 0.4,
       keys: ["title", "artists", "album", "genre"],
     };
     const fuse = new Fuse(songs, fuseOptions);
@@ -243,15 +244,15 @@ export const PlayerProvider = ({ children }) => {
 
   const currentSong = activeQueue.length > 0 ? activeQueue[currentSongIndex] : songs[currentSongIndex];
 
-  const addToRecents = (songId) => {
+  const addToRecents = useCallback((songId) => {
     setRecentSongIds(prev => {
       const filtered = prev.filter(id => String(id) !== String(songId));
       const updated = [songId, ...filtered];
       return updated.slice(0, maxRecents);
     });
-  };
+  }, [maxRecents]);
 
-  const playSong = (index, queue = null, isFromRecents = false) => {
+  const playSong = useCallback((index, queue = null, isFromRecents = false) => {
     const targetQueue = queue || (activeQueue.length > 0 ? activeQueue : songs);
     const song = targetQueue[index];
 
@@ -272,19 +273,21 @@ export const PlayerProvider = ({ children }) => {
       if (pos !== -1) setShufflePointer(pos);
     }
     setIsPlaying(true);
-  };
+  }, [activeQueue, songs, addToRecents, isShuffled, shuffledIndices]);
 
-  const togglePlayPause = () => {
+  const togglePlayPause = useCallback(() => {
     if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
+    setIsPlaying(prev => {
+      if (prev) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play().catch(() => { });
+      }
+      return !prev;
+    });
+  }, []);
 
-  const nextSong = () => {
+  const nextSong = useCallback(() => {
     const queue = activeQueue.length > 0 ? activeQueue : songs;
     if (queue.length === 0) return;
 
@@ -300,9 +303,9 @@ export const PlayerProvider = ({ children }) => {
       setCurrentSongIndex((currentSongIndex + 1) % queue.length);
     }
     setIsPlaying(true);
-  };
+  }, [activeQueue, songs, isShuffled, shuffledIndices, shufflePointer, currentSongIndex]);
 
-  const prevSong = () => {
+  const prevSong = useCallback(() => {
     const queue = activeQueue.length > 0 ? activeQueue : songs;
     if (queue.length === 0) return;
 
@@ -323,21 +326,21 @@ export const PlayerProvider = ({ children }) => {
       setCurrentSongIndex((currentSongIndex - 1 + queue.length) % queue.length);
     }
     setIsPlaying(true);
-  };
+  }, [activeQueue, songs, isShuffled, shuffledIndices, shufflePointer, currentSongIndex]);
 
-  const addToQueueNext = (song) => {
+  const addToQueueNext = useCallback((song) => {
     const queue = activeQueue.length > 0 ? activeQueue : songs;
     const newQueue = [...queue];
     newQueue.splice(currentSongIndex + 1, 0, song);
     setActiveQueue(newQueue);
-    console.log(activeQueue);
-  };
+    // console.log(activeQueue);
+  }, [activeQueue, songs, currentSongIndex]);
 
-  const addToQueueLast = (song) => {
+  const addToQueueLast = useCallback((song) => {
     const queue = activeQueue.length > 0 ? activeQueue : songs;
     setActiveQueue([...queue, song]);
-    console.log(activeQueue);
-  };
+    // console.log(activeQueue);
+  }, [activeQueue, songs]);
 
   // System controls
   if ('mediaSession' in navigator) {
@@ -359,7 +362,7 @@ export const PlayerProvider = ({ children }) => {
   }
 
   // Helper for UI to know what's truly next
-  const getNextSongInfo = () => {
+  const getNextSongInfo = useCallback(() => {
     const queue = activeQueue.length > 0 ? activeQueue : songs;
     if (queue.length === 0) return null;
     if (isShuffled && shuffledIndices.length > 0) {
@@ -367,7 +370,7 @@ export const PlayerProvider = ({ children }) => {
       return queue[shuffledIndices[nextPointer]];
     }
     return queue[(currentSongIndex + 1) % queue.length];
-  };
+  }, [activeQueue, songs, isShuffled, shuffledIndices, shufflePointer, currentSongIndex]);
 
   const handleTimeUpdate = () => {
     if (audioRef.current) {
@@ -376,12 +379,12 @@ export const PlayerProvider = ({ children }) => {
     }
   };
 
-  const seek = (time) => {
+  const seek = useCallback((time) => {
     if (audioRef.current) {
       audioRef.current.currentTime = time;
       setCurrentTime(time);
     }
-  };
+  }, []);
 
   // Sync to audio element
   useEffect(() => {
@@ -423,20 +426,36 @@ export const PlayerProvider = ({ children }) => {
     }
   }, [currentSongIndex, songs, lyrics]);
 
+  const playerContextValue = useMemo(() => ({
+    songs, activeQueue, currentSong, lyrics, parsedLyrics,
+    currentSongIndex, isPlaying, isShuffled, isLooped, volume, playbackRate,
+    searchQuery, setSearchQuery, searchResults, isOnekoEnabled, setIsOnekoEnabled,
+    recentSongIds, maxRecents, setMaxRecents,
+    playlists, refetchPlaylists,
+    getNextSongInfo,
+    setIsShuffled, setIsLooped, setVolume, setPlaybackRate, setActiveQueue,
+    playSong, togglePlayPause, nextSong, prevSong,
+    addToQueueNext, addToQueueLast,
+    audioRef, refetchSongs
+  }), [
+    songs, activeQueue, currentSong, lyrics, parsedLyrics,
+    currentSongIndex, isPlaying, isShuffled, isLooped, volume, playbackRate,
+    searchQuery, searchResults, isOnekoEnabled,
+    recentSongIds, maxRecents,
+    playlists, refetchPlaylists,
+    getNextSongInfo,
+    playSong, togglePlayPause, nextSong, prevSong,
+    addToQueueNext, addToQueueLast,
+    refetchSongs
+  ]);
+
+  const playerProgressContextValue = useMemo(() => ({
+    currentTime, duration, seek
+  }), [currentTime, duration, seek]);
+
   return (
-    <>
-      <PlayerContext.Provider value={{
-        songs, activeQueue, currentSong, lyrics, parsedLyrics,
-        currentSongIndex, isPlaying, isShuffled, isLooped, volume, playbackRate, currentTime, duration,
-        searchQuery, setSearchQuery, searchResults, isOnekoEnabled, setIsOnekoEnabled,
-        recentSongIds, maxRecents, setMaxRecents,
-        playlists, refetchPlaylists,
-        getNextSongInfo,
-        setIsShuffled, setIsLooped, setVolume, setPlaybackRate, setActiveQueue,
-        playSong, togglePlayPause, nextSong, prevSong, seek,
-        addToQueueNext, addToQueueLast,
-        audioRef, refetchSongs
-      }}>
+    <PlayerContext.Provider value={playerContextValue}>
+      <PlayerProgressContext.Provider value={playerProgressContextValue}>
         {children}
         {songs.length > 0 && (
           <audio
@@ -450,7 +469,7 @@ export const PlayerProvider = ({ children }) => {
             crossOrigin="anonymous"
           />
         )}
-      </PlayerContext.Provider>
-    </>
+      </PlayerProgressContext.Provider>
+    </PlayerContext.Provider>
   );
 };

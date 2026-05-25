@@ -47,8 +47,10 @@ def split_artists(artist_string):
     return [a.strip() for a in artist_string.split("|") if a.strip()]
 
 def fallback_art():
-    index = random.randint(0,len(fallback_art_arr))
-    return str("assets/album-arts/" + fallback_art_arr[index])
+    if not fallback_art_arr:
+        return "assets/album-arts/default.jpg"
+    filename = random.choice(fallback_art_arr)
+    return f"assets/album-arts/fallback/{filename}"
 
 def extract_metadata(file_path):
     """Extract metadata and album art from an MP3 file."""
@@ -197,13 +199,28 @@ def sync(reset=False, cleanup=False):
     for artist_name in sorted(all_artists):
         artist_obj = artist_lookup.get(artist_name, {"name": artist_name, "image": None})
         
-        # Check for image if null
-        if not artist_obj.get("image"):
+        has_valid_image = False
+        
+        # If an image path already exists in JSON, check if the file exists on disk
+        if artist_obj.get("image"):
+            # Extract just the filename to find it in ARTIST_IMAGES_DIR
+            img_filename = Path(artist_obj["image"]).name
+            if (ARTIST_IMAGES_DIR / img_filename).exists():
+                artist_obj["image"] = f"/artist-images/{img_filename}"
+                has_valid_image = True
+        
+        # If no valid image is found, search disk for lowercase matching extensions
+        if not has_valid_image:
+            found_image = False
             for ext in [".jpg", ".png", ".webp", ".jpeg"]:
                 img_name = f"{artist_name.lower()}{ext}"
                 if (ARTIST_IMAGES_DIR / img_name).exists():
-                    artist_obj["image"] = f"/assets/artist-images/{img_name}"
+                    artist_obj["image"] = f"/artist-images/{img_name}"
+                    found_image = True
                     break
+            
+            if not found_image:
+                artist_obj["image"] = None
         
         final_artists.append(artist_obj)
         

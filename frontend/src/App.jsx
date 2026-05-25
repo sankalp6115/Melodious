@@ -13,14 +13,13 @@ const Settings = lazy(() => import('./pages/Settings'));
 const PlaylistDetail = lazy(() => import('./pages/PlaylistDetail'));
 const ArtistDetail = lazy(() => import('./pages/ArtistDetail'));
 const Recent = lazy(() => import('./pages/Recent'));
-const Test = lazy(() => import('./pages/Test'));
 const Upload = lazy(() => import('./pages/Upload'));
 const Favourites = lazy(() => import('./pages/Favourites'));
 
 // Components
 const PlayerControl = lazy(() => import('./components/player/PlayerControl'));
 const EasterEggs = lazy(() => import('./components/shared/EasterEggs'));
-const ContextMenu = lazy(() => import('./components/layout/ContextMenu'));
+const ContextMenu = lazy(() => import('./components/shared/ContextMenu'));
 
 const Loading = () => <div className="loading-screen">Loading Melodious…</div>;
 
@@ -41,7 +40,6 @@ function App() {
                 <Route path="settings" element={<Settings />} />
                 <Route path="recent" element={<Recent />} />
                 <Route path="favourites" element={<Favourites />} />
-                <Route path="test" element={<Test />} />
                 <Route path="upload" element={<Upload />} />
               </Route>
             </Routes>

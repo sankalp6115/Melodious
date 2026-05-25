@@ -4,14 +4,14 @@ import { getAssetUrl } from '../utils/assets';
 import '../styles/playlist-detail.css'; // Reusing table styles
 
 const Recent = () => {
-    const { 
-        songs, 
-        recentSongIds, 
-        playSong, 
-        isPlaying, 
+    const {
+        songs,
+        recentSongIds,
+        playSong,
+        isPlaying,
         currentSong,
         maxRecents,
-        setMaxRecents 
+        setMaxRecents
     } = use(PlayerContext);
 
     // Filter and sort songs based on recent IDs
@@ -27,9 +27,9 @@ const Recent = () => {
             <section className="playlist-hero" style={{ background: 'linear-gradient(to bottom, #1a1a1a, #000)' }}>
                 <div className="playlist-hero-content">
                     <div className="hero-poster">
-                        <img 
-                            src="/assets/images/ui/recent.png" 
-                            alt="Recents" 
+                        <img
+                            src="/assets/images/ui/recent.png"
+                            alt="Recents"
                             onError={(e) => { e.target.src = getAssetUrl('album-arts/default.jpg'); }}
                         />
                     </div>
@@ -38,14 +38,14 @@ const Recent = () => {
                         <h1 className="playlist-name">Recently Played</h1>
                         <div className="settings-row" style={{ marginTop: '10px' }}>
                             <label htmlFor="max-recents-select" style={{ color: '#aaa', fontSize: '0.9rem' }}>Show last: </label>
-                            <select 
+                            <select
                                 id="max-recents-select"
-                                value={maxRecents} 
+                                value={maxRecents}
                                 onChange={(e) => setMaxRecents(Number(e.target.value))}
-                                style={{ 
-                                    background: '#222', 
-                                    color: '#fff', 
-                                    border: '1px solid #444', 
+                                style={{
+                                    background: '#222',
+                                    color: '#fff',
+                                    border: '1px solid #444',
                                     borderRadius: '4px',
                                     marginLeft: '10px',
                                     padding: '2px 5px'
@@ -70,15 +70,15 @@ const Recent = () => {
                             <th>Title</th>
                             <th>Artist</th>
                             <th>Album</th>
-                            <th>⏱︎</th>
+                            <th className="table-length-header">⏱︎</th>
                         </tr>
                     </thead>
                     <tbody>
                         {recentSongs.map((song, index) => {
                             const isActive = song.id === currentSong?.id;
                             return (
-                                <tr 
-                                    key={song.id} 
+                                <tr
+                                    key={song.id}
                                     className={`row ${isActive ? 'active-row' : ''}`}
                                     data-song-id={song.id}
                                     role="button"
@@ -93,11 +93,11 @@ const Recent = () => {
                                 >
                                     <td className="table-index">{index + 1}</td>
                                     <td className="table-art">
-                                        <img 
-                                            src={song.albumArt} 
+                                        <img
+                                            src={song.albumArt}
                                             loading="lazy"
-                                            className={`album-art ${isActive && isPlaying ? 'active-album-art' : ''}`} 
-                                            alt="" 
+                                            className={`album-art ${isActive && isPlaying ? 'active-album-art' : ''}`}
+                                            alt={song.title}
                                             onError={(e) => { e.target.src = getAssetUrl('album-arts/default.jpg'); }}
                                         />
                                     </td>

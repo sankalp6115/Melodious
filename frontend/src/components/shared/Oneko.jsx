@@ -25,7 +25,7 @@ const Oneko = () => {
         let windowWidth = window.innerWidth;
         let windowHeight = window.innerHeight;
 
-        const nekoSpeed = 12;
+        const nekoSpeed = 8;
         const spriteSets = {
             idle: [[-3, -3]],
             alert: [[-7, -3]],

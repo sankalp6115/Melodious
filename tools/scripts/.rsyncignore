@@ -6,4 +6,5 @@ node_modules
 .git
 __pycache__
 package-lock.json
-
+all_media
+downloads

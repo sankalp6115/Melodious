@@ -1,77 +1,87 @@
-import React, { use, useEffect, useRef, useState } from 'react';
+import React, { use, useEffect, useRef } from 'react';
 import { PlayerContext } from '../contexts/PlayerContext';
 
 const Explore = () => {
   const { songs, playSong, currentSongIndex, isPlaying, searchResults, currentSong } = use(PlayerContext);
   const containerRef = useRef(null);
-  const [highlightStyle, setHighlightStyle] = useState({ top: 0, height: 0, left: 0, width: 0, opacity: 0 });
+  const highlightRef = useRef(null);
 
   // Auto-scroll to search results
   useEffect(() => {
     if (searchResults.length > 0 && containerRef.current) {
-        const firstMatchId = searchResults[0];
-        const row = containerRef.current.querySelector(`[data-id="${firstMatchId}"]`);
-        if (row) {
-            row.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+      const firstMatchId = searchResults[0];
+      const row = containerRef.current.querySelector(`[data-id="${firstMatchId}"]`);
+      if (row) {
+        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
   }, [searchResults]);
 
-  const handleMouseMove = (e) => {
-    if (!containerRef.current) return;
-    const tr = e.target.closest("tr");
-    if (tr && containerRef.current.contains(tr) && tr.parentElement.tagName === 'TBODY') {
-      const rowRect = tr.getBoundingClientRect();
-      const containerRect = containerRef.current.getBoundingClientRect();
-      const tableEl = containerRef.current.querySelector(".song-table");
-      const tableRect = tableEl ? tableEl.getBoundingClientRect() : containerRect;
+  const handleMouseEnterRow = (e) => {
+    const tr = e.currentTarget;
+    const highlight = highlightRef.current;
+    if (!highlight || !containerRef.current) return;
 
-      setHighlightStyle({
-        top: rowRect.top - containerRect.top,
-        height: rowRect.height,
-        left: tableRect.left - containerRect.left,
-        width: tableRect.width,
-        opacity: 1
-      });
-    } else {
-      setHighlightStyle(prev => ({ ...prev, opacity: 0 }));
+    const tableEl = containerRef.current.querySelector(".song-table");
+    if (!tableEl) return;
+
+    let top = tr.offsetTop;
+    let parent = tr.offsetParent;
+    while (parent && parent !== containerRef.current) {
+      top += parent.offsetTop;
+      parent = parent.offsetParent;
     }
+
+    const height = tr.offsetHeight;
+    let left = tableEl.offsetLeft;
+    let parentLeft = tableEl.offsetParent;
+    while (parentLeft && parentLeft !== containerRef.current) {
+      left += parentLeft.offsetLeft;
+      parentLeft = parentLeft.offsetParent;
+    }
+    const width = tableEl.offsetWidth;
+
+    highlight.style.top = `${top}px`;
+    highlight.style.left = `${left}px`;
+    highlight.style.height = `${height}px`;
+    highlight.style.width = `${width}px`;
+    highlight.style.opacity = '1';
   };
 
   const handleMouseLeave = () => {
-    setHighlightStyle(prev => ({ ...prev, opacity: 0 }));
+    const highlight = highlightRef.current;
+    if (highlight) {
+      highlight.style.opacity = '0';
+    }
   };
 
   return (
-    <div 
-      id="songList" 
-      className="song-list-container" 
+    <div
+      id="songList"
+      className="song-list-container"
       ref={containerRef}
-      onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <div 
-        className="hover-highlight" 
+      <div
+        className="hover-highlight"
+        ref={highlightRef}
         style={{
-          top: highlightStyle.top,
-          height: highlightStyle.height,
-          left: highlightStyle.left,
-          width: highlightStyle.width,
-          opacity: highlightStyle.opacity
+          opacity: 0,
+          pointerEvents: 'none',
         }}
       />
       <table className="song-table">
-        <thead>
+        <thead onMouseEnter={handleMouseLeave}>
           <tr>
-            <th>#</th><th></th><th>Title</th><th>Artist</th><th>Album</th><th>Genre</th><th>⏱︎</th>
+            <th>#</th><th></th><th>Title</th><th>Artist</th><th>Album</th><th className="table-genre-header">Genre</th><th className="table-length-header">⏱︎</th>
           </tr>
         </thead>
         <tbody>
           {songs.map((song, index) => {
             const isActive = song.id === currentSong?.id;
             return (
-              <tr 
-                key={song.id || index} 
+              <tr
+                key={song.id || index}
                 data-id={song.id}
                 data-song-id={song.id}
                 className={`row ${isActive ? 'active-row' : ''} ${searchResults.includes(song.id) ? 'searchActive' : ''}`}
@@ -84,16 +94,17 @@ const Explore = () => {
                     playSong(index, songs);
                   }
                 }}
+                onMouseEnter={handleMouseEnterRow}
               >
                 <td className="table-index">{index + 1}</td>
                 <td className="table-art">
-                   <img src={song.albumArt} loading="lazy" className={`album-art ${isPlaying && isActive ? 'active-album-art' : ''}`} alt="" />
+                  <img src={song.albumArt} loading="lazy" className={`album-art ${isPlaying && isActive ? 'active-album-art' : ''}`} alt="album-art" />
                 </td>
-              <td className="table-title">{song.title}</td>
-              <td className="table-artist">{song.artists?.join(", ") || "Unknown"}</td>
-              <td className="table-album">{song.album || "—"}</td>
-              <td className="table-genre">{song.genre || "—"}</td>
-              <td className="table-length">{`${Math.floor((song.duration || 0) / 60)}:${String((song.duration || 0) % 60).padStart(2, "0")}`}</td>
+                <td className="table-title">{song.title}</td>
+                <td className="table-artist" > {song.artists?.join(", ") || "Unknown"}</td>
+                <td className="table-album">{song.album || "—"}</td>
+                <td className="table-genre">{song.genre || "—"}</td>
+                <td className="table-length" > {`${Math.floor((song.duration || 0) / 60)}:${String((song.duration || 0) % 60).padStart(2, "0")}`}</td>
               </tr>
             );
           })}

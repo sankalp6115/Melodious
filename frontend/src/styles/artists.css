@@ -3,8 +3,8 @@
 }
 
 .artists-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 25px;
     margin-top: 20px;
 }
@@ -15,11 +15,10 @@
     align-items: center;
     gap: 12px;
     padding: 15px;
-    border-radius: 12px;
+    border-radius: 10px;
     transition: all 0.3s ease;
     text-decoration: none;
     color: white;
-    width: 180px;
 }
 
 .artist-card:hover {
@@ -31,15 +30,17 @@
     width: 150px;
     height: 150px;
     border-radius: 50%;
+    corner-shape: squircle;
     overflow: hidden;
     border: 3px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .artist-poster img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 0;
 }
 
 .artist-title {
@@ -53,7 +54,9 @@
 }
 
 /* Other Artists List */
-.mt-40 { margin-top: 40px; }
+.mt-40 {
+    margin-top: 40px;
+}
 
 .other-artists-list {
     display: flex;
@@ -77,35 +80,39 @@
     color: #ff0844;
 }
 
-.dot { color: #ff0844; }
+.dot {
+    color: #ff0844;
+}
 
 /* Artist Detail Hero */
 .artist-detail-container {
     display: flex;
     flex-direction: column;
+    margin-top: 20px;
 }
 
 .artist-hero {
-    height: 350px;
+    height: 200px;
     width: 100%;
-    padding: 40px;
+    padding: 20px;
     display: flex;
     align-items: flex-end;
+    border-radius: 0 20px 0 0;
 }
 
 .artist-hero-content {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 20px;
 }
 
 .artist-big-poster {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     overflow: hidden;
-    border: 6px solid white;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    border: 5px solid white;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
 }
 
 .artist-big-poster img {
@@ -115,7 +122,7 @@
 }
 
 .artist-name-big {
-    font-size: 5rem;
+    font-size: 4rem;
     margin: 0;
     font-weight: 800;
     font-family: 'Oswald', sans-serif;

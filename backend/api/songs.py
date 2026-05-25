@@ -16,7 +16,6 @@ SONGS_DIR = get_songs_dir()
 
 
 # ---------- HELPER ----------
-
 def sanitize_filename(filename: str) -> str:
     """Sanitize the filename to be safe for URLs and the filesystem."""
     # Decode URL encoding if any
@@ -278,14 +277,28 @@ async def upload_song(
         song_id = cursor.lastrowid
         
         # Link song to artists
-        artist_names = [a.strip() for a in artists.split(",") if a.strip()]
+        artist_names = [a.strip() for a in re.split(r'[,/;|]', artists) if a.strip()]
         for name in artist_names:
-            cursor.execute("SELECT id FROM artists WHERE LOWER(name) = LOWER(?)", (name,))
+            # Check if artist has a profile image in frontend/public/assets/artist-images/
+            artist_image_db = None
+            assets_dir = get_assets_dir()
+            artist_images_dir = assets_dir / "artist-images"
+            if artist_images_dir.exists():
+                for ext in [".jpg", ".jpeg", ".png", ".webp"]:
+                    img_filename = f"{name.lower()}{ext}"
+                    if (artist_images_dir / img_filename).exists():
+                        artist_image_db = f"/artist-images/{img_filename}"
+                        break
+
+            cursor.execute("SELECT id, image FROM artists WHERE LOWER(name) = LOWER(?)", (name,))
             artist_row = cursor.fetchone()
             if artist_row:
                 artist_id = artist_row["id"]
+                # Update existing artist image if it is currently NULL/empty and we found a valid image
+                if (not artist_row["image"] or not artist_row["image"].strip()) and artist_image_db:
+                    cursor.execute("UPDATE artists SET image = ? WHERE id = ?", (artist_image_db, artist_id))
             else:
-                cursor.execute("INSERT INTO artists (name, image) VALUES (?, NULL)", (name,))
+                cursor.execute("INSERT INTO artists (name, image) VALUES (?, ?)", (name, artist_image_db))
                 artist_id = cursor.lastrowid
                 
             cursor.execute("""

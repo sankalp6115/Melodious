@@ -2,7 +2,7 @@ import React from 'react';
 
 const Playlists = () => {
   return (
-    <section className="playlists" style={{padding: '20px'}}>
+    <section className="playlists" style={{ padding: '20px' }}>
       <h2 className="heading">Your Playlists</h2>
       <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
         {["Indi Pop Music", "Rock Music", "Calm Music", "Pop Music"].map((title, idx) => (
@@ -11,7 +11,7 @@ const Playlists = () => {
             <div className="playlist-info">
               <span className="playlist-title">{title}</span>
             </div>
-            <button className="playPauseBtn"><img src="/assets/images/ui/play.jpg" alt="Play" /></button>
+            <button type="button" className="playPauseBtn"><img src="/assets/images/ui/play.png" alt="Play" /></button>
           </div>
         ))}
       </div>
@@ -24,7 +24,7 @@ const Playlists = () => {
             <div className="playlist-info">
               <span className="playlist-title">{title}</span>
             </div>
-            <button className="playPauseBtn"><img src="/assets/images/ui/play.jpg" alt="Play" /></button>
+            <button type="button" className="playPauseBtn"><img src="/assets/images/ui/play.png" alt="Play" /></button>
           </div>
         ))}
       </div>

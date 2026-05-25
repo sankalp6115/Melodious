@@ -11,7 +11,7 @@ const RightPanel = () => {
       <section className="playlist_poster">
         <div className="playlist-info">
           <span className="playlist-title">Urban Rock</span>
-          <span className="playlist-owner">Private</span>
+          <span className="playlist-owner"></span>
           <span className="playlist-length">{(activeQueue && activeQueue.length > 0) ? activeQueue.length : (songs?.length || 0)} Songs</span>
         </div>
       </section>

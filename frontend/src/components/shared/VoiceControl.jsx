@@ -2,11 +2,11 @@ import React, { useState, use, useEffect, useCallback } from 'react';
 import { PlayerContext } from '../../contexts/PlayerContext';
 
 const VoiceControl = () => {
-  const { 
-    togglePlayPause, nextSong, prevSong, volume, setVolume, 
-    setIsShuffled, setIsLooped, isPlaying 
+  const {
+    togglePlayPause, nextSong, prevSong, volume, setVolume,
+    setIsShuffled, setIsLooped, isPlaying
   } = use(PlayerContext);
-  
+
   const [isListening, setIsListening] = useState(false);
   const [recognition, setRecognition] = useState(null);
 
@@ -56,8 +56,8 @@ const VoiceControl = () => {
 
   const toggleListening = () => {
     if (!recognition) {
-        alert("Speech recognition is not supported in this browser.");
-        return;
+      alert("Speech recognition is not supported in this browser.");
+      return;
     }
     if (isListening) {
       recognition.stop();
@@ -69,10 +69,10 @@ const VoiceControl = () => {
   };
 
   return (
-    <div className={`voiceRecog ${isListening ? 'listening' : ''}`} style={{ marginLeft: '10px', marginRight: '80px' }}>
-      <button id="voiceBtn" onClick={toggleListening}>
-        <img 
-          src={isListening ? "/assets/images/ui/mic-on.png" : "/assets/images/ui/mic-off.png"} 
+    <div className={`voiceRecog ${isListening ? 'listening' : ''}`} style={{ borderRadius: 0 }}>
+      <button type="button" id="voiceBtn" onClick={toggleListening}>
+        <img
+          src={isListening ? "/assets/images/ui/mic-on.png" : "/assets/images/ui/mic-off.png"}
           alt="Voice Control"
         />
       </button>
