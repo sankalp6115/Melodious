@@ -166,11 +166,16 @@ def stream_song(filename: str, request: Request):
                 remaining -= len(chunk)
                 yield chunk
 
+    import mimetypes
+    content_type, _ = mimetypes.guess_type(file_path)
+    if not content_type:
+        content_type = "audio/mpeg"
+
     headers = {
         "Content-Range":  f"bytes {start}-{end}/{file_size}",
         "Accept-Ranges":  "bytes",
         "Content-Length": str(chunk_size),
-        "Content-Type":   "audio/mpeg",
+        "Content-Type":   content_type,
     }
 
     return StreamingResponse(iter_file(), status_code=206, headers=headers)

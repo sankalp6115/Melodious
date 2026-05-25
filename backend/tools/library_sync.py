@@ -53,29 +53,126 @@ def fallback_art():
     return f"assets/album-arts/fallback/{filename}"
 
 def extract_metadata(file_path):
-    """Extract metadata and album art from an MP3 file."""
+    """Extract metadata and album art from various audio formats (MP3, FLAC, OGG, WAV, M4A)."""
+    file_path = Path(file_path)
+    suffix = file_path.suffix.lower()
+    
+    title = file_path.stem
+    artist_raw = "Unknown Artist"
+    album = "Unknown Album"
+    genre = "Unknown Genre"
+    year = 0
+    duration = 0
+    art_data = None
+    
     try:
-        audio = MP3(file_path, ID3=ID3)
-        
-        # Basic tags
-        title = str(audio.get("TIT2", Path(file_path).stem))
-        artist_raw = str(audio.get("TPE1", "Unknown Artist"))
-        album = str(audio.get("TALB", "Unknown Album"))
-        genre = str(audio.get("TCON", "Unknown Genre"))
-        year_raw = audio.get("TYER") or audio.get("TDRC")
-        year = int(str(year_raw)[:4]) if year_raw and str(year_raw)[:4].isdigit() else 0
-        duration = int(audio.info.length)
+        if suffix == ".mp3":
+            audio = MP3(file_path, ID3=ID3)
+            title = str(audio.get("TIT2", title))
+            artist_raw = str(audio.get("TPE1", artist_raw))
+            album = str(audio.get("TALB", album))
+            genre = str(audio.get("TCON", genre))
+            year_raw = audio.get("TYER") or audio.get("TDRC")
+            year = int(str(year_raw)[:4]) if year_raw and str(year_raw)[:4].isdigit() else 0
+            duration = int(audio.info.length)
+            
+            if audio.tags:
+                for tag in audio.tags.values():
+                    if isinstance(tag, APIC):
+                        art_data = tag.data
+                        break
+                        
+        elif suffix == ".flac":
+            from mutagen.flac import FLAC
+            audio = FLAC(file_path)
+            title = audio.get("title", [title])[0]
+            artist_raw = audio.get("artist", [artist_raw])[0]
+            album = audio.get("album", [album])[0]
+            genre = audio.get("genre", [genre])[0]
+            year_raw = audio.get("date", [""])[0] or audio.get("year", [""])[0]
+            year = int(str(year_raw)[:4]) if year_raw and str(year_raw)[:4].isdigit() else 0
+            duration = int(audio.info.length)
+            
+            if audio.pictures:
+                art_data = audio.pictures[0].data
+                
+        elif suffix == ".ogg":
+            from mutagen.oggvorbis import OggVorbis
+            audio = OggVorbis(file_path)
+            title = audio.get("title", [title])[0]
+            artist_raw = audio.get("artist", [artist_raw])[0]
+            album = audio.get("album", [album])[0]
+            genre = audio.get("genre", [genre])[0]
+            year_raw = audio.get("date", [""])[0] or audio.get("year", [""])[0]
+            year = int(str(year_raw)[:4]) if year_raw and str(year_raw)[:4].isdigit() else 0
+            duration = int(audio.info.length)
+            
+            if "metadata_block_picture" in audio:
+                import base64
+                from mutagen.flac import Picture
+                for tag in audio["metadata_block_picture"]:
+                    try:
+                        pic = Picture(base64.b64decode(tag))
+                        art_data = pic.data
+                        break
+                    except Exception:
+                        pass
+                        
+        elif suffix == ".wav":
+            from mutagen.wave import WAVE
+            audio = WAVE(file_path)
+            duration = int(audio.info.length)
+            if audio.tags:
+                title = str(audio.tags.get("TIT2", title))
+                artist_raw = str(audio.tags.get("TPE1", artist_raw))
+                album = str(audio.tags.get("TALB", album))
+                genre = str(audio.tags.get("TCON", genre))
+                year_raw = audio.tags.get("TYER") or audio.tags.get("TDRC")
+                year = int(str(year_raw)[:4]) if year_raw and str(year_raw)[:4].isdigit() else 0
+                
+                for tag in audio.tags.values():
+                    if isinstance(tag, APIC):
+                        art_data = tag.data
+                        break
+                        
+        elif suffix in (".m4a", ".mp4"):
+            from mutagen.mp4 import MP4, MP4Cover
+            audio = MP4(file_path)
+            title = audio.get("\xa9nam", [title])[0]
+            artist_raw = audio.get("\xa9ART", [artist_raw])[0]
+            album = audio.get("\xa9alb", [album])[0]
+            genre = audio.get("\xa9gen", [genre])[0]
+            year_raw = audio.get("\xa9day", [""])[0]
+            year = int(str(year_raw)[:4]) if year_raw and str(year_raw)[:4].isdigit() else 0
+            duration = int(audio.info.length)
+            
+            if "covr" in audio:
+                cover = audio["covr"][0]
+                if isinstance(cover, MP4Cover):
+                    art_data = bytes(cover)
+                else:
+                    art_data = cover
+                    
+        else:
+            import mutagen
+            audio = mutagen.File(file_path)
+            if audio is not None:
+                duration = int(audio.info.length)
+                if hasattr(audio, "get"):
+                    title = audio.get("title", [title])[0]
+                    artist_raw = audio.get("artist", [artist_raw])[0]
+                    album = audio.get("album", [album])[0]
+                    genre = audio.get("genre", [genre])[0]
+            else:
+                return None
         
         # Album Art extraction (use stem to avoid issues with extra dots)
         art_filename = f"{Path(file_path).stem}.jpg"
         art_path = ALBUM_ARTS_DIR / art_filename
         
-        if not art_path.exists():
-            for tag in audio.tags.values():
-                if isinstance(tag, APIC):
-                    with open(art_path, "wb") as img:
-                        img.write(tag.data)
-                    break
+        if art_data and not art_path.exists():
+            with open(art_path, "wb") as img:
+                img.write(art_data)
         
         # Use relative path as the stable identifier
         rel_path = file_path.relative_to(SONGS_DIR).as_posix()
@@ -152,8 +249,11 @@ def sync(reset=False, cleanup=False):
     all_artists = set()
     
     # 2. Recursive Filesystem Scan
-    files = list(SONGS_DIR.rglob("*.mp3"))
-    print(f"Found {len(files)} MP3 files recursively.")
+    supported_extensions = {".mp3", ".flac", ".ogg", ".wav", ".m4a", ".mp4"}
+    files = [p for p in SONGS_DIR.rglob("*") if p.is_file() and p.suffix.lower() in supported_extensions]
+    # Sort files to ensure deterministic sync order
+    files.sort(key=lambda x: x.name.lower())
+    print(f"Found {len(files)} audio files recursively.")
     
     valid_files = set()
     for i, file_path in enumerate(files):

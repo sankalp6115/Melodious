@@ -27,7 +27,7 @@ const RightPanel = () => {
 
         <div className="nextSong">
           <img
-            src={nextSong?.albumArt || "/assets/images/backgrounds/playlist-poster.jpg"}
+            src={nextSong?.albumArt || "/assets/images/backgrounds/playlist-poster.jpg1"}
             className="nextSongAlbumArt"
             alt="Next Album Art"
           />

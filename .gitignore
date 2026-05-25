@@ -9,11 +9,18 @@ __pycache__/
 .pyc
 .pyo
 
+data-accumulation-pipeline
+all_media
+
 *.mp3
+*.opus
+*.mp4
 *.lrc
 *.flac
 
-*.png
-*.jpg
-*.avif
-*.webp
+frontend/public/assets/album-arts/*.jpg
+songs/
+data/*.json
+songs.db
+*.db
+

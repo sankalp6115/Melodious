@@ -49,5 +49,5 @@ for entry in lyrics:
         del entry["title"]
 
 # Save result
-with open("lyrics_updated.json", "w", encoding="utf-8") as f:
+with open("lyrics.json", "w", encoding="utf-8") as f:
     json.dump(lyrics, f, ensure_ascii=False, indent=2)

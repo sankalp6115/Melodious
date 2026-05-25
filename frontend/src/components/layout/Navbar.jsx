@@ -2,9 +2,6 @@ import React, { useState, use, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { PlayerContext } from '../../contexts/PlayerContext';
 import VoiceControl from '../shared/VoiceControl';
-import { TegakiRenderer } from 'tegaki';
-// import bundle from 'tegaki/fonts/caveat';
-import bundle from '../../../cookie/bundle.ts';
 import Searchbar from '../shared/Searchbar.jsx';
 
 
